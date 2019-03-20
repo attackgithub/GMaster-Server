@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="09e7e51b-ded6-4c88-878e-8f4ece8ab774" ChangeDateTime="03/20/2019 03:29:48">
+    <Property Name="ElementName" Value="[dbo].[Users].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="userId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0e9dfcef-a9ce-4d85-b256-858d1a453ce1" ChangeDateTime="03/20/2019 03:32:18">
+    <Property Name="ElementName" Value="[dbo].[DeveloperKeys].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DeveloperKeys]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="devkey" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="114dc79f-2b8a-4c29-838f-b3abbb0fa465" ChangeDateTime="03/20/2019 03:35:05">
+    <Property Name="ElementName" Value="[dbo].[AddressBook].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressBook]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="email" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="10db21b3-a354-49c8-a83e-cc3fa6c6505e" ChangeDateTime="03/20/2019 03:35:16">
+    <Property Name="ElementName" Value="[dbo].[AddressBook].[email]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressBook]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="101fca51-2d8b-46a5-9253-f16dccf3b1b2" ChangeDateTime="03/20/2019 03:35:19">
+    <Property Name="ElementName" Value="[dbo].[AddressBook].[id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressBook]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="942680e1-b8d4-459c-8a78-8624004edd70" ChangeDateTime="03/20/2019 03:42:45">
+    <Property Name="ElementName" Value="[dbo].[AddressBook].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressBook]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="addressId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6ebbadf3-40ba-409f-a441-0720ff36b3ad" ChangeDateTime="03/20/2019 03:43:11">
+    <Property Name="ElementName" Value="[dbo].[AddressFields_Text].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields_Text]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fieldId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d5e448f8-4f95-4b4a-b875-5a433518e5af" ChangeDateTime="03/20/2019 03:48:11">
+    <Property Name="ElementName" Value="[dbo].[AddressFields_Text].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields_Text]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fieldId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="da4ec6fe-219d-4280-8359-dea2a93dae65" ChangeDateTime="03/20/2019 03:51:36">
+    <Property Name="ElementName" Value="[dbo].[AddressFields_Numbers].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields_Numbers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fieldId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cec89539-798d-45d8-a68e-f99760b99c72" ChangeDateTime="03/20/2019 03:52:59">
+    <Property Name="ElementName" Value="[dbo].[AddressFields_DateTimes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields_DateTimes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fieldId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0e0dbb03-40bb-4347-b954-05a5b5904f04" ChangeDateTime="03/20/2019 03:54:30">
+    <Property Name="ElementName" Value="[dbo].[AddressFields_Bits].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields_Bits]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="fieldId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e67f3097-e474-43a1-a983-d7d4b7820497" ChangeDateTime="03/20/2019 04:07:31">
+    <Property Name="ElementName" Value="[dbo].[Campaigns].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Campaigns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaignId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3e720160-c36d-4871-8707-fb9fd313d408" ChangeDateTime="03/20/2019 04:14:27">
+    <Property Name="ElementName" Value="[dbo].[CampaignQueue].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignQueue]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaignId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e7709ee7-88d8-4177-94a6-34dde8196b79" ChangeDateTime="03/20/2019 04:16:35">
+    <Property Name="ElementName" Value="[dbo].[CampaignMessage].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignMessage]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaignId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="68a78cdf-002c-43a9-8466-c75f22f510cf" ChangeDateTime="03/20/2019 04:18:01">
+    <Property Name="ElementName" Value="[dbo].[Campaigns].[draftOnly]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Campaigns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="draftsOnly" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="483e884d-c712-4df7-8c8c-9e10af8c25bb" ChangeDateTime="03/20/2019 04:22:58">
+    <Property Name="ElementName" Value="[dbo].[CampaignQueue].[sent]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignQueue]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="datesent" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8463a9b1-b882-4932-8ccd-e9efbd63c179" ChangeDateTime="03/20/2019 04:34:59">
+    <Property Name="ElementName" Value="[dbo].[CampaignFollowupRules].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignFollowupRules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaignId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="20ef24e7-a4b1-4756-bb74-6014b4399cbd" ChangeDateTime="03/20/2019 04:38:30">
+    <Property Name="ElementName" Value="[dbo].[CampaignFollowupRules].[sentdelay]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignFollowupRules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="onsentdelay" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="43a8e311-a61d-43c1-8890-639b1d86353f" ChangeDateTime="03/20/2019 04:38:38">
+    <Property Name="ElementName" Value="[dbo].[CampaignFollowupRules].[o]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignFollowupRules]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="onopeneddelay" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fb5d2f49-0144-46af-bc63-66d671258a43" ChangeDateTime="03/20/2019 04:57:02">
+    <Property Name="ElementName" Value="[dbo].[CampaignQueue].[dateupdated]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignQueue]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="datestatuschange" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b2757437-6f74-4ac8-bb9e-2cc7d4c1820f" ChangeDateTime="03/20/2019 05:11:00">
+    <Property Name="ElementName" Value="[dbo].[CampaignPollQA].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[CampaignPollQA]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="campaignId" />
+  </Operation>
+</Operations>
