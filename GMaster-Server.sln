@@ -4,10 +4,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{FE694897-F44F-4AF4-A72E-5CB18F000368}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F78D2648-AA26-4D61-8FA7-F61332AF7F3A} = {F78D2648-AA26-4D61-8FA7-F61332AF7F3A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Query", "Query\Query.csproj", "{F78D2648-AA26-4D61-8FA7-F61332AF7F3A}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Sql", "Sql\Sql.sqlproj", "{76F77191-CB69-4887-986F-F2896C0EBF73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90EEAEFD-4CA6-4E62-84F9-CCFC4F1AB319}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
