@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
-    <Build Include="dbo\Tables\DeveloperKeys.sql" />
     <Build Include="dbo\Tables\AddressBook.sql" />
     <Build Include="dbo\Tables\AddressFields.sql" />
     <Build Include="dbo\Tables\AddressFields_Text.sql" />
@@ -101,6 +100,9 @@
     <Build Include="dbo\Stored Procedures\Users\User_GetPassword.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_HasAdmin.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_HasPasswords.sql" />
+    <Build Include="dbo\Stored Procedures\DeveloperKeys\DeveloperKey_Create.sql" />
+    <Build Include="dbo\Tables\DeveloperKeys.sql" />
+    <Build Include="dbo\Stored Procedures\DeveloperKeys\DeveloperKey_Authenticate.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
