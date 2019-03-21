@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>31bf419f-8b75-427d-af34-2fb9bece0c02</UserSecretsId>
+    <AssemblyName>GMaster</AssemblyName>
+    <RootNamespace>GMaster</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

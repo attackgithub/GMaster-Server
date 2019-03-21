@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Services.Controllers
+namespace GMaster.Controllers
 {
     [Route("api/addressbook")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace Services.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "" };
+            return new string[] { "funky" };
         }
 
         // GET api/values/5

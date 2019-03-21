@@ -7,3 +7,7 @@
 */bin
 */obj
 **/.toolstarget
+*/Sql
+Sql/*
+Sql
+Sql/**/*.*

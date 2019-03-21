@@ -59,6 +59,14 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="dbo\Sequences" />
+    <Folder Include="dbo\Stored Procedures\AddressBook" />
+    <Folder Include="dbo\Stored Procedures\AddressFields" />
+    <Folder Include="dbo\Stored Procedures\Campaigns" />
+    <Folder Include="dbo\Stored Procedures\DeveloperKeys" />
+    <Folder Include="dbo\Stored Procedures\Users" />
+    <Folder Include="dbo\Stored Procedures\Utility" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -74,6 +82,25 @@
     <Build Include="dbo\Tables\CampaignMessage.sql" />
     <Build Include="dbo\Tables\CampaignFollowupRules.sql" />
     <Build Include="dbo\Tables\CampaignPollQA.sql" />
+    <Build Include="dbo\Sequences\SequenceAddressBook.sql" />
+    <Build Include="dbo\Sequences\SequenceAddressFields.sql" />
+    <Build Include="dbo\Sequences\SequenceCampaigns.sql" />
+    <Build Include="dbo\Sequences\SequenceFollowup.sql" />
+    <Build Include="dbo\Sequences\SequenceUsers.sql" />
+    <Build Include="dbo\Stored Procedures\Utility\GetCustomId.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_Authenticate.sql" />
+    <Build Include="dbo\Tables\User_AuthTokens.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_CreateAuthToken.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_GetInfo.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdateEmail.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdatePassword.sql" />
+    <Build Include="dbo\Stored Procedures\Users\Users_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_AuthenticateByToken.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_GetEmail.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_GetPassword.sql" />
+    <Build Include="dbo\Stored Procedures\Users\Users_HasAdmin.sql" />
+    <Build Include="dbo\Stored Procedures\Users\Users_HasPasswords.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

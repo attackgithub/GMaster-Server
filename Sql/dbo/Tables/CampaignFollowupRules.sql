@@ -1,7 +1,11 @@
 ﻿CREATE TABLE [dbo].[CampaignFollowupRules]
 (
-	[campaignId] INT NOT NULL PRIMARY KEY, 
-    [followupId] INT NOT NULL, 
+	[ruleId] INT NOT NULL PRIMARY KEY,
+	[campaignId] INT NOT NULL,  /* campaign that the followup rules belong to */
+	[action] SMALLINT NOT NULL DEFAULT 0,	/*	0 = add email to followup campaign, 
+												1 = delete email from address book 
+											*/
+    [followupId] INT NULL, /* campaignId to use as the followup campaign */
     [onsent] BIT NOT NULL DEFAULT 0, 
     [onsentdelay] INT NOT NULL DEFAULT 0, 
     [onopened] BIT NOT NULL DEFAULT 0, 

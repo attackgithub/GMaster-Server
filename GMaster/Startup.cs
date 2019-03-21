@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Services
+namespace GMaster
 {
     public class Startup
     {
@@ -39,6 +39,9 @@ namespace Services
             {
                 app.UseHsts();
             }
+
+            //add Web API developer key validation
+            app.UseMiddleware<Middleware.DeveloperKeyValidatorMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseMvc();
