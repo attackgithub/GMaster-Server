@@ -1,6 +1,8 @@
 ﻿CREATE TABLE [dbo].[AddressFields_Numbers]
 (
-	[fieldId] INT NOT NULL PRIMARY KEY, 
+	[addressId] INT NOT NULL, 
+	[fieldId] INT NOT NULL, 
+	PRIMARY KEY (addressId, fieldId),
     [number] INT NOT NULL DEFAULT 0
 )
 

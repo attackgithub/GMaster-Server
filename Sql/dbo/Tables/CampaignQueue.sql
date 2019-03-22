@@ -1,7 +1,8 @@
 ﻿CREATE TABLE [dbo].[CampaignQueue]
 (
-	[campaignId] INT NOT NULL PRIMARY KEY, 
+	[campaignId] INT NOT NULL, 
     [addressId] INT NOT NULL, 
+	PRIMARY KEY (campaignId, addressId),
     [tries] TINYINT NOT NULL DEFAULT 0,
     [status] TINYINT NOT NULL DEFAULT 0, /* 0 = pending, 1 = sent, 2 = bounced, 3 = replied */
 	[clicked] BIT NOT NULL DEFAULT 0, /* tracks when user clicked on link in campaign email */

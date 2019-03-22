@@ -25,5 +25,23 @@ namespace Query
                 }
             );
         }
+
+        public static List<Models.DeveloperKey> GetList()
+        {
+            return Sql.Populate<Models.DeveloperKey>(
+                "DeveloperKeys_GetList"
+            );
+        }
+
+        public static Models.DeveloperKey ForUser(int userId)
+        {
+            return Sql.ExecuteScalar<Models.DeveloperKey>(
+                "DeveloperKey_ForUser",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                }
+            );
+        }
     }
 }

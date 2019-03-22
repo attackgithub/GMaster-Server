@@ -1,7 +1,9 @@
 ﻿CREATE TABLE [dbo].[AddressFields_Text]
 (
-	[fieldId] INT NOT NULL PRIMARY KEY, 
-    [text] NVARCHAR(64) NOT NULL DEFAULT ''
+	[addressId] INT NOT NULL, 
+	[fieldId] INT NOT NULL, 
+	PRIMARY KEY (addressId, fieldId),
+    [text] NVARCHAR(255) NOT NULL DEFAULT ''
 )
 
 GO

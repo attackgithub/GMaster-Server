@@ -1,6 +1,8 @@
 ﻿CREATE TABLE [dbo].[AddressFields_DateTimes]
 (
-	[fieldId] INT NOT NULL PRIMARY KEY, 
+	[addressId] INT NOT NULL, 
+	[fieldId] INT NOT NULL, 
+	PRIMARY KEY (addressId, fieldId),
     [date] DATETIME2 NOT NULL DEFAULT GETDATE()
 )
 

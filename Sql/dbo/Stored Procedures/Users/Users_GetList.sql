@@ -11,7 +11,7 @@ BEGIN
 	FROM Users
 	WHERE 
 	userId = CASE WHEN @userId > 0 THEN @userId ELSE userId END
-	AND email  LIKE CASE WHEN @search <> '' THEN '%' + @search + '%' ELSE email END
+	AND email LIKE CASE WHEN @search <> '' THEN '%' + @search + '%' ELSE email END
 	ORDER BY
 	CASE WHEN @orderby = 1 THEN email END DESC,
 	CASE WHEN @orderby = 2 THEN datecreated END ASC
