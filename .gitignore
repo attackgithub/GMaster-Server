@@ -3,6 +3,9 @@
 *.user
 *.sln.docstates
 
+## Ingore authentication keys, secret keys, etc
+auth.json
+
 /App/wwwroot/css/
 /App/wwwroot/js/
 

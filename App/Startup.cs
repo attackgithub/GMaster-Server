@@ -18,8 +18,8 @@ public class Startup: Datasilk.Startup
         app.UseHttpsRedirection();
 
         //set up database
-        Query.Sql.connectionString = server.sqlConnectionString;
-        server.hasAdmin = Query.Users.HasAdmin();
+        Query.Sql.connectionString = Server.sqlConnectionString;
+        Server.hasAdmin = Query.Users.HasAdmin();
 
         base.Configured(app, env, config);
     }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Utility.Serialization;
 
 namespace GMaster.Services
 {
@@ -68,6 +66,26 @@ namespace GMaster.Services
                 return Success();
             }
             return Error();
+        }
+
+        public string Create(string name, string email, string password)
+        {
+            try
+            {
+                return Serializer.WriteObjectToString(new
+                {
+                    userId = Query.Users.CreateUser(new Query.Models.User()
+                    {
+                        email = email,
+                        password = EncryptPassword(email, password),
+                        name = name
+                    })
+                });
+            }
+            catch (Exception ex)
+            {
+                return Error(ex.Message);
+            }
         }
 
         public void LogOut()

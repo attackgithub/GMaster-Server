@@ -5,6 +5,8 @@ namespace GMaster
 {
     public class Service : Datasilk.Web.Service
     {
+        private bool isRemote = true;
+
         public Service(HttpContext context) : base(context)
         {
             //validate developer key for Web API calls via gmail
@@ -53,8 +55,13 @@ namespace GMaster
             }
         }
 
-        public bool HasPermissions()
+        public bool HasPermissions(bool localOnly = true)
         {
+            if(localOnly == true && isRemote == true)
+            {
+                //Web API can only be accessed via localhost or from the datasilk.io domain
+                return false;
+            }
             if (context.Request.Path.StartsWithSegments("/gmail"))
             {
                 //Web API calls require developer key which loads User object

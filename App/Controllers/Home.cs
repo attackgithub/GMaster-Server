@@ -10,7 +10,7 @@ namespace GMaster.Controllers
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
-            var scaffold = new Scaffold("Views/Home/home.html", Server.Scaffold);
+            var scaffold = new Scaffold("Views/Home/home.html");
 
             return base.Render(path, scaffold.Render());
         }
