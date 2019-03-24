@@ -12,6 +12,7 @@ namespace Query
                 {
                     {"email", user.email },
                     {"password", user.password },
+                    {"name", user.name },
                 }
             );
         }

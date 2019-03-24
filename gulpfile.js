@@ -24,22 +24,22 @@ paths.working = {
     js: {
         platform: [
             paths.webroot + 'js/selector.js',
-            //paths.scripts + 'utility/velocity.min.js',
+            paths.scripts + 'utility/velocity.min.js',
             paths.scripts + "platform/_super.js",
             paths.scripts + "platform/ajax.js",
             //paths.scripts + "platform/drag.js",
-            //paths.scripts + "platform/loader.js",
+            paths.scripts + "platform/loader.js",
             paths.scripts + "platform/message.js",
             //paths.scripts + "platform/polyfill.js",
             paths.scripts + "platform/popup.js",
-            //paths.scripts + "platform/scaffold.js",
+            paths.scripts + "platform/scaffold.js",
             //paths.scripts + "platform/scrollbar.js",
             paths.scripts + "platform/svg.js",
             paths.scripts + "platform/util.js",
             //paths.scripts + "platform/util.color.js",
             //paths.scripts + "platform/util.text.js",
-            //paths.scripts + "platform/validate.js",
-            //paths.scripts + "platform/window.js"
+            paths.scripts + "platform/validate.js",
+            paths.scripts + "platform/window.js"
         ],
         app: paths.app + '**/*.js',
         utility: [

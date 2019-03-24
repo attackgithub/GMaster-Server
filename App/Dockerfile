@@ -5,14 +5,14 @@ EXPOSE 443
 
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
-COPY ["GMaster/GMaster.csproj", "GMaster/"]
-RUN dotnet restore "GMaster/GMaster.csproj"
+COPY ["App/App.csproj", "GMaster/"]
+RUN dotnet restore "GMaster/App.csproj"
 COPY . .
 WORKDIR "/src/GMaster"
-RUN dotnet build "GMaster.csproj" -c Release -o /app
+RUN dotnet build "App.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "GMaster.csproj" -c Release -o /app
+RUN dotnet publish "App.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app

@@ -7,5 +7,7 @@ namespace Query.Models
         public int userId { get; set; }
         public string email { get; set; }
         public string password { get; set; }
+        public string name { get; set; }
+        public DateTime datecreated { get; set; }
     }
 }
