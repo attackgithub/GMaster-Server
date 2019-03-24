@@ -1,3 +1,6 @@
 [submodule "Query/Core"]
 	path = Query/Core
 	url = https://github.com/datasilk/corequery
+[submodule "App/Core"]
+	path = App/Core
+	url = https://github.com/datasilk/Core
