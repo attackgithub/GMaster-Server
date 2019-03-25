@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Content\" />
     <Folder Include="Scripts\" />
     <Folder Include="Views\Login\" />
     <Folder Include="wwwroot\" />
@@ -17,6 +18,13 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.38.0" />
+    <PackageReference Include="Google.Apis.Core" Version="1.38.0" />
+    <PackageReference Include="Google.Apis.Drive.v2" Version="1.38.0.1533" />
+    <PackageReference Include="Google.Apis.Gmail.v1" Version="1.38.0.1495" />
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.38.0.1532" />
+    <PackageReference Include="Google.Apis.Plus.v1" Version="1.38.0.1536" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.38.0.1537" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />

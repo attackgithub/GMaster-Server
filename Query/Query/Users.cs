@@ -116,5 +116,16 @@ namespace Query
             if (list.Count > 0) { return list[0]; }
             return null;
         }
+
+        public static void UpdateRefreshToken(int userId, string refreshToken)
+        {
+            Sql.ExecuteNonQuery("User_UpdateRefreshToken",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"refreshToken", refreshToken }
+                }
+            );
+        }
     }
 }

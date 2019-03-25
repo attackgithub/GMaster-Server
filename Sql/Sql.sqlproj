@@ -134,6 +134,7 @@
     <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_BulkAdd.sql" />
     <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_Add.sql" />
     <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdateRefreshToken.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

@@ -4,7 +4,8 @@
     [email] VARCHAR(64) NOT NULL, 
     [password] VARCHAR(255) NOT NULL, 
     [name] NVARCHAR(64) NOT NULL DEFAULT '', 
-    [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE()
+    [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE(), 
+    [refreshToken] VARCHAR(64) NOT NULL DEFAULT ''
 )
 
 GO

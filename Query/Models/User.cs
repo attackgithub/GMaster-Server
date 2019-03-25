@@ -9,5 +9,6 @@ namespace Query.Models
         public string password { get; set; }
         public string name { get; set; }
         public DateTime datecreated { get; set; }
+        public string refreshToken { get; set; }
     }
 }
