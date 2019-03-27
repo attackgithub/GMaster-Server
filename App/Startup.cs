@@ -30,6 +30,7 @@ public class Startup: Datasilk.Startup
             
             GMaster.Settings.Google.OAuth2.clientId = authConfig.GetSection("google:OAuth2:clientId").Value;
             GMaster.Settings.Google.OAuth2.secret = authConfig.GetSection("google:OAuth2:secret").Value;
+            GMaster.Settings.Google.OAuth2.extensionId = authConfig.GetSection("google:OAuth2:extensionId").Value;
             switch (Server.environment)
             {
                 case Server.Environment.development:

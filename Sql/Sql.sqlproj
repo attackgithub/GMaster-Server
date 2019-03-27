@@ -91,14 +91,11 @@
     <Build Include="dbo\Sequences\SequenceUsers.sql" />
     <Build Include="dbo\Stored Procedures\Utility\GetCustomId.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_Create.sql" />
-    <Build Include="dbo\Stored Procedures\Users\User_Authenticate.sql" />
-    <Build Include="dbo\Tables\User_AuthTokens.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_CreateAuthToken.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_GetInfo.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_UpdateEmail.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_UpdatePassword.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_GetList.sql" />
-    <Build Include="dbo\Stored Procedures\Users\User_AuthenticateByToken.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_GetEmail.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_GetPassword.sql" />
     <Build Include="dbo\Stored Procedures\Users\Users_HasAdmin.sql" />
@@ -135,6 +132,10 @@
     <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_Add.sql" />
     <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_GetList.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_UpdateRefreshToken.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_GetByEmail.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_Authenticate.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_AuthenticateByToken.sql" />
+    <Build Include="dbo\Tables\User_AuthTokens.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

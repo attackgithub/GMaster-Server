@@ -13,6 +13,8 @@ namespace Query
                     {"email", user.email },
                     {"password", user.password },
                     {"name", user.name },
+                    {"gender", user.gender },
+                    {"refreshToken", user.refreshToken },
                 }
             );
         }
@@ -111,6 +113,18 @@ namespace Query
                 new Dictionary<string, object>()
                 {
                     {"userId", userId }
+                }
+            );
+            if (list.Count > 0) { return list[0]; }
+            return null;
+        }
+
+        public static Models.User GetByEmail(string email)
+        {
+            var list = Sql.Populate<Models.User>("User_GetByEmail",
+                new Dictionary<string, object>()
+                {
+                    {"email", email }
                 }
             );
             if (list.Count > 0) { return list[0]; }

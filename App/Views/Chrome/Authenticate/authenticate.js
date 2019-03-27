@@ -8,10 +8,16 @@ $(document).ready(() => {
 
         auth2.grantOfflineAccess().then(
             function (response) {
-                console.log(response);
+                $('.auth-msg').html('Authenticating...');
                 S.ajax.post('Chrome/OAuth2', response,
-                    function (d) {
-                        window.parent.Gmaster_authenticated(d);
+                    function (devkey) {
+                        $('.auth-msg').html('Authenticated! Please wait...');
+                        chrome.runtime.sendMessage(extensionId, { devkey: devkey },
+                            function (response) {
+                                console.log(response);
+                                
+                            }
+                        );
                     },
 
                     function (err) {

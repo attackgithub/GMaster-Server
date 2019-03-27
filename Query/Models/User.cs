@@ -8,6 +8,7 @@ namespace Query.Models
         public string email { get; set; }
         public string password { get; set; }
         public string name { get; set; }
+        public bool? gender { get; set; }
         public DateTime datecreated { get; set; }
         public string refreshToken { get; set; }
     }

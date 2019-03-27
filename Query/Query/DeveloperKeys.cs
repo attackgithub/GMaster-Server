@@ -35,13 +35,15 @@ namespace Query
 
         public static Models.DeveloperKey ForUser(int userId)
         {
-            return Sql.ExecuteScalar<Models.DeveloperKey>(
+            var list = Sql.Populate<Models.DeveloperKey>(
                 "DeveloperKey_ForUser",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },
                 }
             );
+            if(list.Count > 0) { return list[0]; }
+            return null;
         }
     }
 }
