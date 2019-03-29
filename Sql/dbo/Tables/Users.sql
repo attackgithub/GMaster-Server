@@ -7,7 +7,8 @@
     [gender] BIT NULL, 
     [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE(),
     [accessToken] VARCHAR(64) NOT NULL DEFAULT '',
-    [refreshToken] VARCHAR(64) NOT NULL DEFAULT ''
+    [refreshToken] VARCHAR(64) NOT NULL DEFAULT '', 
+    [countrycode] CHAR(2) NOT NULL DEFAULT ''
 )
 
 GO

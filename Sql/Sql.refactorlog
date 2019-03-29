@@ -147,4 +147,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="campaignId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="fbcbdac9-5ab7-4fa2-a8d2-34bbdae3fbe7" ChangeDateTime="03/29/2019 03:26:15">
+    <Property Name="ElementName" Value="[dbo].[Teams].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Teams]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="teamId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="28d94e2a-8d14-4f1b-ad34-0f023fb16191" ChangeDateTime="03/29/2019 03:27:59">
+    <Property Name="ElementName" Value="[dbo].[Plans].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Plans]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="planId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="40692d72-cf32-400a-9774-69ec822be4a7" ChangeDateTime="03/29/2019 03:29:18">
+    <Property Name="ElementName" Value="[dbo].[Subscriptions].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Subscriptions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="subscriptionId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6f093f0c-137e-4180-90cf-07fc22f97479" ChangeDateTime="03/29/2019 03:34:47">
+    <Property Name="ElementName" Value="[dbo].[Invoices].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Invoices]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="invoiceId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d7d38948-cf9c-4472-8792-0fe31337841c" ChangeDateTime="03/29/2019 03:37:12">
+    <Property Name="ElementName" Value="[dbo].[Payments].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Payments]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="paymentId" />
+  </Operation>
 </Operations>
