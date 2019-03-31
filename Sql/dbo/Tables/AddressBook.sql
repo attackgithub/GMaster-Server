@@ -2,7 +2,7 @@
 (
 	[addressId] INT NOT NULL, 
     [userId] INT NOT NULL, 
-    [email] VARCHAR(255) NOT NULL, 
+    [email] NVARCHAR(64) NOT NULL, 
     [firstname] NVARCHAR(32) NOT NULL DEFAULT '', 
     [lastname] NVARCHAR(32) NOT NULL DEFAULT '', 
     [status] BIT NOT NULL DEFAULT 1, 

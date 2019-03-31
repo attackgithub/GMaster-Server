@@ -7,5 +7,6 @@
     [billingDay] INT NOT NULL DEFAULT DAY(GETDATE()), 
     [pricePerUser] FLOAT NOT NULL, 
     [paySchedule] BIT NOT NULL, /* 0 = monthly, 1 = yearly */
-    [totalUsers] INT NOT NULL
+    [totalUsers] INT NOT NULL, 
+    [status] TINYINT NOT NULL DEFAULT 1
 )

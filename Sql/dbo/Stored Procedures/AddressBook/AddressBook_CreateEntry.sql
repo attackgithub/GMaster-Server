@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[AddressBook_CreateEntry]
 	@userId int,
-	@email varchar(255),
+	@email nvarchar(64),
 	@firstname nvarchar(32),
 	@lastname nvarchar(32)
 AS

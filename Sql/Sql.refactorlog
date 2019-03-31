@@ -182,4 +182,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="paymentId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="e09f26aa-3637-4054-ae9d-c178a48a410a" ChangeDateTime="03/31/2019 00:24:48">
+    <Property Name="ElementName" Value="[dbo].[TeamMembers].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamMembers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="memberId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="301164e4-366b-4703-9fda-48b95274b71a" ChangeDateTime="03/31/2019 00:24:51">
+    <Property Name="ElementName" Value="[dbo].[TeamMembers].[memberId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TeamMembers]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="userId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2175c995-b6c1-41dd-af13-9fc199db347a" ChangeDateTime="03/31/2019 05:23:02">
+    <Property Name="ElementName" Value="[dbo].[Invoices].[price]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Invoices]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="subtotal" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="02711d7f-a1fd-4944-8e55-fd2ff3b8e459" ChangeDateTime="03/31/2019 05:32:22">
+    <Property Name="ElementName" Value="[dbo].[InvoiceItems].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceItems]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="itemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="05139dc8-e6a8-4ea1-bd36-e90ad813dcc3" ChangeDateTime="03/31/2019 05:34:45">
+    <Property Name="ElementName" Value="[dbo].[InvoiceItems].[users]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[InvoiceItems]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="totalUsers" />
+  </Operation>
 </Operations>

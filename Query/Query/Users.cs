@@ -11,10 +11,10 @@ namespace Query
                 new Dictionary<string, object>()
                 {
                     {"email", user.email },
-                    {"password", user.password },
+                    {"password", !string.IsNullOrEmpty(user.password) ? user.password : "" },
                     {"name", user.name },
                     {"gender", user.gender },
-                    {"refreshToken", user.refreshToken },
+                    {"refreshToken", !string.IsNullOrEmpty(user.refreshToken) ? user.refreshToken : "" },
                 }
             );
         }
