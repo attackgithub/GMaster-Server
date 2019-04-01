@@ -14,6 +14,7 @@ namespace Query
                     {"password", !string.IsNullOrEmpty(user.password) ? user.password : "" },
                     {"name", user.name },
                     {"gender", user.gender },
+                    {"locale", !string.IsNullOrEmpty(user.locale) ? user.locale : "" },
                     {"refreshToken", !string.IsNullOrEmpty(user.refreshToken) ? user.refreshToken : "" },
                 }
             );

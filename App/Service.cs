@@ -55,29 +55,15 @@ namespace GMaster
             }
         }
 
-        public bool HasPermissions(bool localOnly = true)
+        public bool HasPermissions()
         {
-            if(localOnly == true && isRemote == true)
+            if (User.userId == 0)
             {
-                //Web API can only be accessed via localhost or from the datasilk.io domain
+                context.Response.StatusCode = 401;
+                context.Response.WriteAsync("Access Denied");
                 return false;
             }
-            if (context.Request.Path.StartsWithSegments("/gmail"))
-            {
-                //Web API calls require developer key which loads User object
-                return User.userId > 0;
-            }
-            else if (context.Request.Path.StartsWithSegments("/api"))
-            {
-                //Internal API calls require Session with User object
-                if (User.userId == 0)
-                {
-                    context.Response.StatusCode = 401;
-                    context.Response.WriteAsync("Access Denied");
-                }
-                return User.userId > 0;
-            }
-            return false;
+            return true;
         }
     }
 }

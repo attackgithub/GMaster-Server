@@ -21,7 +21,7 @@ function openGoogleSignin() {
     auth2.grantOfflineAccess().then(
         function (response) {
             $('.auth-msg').html('Authenticating...');
-            S.ajax.post('Chrome/OAuth2', response,
+            S.ajax.post('Google/OAuth2', response,
                 function (devkey) {
                     $('.auth-msg').html('Authenticated! Please wait...');
                     chrome.runtime.sendMessage(extensionId, { devkey: devkey },

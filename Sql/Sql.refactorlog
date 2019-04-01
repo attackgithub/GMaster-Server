@@ -217,4 +217,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="totalUsers" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="849adaa9-6230-4507-bfd1-7d6c2328fad2" ChangeDateTime="04/01/2019 02:45:05">
+    <Property Name="ElementName" Value="[dbo].[Users].[countrycode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="locale" />
+  </Operation>
 </Operations>

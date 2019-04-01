@@ -70,6 +70,13 @@
     <Folder Include="dbo\Stored Procedures\CampaignMessages" />
     <Folder Include="dbo\Stored Procedures\CampaignFollowupRules" />
     <Folder Include="dbo\Stored Procedures\CampaignQueue" />
+    <Folder Include="dbo\Stored Procedures\Teams" />
+    <Folder Include="dbo\Stored Procedures\Subscriptions" />
+    <Folder Include="dbo\Stored Procedures\Plans" />
+    <Folder Include="dbo\Stored Procedures\Payments" />
+    <Folder Include="dbo\Stored Procedures\Invoices" />
+    <Folder Include="dbo\Stored Procedures\TeamMembers" />
+    <Folder Include="dbo\Stored Procedures\InvoiceItems" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -141,6 +148,20 @@
     <Build Include="dbo\Tables\Subscriptions.sql" />
     <Build Include="dbo\Tables\Invoices.sql" />
     <Build Include="dbo\Tables\Payments.sql" />
+    <Build Include="dbo\Stored Procedures\Teams\Team_Create.sql" />
+    <Build Include="dbo\Sequences\SequenceTeams.sql" />
+    <Build Include="dbo\Tables\TeamMembers.sql" />
+    <Build Include="dbo\Stored Procedures\TeamMembers\TeamMember_Create.sql" />
+    <Build Include="dbo\Stored Procedures\TeamMembers\TeamMember_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Teams\Team_Delete.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_Create.sql" />
+    <Build Include="dbo\Sequences\SequenceSubscriptions.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_Cancel.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_Reinstate.sql" />
+    <Build Include="dbo\Stored Procedures\Invoices\Invoices_GetList.sql" />
+    <Build Include="dbo\Tables\InvoiceItems.sql" />
+    <Build Include="dbo\Stored Procedures\InvoiceItems\InvoiceItems_GetList.sql" />
+    <Build Include="dbo\Stored Procedures\Plans\Plans_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

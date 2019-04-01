@@ -8,9 +8,9 @@ using GMaster.Common.Google;
 
 namespace GMaster.Services
 {
-    public class Chrome : Service
+    public class Google : Service
     {
-        public Chrome(HttpContext context) : base(context)
+        public Google(HttpContext context) : base(context)
         {
         }
 
@@ -68,6 +68,7 @@ namespace GMaster.Services
                     email = googleUser.Email,
                     name = googleUser.Name,
                     gender = googleUser.Gender == "male",
+                    locale = googleUser.Locale,
                     refreshToken = refreshToken
                 });
 
