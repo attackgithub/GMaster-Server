@@ -15,13 +15,14 @@ namespace Query
             );
         }
 
-        public static int? Authenticate(string key)
+        public static int? Authenticate(string key, string email)
         {
             return Sql.ExecuteScalar<int?>(
                 "DeveloperKey_Authenticate",
                 new Dictionary<string, object>()
                 {
                     {"key", key },
+                    {"email", email },
                 }
             );
         }

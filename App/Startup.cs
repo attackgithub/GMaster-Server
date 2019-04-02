@@ -2,9 +2,28 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 public class Startup: Datasilk.Startup
 {
+    public override void ConfiguringServices(IServiceCollection services)
+    {
+        base.ConfiguringServices(services);
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("google",
+                builder =>
+                {
+                    builder.WithOrigins(
+                        "chrome-extension://kdcpigikfhpokfbbklgdeeheajkndiam"
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                }
+            );
+        });
+    }
     public override void Configured(IApplicationBuilder app, IHostingEnvironment env, IConfigurationRoot config)
     {
         //set up HTTPS
@@ -17,6 +36,9 @@ public class Startup: Datasilk.Startup
             app.UseHsts();
         }
         app.UseHttpsRedirection();
+
+        //use CORS for cross-domain requests
+        app.UseCors("google");
 
         //set up database
         Query.Sql.connectionString = Server.sqlConnectionString;

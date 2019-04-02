@@ -44,5 +44,16 @@ namespace Query
                 }
             );
         }
+
+        public static List<Models.SubscriptionInfo> GetInfo(int userId)
+        {
+            return Sql.Populate<Models.SubscriptionInfo>(
+                "Subscriptions_GetInfo",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId }
+                }
+            );
+        }
     }
 }

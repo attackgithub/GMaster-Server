@@ -1,4 +1,9 @@
 ﻿CREATE PROCEDURE [dbo].[DeveloperKey_Authenticate]
-	@key char(10)
+	@key char(10),
+	@email nvarchar(64)
 AS
-	SELECT userId FROM DeveloperKeys WHERE devkey=@key
+	SELECT dk.userId 
+	FROM DeveloperKeys dk
+	INNER JOIN Users u ON u.userId=dk.userId 
+	WHERE dk.devkey=@key
+	AND u.email = @email

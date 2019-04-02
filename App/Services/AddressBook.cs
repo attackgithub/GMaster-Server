@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
 namespace GMaster.Services
@@ -6,6 +7,10 @@ namespace GMaster.Services
     public class AddressBook : Service
     {
         public AddressBook(HttpContext context) : base(context)
+        {
+        }
+
+        public AddressBook(HttpContext context, Dictionary<string, string> query) : base(context, query)
         {
         }
 

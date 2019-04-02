@@ -19,4 +19,10 @@ namespace Query.Models
         public int totalUsers { get; set; }
         public byte status { get; set; }
     }
+
+    public class SubscriptionInfo : Subscription
+    {
+        public string ownerName { get; set; }
+        public string ownerEmail { get; set; }
+    }
 }

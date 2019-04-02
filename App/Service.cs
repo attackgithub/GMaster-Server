@@ -1,21 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace GMaster
 {
     public class Service : Datasilk.Web.Service
     {
-        private bool isRemote = true;
+        public Service(HttpContext context) : base(context) { }
 
-        public Service(HttpContext context) : base(context)
+        public Service(HttpContext context, Dictionary<string, string> query) : base(context, query)
         {
             //validate developer key for Web API calls via gmail
             if (context.Request.Path.StartsWithSegments("/gmail"))
             {
-                var queryString = context.Request.Query;
-                StringValues developerKey;
-                queryString.TryGetValue("key", out developerKey);
-
+                var developerKey = query.ContainsKey("devkey") ? query["devkey"] : "";
+                var email = query.ContainsKey("email") ? query["email"] : "";
                 switch (context.Request.Method)
                 {
                     case "GET":
@@ -29,18 +27,25 @@ namespace GMaster
                         return;
                 }
 
-                if (developerKey.Count == 0)
+                if (developerKey == "")
                 {
                     //missing query string
                     context.Response.StatusCode = 400;
-                    context.Response.WriteAsync("'key' query string is required");
+                    context.Response.WriteAsync("'key' parameter is required");
+                    return;
+                }
+                else if (email == "")
+                {
+                    //missing query string
+                    context.Response.StatusCode = 400;
+                    context.Response.WriteAsync("'email' parameter is required");
                     return;
                 }
                 else
                 {
                     //check developer key if it is valid
                     string[] paths = context.Request.Path.Value.Split('/');
-                    var userId = Query.DeveloperKeys.Authenticate(developerKey.ToString());
+                    var userId = Query.DeveloperKeys.Authenticate(developerKey, email);
                     if (userId.HasValue == false)
                     {
                         context.Response.StatusCode = 401;
@@ -50,6 +55,7 @@ namespace GMaster
                     else
                     {
                         User.userId = userId.Value;
+                        User.email = email;
                     }
                 }
             }
@@ -59,8 +65,11 @@ namespace GMaster
         {
             if (User.userId == 0)
             {
-                context.Response.StatusCode = 401;
-                context.Response.WriteAsync("Access Denied");
+                if(context.Response.HasStarted == false)
+                {
+                    context.Response.StatusCode = 401;
+                    context.Response.WriteAsync("Access Denied");
+                }
                 return false;
             }
             return true;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Utility.Serialization;
 
@@ -7,6 +8,10 @@ namespace GMaster.Services
     public class User : Service
     {
         public User(HttpContext context) : base(context)
+        {
+        }
+
+        public User(HttpContext context, Dictionary<string, string> query) : base(context, query)
         {
         }
 

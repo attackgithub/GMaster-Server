@@ -1,5 +1,5 @@
-﻿using System.Threading;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Threading;
 using Microsoft.AspNetCore.Http;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Oauth2.v2;
@@ -11,6 +11,10 @@ namespace GMaster.Services
     public class Google : Service
     {
         public Google(HttpContext context) : base(context)
+        {
+        }
+
+        public Google(HttpContext context, Dictionary<string, string> query) : base(context, query)
         {
         }
 
