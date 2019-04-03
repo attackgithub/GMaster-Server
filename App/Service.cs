@@ -5,15 +5,13 @@ namespace GMaster
 {
     public class Service : Datasilk.Web.Service
     {
-        public Service(HttpContext context) : base(context) { }
-
-        public Service(HttpContext context, Dictionary<string, string> query) : base(context, query)
+        public Service(HttpContext context, Parameters parameters) : base(context, parameters)
         {
             //validate developer key for Web API calls via gmail
             if (context.Request.Path.StartsWithSegments("/gmail"))
             {
-                var developerKey = query.ContainsKey("devkey") ? query["devkey"] : "";
-                var email = query.ContainsKey("email") ? query["email"] : "";
+                var developerKey = parameters.ContainsKey("devkey") ? parameters["devkey"] : "";
+                var email = parameters.ContainsKey("email") ? parameters["email"] : "";
                 switch (context.Request.Method)
                 {
                     case "GET":
@@ -29,14 +27,14 @@ namespace GMaster
 
                 if (developerKey == "")
                 {
-                    //missing query string
+                    //missing parameters string
                     context.Response.StatusCode = 400;
                     context.Response.WriteAsync("'key' parameter is required");
                     return;
                 }
                 else if (email == "")
                 {
-                    //missing query string
+                    //missing parameters string
                     context.Response.StatusCode = 400;
                     context.Response.WriteAsync("'email' parameter is required");
                     return;

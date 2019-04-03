@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace GMaster.Controllers
 {
     public class Pricing: Controller
     {
-        public Pricing(HttpContext context) : base(context)
-        {
-        }
+        public Pricing(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {

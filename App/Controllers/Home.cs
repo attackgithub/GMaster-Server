@@ -4,9 +4,7 @@ namespace GMaster.Controllers
 {
     public class Home : Controller
     {
-        public Home(HttpContext context) : base(context)
-        {
-        }
+        public Home(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {

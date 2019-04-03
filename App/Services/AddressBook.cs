@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 
 namespace GMaster.Services
 {
     public class AddressBook : Service
     {
-        public AddressBook(HttpContext context) : base(context)
-        {
-        }
-
-        public AddressBook(HttpContext context, Dictionary<string, string> query) : base(context, query)
-        {
-        }
+        public AddressBook(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public string Index(int page = 1, int length = 50, int sort = 0, string search = "")
         {

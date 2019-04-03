@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Utility.Serialization;
 
@@ -7,13 +6,7 @@ namespace GMaster.Services
 {
     public class Subscriptions : Service
     {
-        public Subscriptions(HttpContext context) : base(context)
-        {
-        }
-
-        public Subscriptions(HttpContext context, Dictionary<string, string> query) : base(context, query)
-        {
-        }
+        public Subscriptions(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public string GetInfo(int userId)
         {

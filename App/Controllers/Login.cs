@@ -4,9 +4,7 @@ namespace GMaster.Controllers
 {
     public class Login : Controller
     {
-        public Login(HttpContext context) : base(context)
-        {
-        }
+        public Login(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {

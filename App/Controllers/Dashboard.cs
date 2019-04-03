@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace GMaster.Controllers
 {
     public class Dashboard : Controller
     {
-        public Dashboard(HttpContext context) : base(context)
-        {
-        }
+        public Dashboard(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {

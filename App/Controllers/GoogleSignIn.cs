@@ -4,9 +4,7 @@ namespace GMaster.Controllers
 {
     public class GoogleSignIn : Controller
     {
-        public GoogleSignIn(HttpContext context) : base(context)
-        {
-        }
+        public GoogleSignIn(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
