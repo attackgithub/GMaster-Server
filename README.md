@@ -64,7 +64,7 @@ After a new (or existing) user authenticates with the Gmaster web application us
 There will be different subscription plan tiers based on various target audiences so that Gmaster can be affordable for all target audiences, whether it be a single entreprenuer or large-scale enterprise company. Below are a refined list of these subscription plans and the various features they support.
 
 #### Beginner Plan ($9.95/month)
-This plan is for the very basic user who has a moderate email list (less than 500 emails) and wishes to send personalized email campaigns to their list via their Gmail account
+This plan is for the very basic user who wishes to send email campaigns to a moderate email list
 * Send unlimited emails (based on Gmail daily limits)
 * Contains Gmaster email signature
 
@@ -74,14 +74,14 @@ For the daily user who needs to send personalized email campaigns without Gmaste
 * Removes Gmaster email signature
 
 #### Pro Plan ($24.95/month)
-Professional users will need the ability to set up auto-followup campaigns that are triggered depending on how their customers respond to their email campaigns.
+Professional users will need the ability to set up followup campaigns that are triggered based on customer response.
 * Send unlimited emails (based on Gmail daily limits)
 * Removes Gmaster email signature
 * Setup Auto-Followup Campaigns
 * Send Q&A Polls
 
 #### Team Plans ($15.95/user/month)
-Marketing teams will be able to achieve everything a proffessional user can do while collaborating on campaigns as a team.
+Marketing teams will be able to achieve everything a professional user can do while collaborating on campaigns as a team.
 * Send unlimited emails (based on Gmail daily limits)
 * Removes Gmaster email signature
 * Setup Auto-Followup Campaigns
