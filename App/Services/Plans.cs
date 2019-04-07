@@ -71,8 +71,8 @@ namespace GMaster.Services
                 {
                     planId = 4,
                     name = "Team",
-                    price = 15.95,
-                    minUsers = 5,
+                    price = 19.95,
+                    minUsers = 2,
                     maxUsers = 10000,
                     //summary = "Marketing teams will be able to achieve everything a professional user can do while collaborating on campaigns as a team.",
                     hasAds = false,
