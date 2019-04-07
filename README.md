@@ -88,3 +88,29 @@ Marketing teams will be able to achieve everything a professional user can do wh
 * Send Q&A Polls
 * Collaborate on Team Campaigns
 * Plan starts at **5 users** @ **$79.95/month**
+
+## Everyone Gets A Team
+Even if a user signs up for an individual plan, a **Team** record is generated for them. This happens because the user can always upgrade to a team subscription. Also, this allows campaigns & address book entries to be created on a per-team basis instead of a per-user basis and enables collaboration between users who are a part of the same team.
+
+## Reporting
+Users will be able to view reports about a campaign after it has started running. 
+
+#### Execution Report
+Displays a set of statistics about a campaign.
+* total emails added to campaign
+* total emails sent
+* total emails left in queue
+* total emails bounced
+* total emails retried to send
+* total email retry fails
+* total emails opened
+* total email responses
+* total emails sent to (specific) followup campaign 
+* total (specific answer) to Q/A Poll
+
+#### Timeline Report
+Displays a set of time lapse charts that visualizes how a campaign was executed and how the users responded
+* emails sent / bounced / retries / opened / responses
+* followup campaign triggers
+* each followup campaign (emails sent / bounced / retries / opened / responses)
+* Q/A Poll questions answered

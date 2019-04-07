@@ -13,4 +13,13 @@ AS
 	/* find any relevant team member records and update user ID */
 	UPDATE TeamMembers SET userId=@id WHERE email=@email
 
+	/* create new team for user */
+	DECLARE @teamId int = NEXT VALUE FOR SequenceTeams
+	INSERT INTO Teams (teamId, ownerId, [name])
+	VALUES (@teamId, @id, @name)
+
+	/* create new team member record for new user */
+	INSERT INTO TeamMembers (teamId, userId, email)
+	VALUES (@teamId, @id, @email)
+
 	SELECT @id
