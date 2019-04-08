@@ -2,17 +2,17 @@
 
 namespace GMaster.Controllers
 {
-    public class Pricing: Controller
+    public class Features: Controller
     {
-        public Pricing(HttpContext context, Parameters parameters) : base(context, parameters) { }
+        public Features(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
         public override string Render(string[] path, string body = "", object metadata = null)
         {
-            var scaffold = new Scaffold("/Views/Pricing/pricing.html");
+            var scaffold = new Scaffold("/Views/Features/features.html");
 
-            if (context.Request.Query.ContainsKey("modal"))
+            if (context.Request.Query.ContainsKey("partial"))
             {
-                return RenderModal(scaffold.Render());
+                return scaffold.Render();
             }
             else
             {

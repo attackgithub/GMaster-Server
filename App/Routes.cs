@@ -16,8 +16,8 @@ public class Routes: Datasilk.Web.Routes
                 return new GMaster.Controllers.Dashboard(context, parameters);
             case "GoogleSignIn":
                 return new GMaster.Controllers.GoogleSignIn(context, parameters);
-            case "Pricing":
-                return new GMaster.Controllers.Pricing(context, parameters);
+            case "Features":
+                return new GMaster.Controllers.Features(context, parameters);
         }
         return base.FromControllerRoutes(context, parameters, name);
     }

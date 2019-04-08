@@ -8,13 +8,13 @@ namespace GMaster.Services
     {
         public Subscriptions(HttpContext context, Parameters parameters) : base(context, parameters) { }
 
-        public string GetInfo(int userId)
+        public string GetInfo()
         {
             if (!HasPermissions()) { return ""; }
             try
             {
                 return Serializer.WriteObjectToString(
-                    Query.Subscriptions.GetInfo(userId),
+                    Query.Subscriptions.GetInfo(User.userId),
                     Newtonsoft.Json.Formatting.Indented
                 );
             }
@@ -22,6 +22,11 @@ namespace GMaster.Services
             {
                 return Error(ex.Message);
             }
+        }
+
+        public string Subscribe(int planId)
+        {
+            return "";
         }
     }
 }
