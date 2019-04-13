@@ -77,6 +77,8 @@
     <Folder Include="dbo\Stored Procedures\Invoices" />
     <Folder Include="dbo\Stored Procedures\TeamMembers" />
     <Folder Include="dbo\Stored Procedures\InvoiceItems" />
+    <Folder Include="dbo\Functions" />
+    <Folder Include="dbo\Stored Procedures\Log" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -163,6 +165,9 @@
     <Build Include="dbo\Stored Procedures\InvoiceItems\InvoiceItems_GetList.sql" />
     <Build Include="dbo\Stored Procedures\Plans\Plans_GetList.sql" />
     <Build Include="dbo\Stored Procedures\Subscriptions\Subscriptions_GetInfo.sql" />
+    <Build Include="dbo\Tables\LogApi.sql" />
+    <Build Include="dbo\Functions\ConvertIPtoInt32.sql" />
+    <Build Include="dbo\Stored Procedures\Log\LogApi_Create.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
