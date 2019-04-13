@@ -24,7 +24,7 @@ namespace GMaster.Services
             }
         }
 
-        public string Subscribe(int planId)
+        public string Subscribe(int planId, int users, int customerId)
         {
             return "";
         }

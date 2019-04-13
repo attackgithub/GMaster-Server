@@ -224,4 +224,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="locale" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="a06b0cf5-06cf-4f3c-a1f6-36fb9cacd4d8" ChangeDateTime="04/13/2019 15:42:27">
+    <Property Name="ElementName" Value="[dbo].[LogApi].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LogApi]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="datecreated" />
+  </Operation>
 </Operations>
