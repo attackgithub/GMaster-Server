@@ -23,17 +23,49 @@ $(document).ready(() => {
     // create an instance of Stripe's card element
     var card = elements.create('card', { style: style });
     card.mount('#stripe-card-element');
+
+    //cc error handler
+    card.addEventListener('change', ({ error }) => {
+        if (error) {
+            error(error.message);
+        } else {
+            message('Secure Pay with Stripe');
+        }
+    });
+
+    //cc form submit handler
+    const form = $('#payment-form');
+    form.on('submit', async (event) => {
+        event.preventDefault();
+
+        const { token, error } = await stripe.createToken(card);
+
+        if (error) {
+            //error occurred
+            error(error.message);
+        } else {
+            // Send the token to server
+            paymentSuccess(token);
+        }
+    });
 });
 
 function pay() {
 
 }
 
-function paymentSuccess() {
-    $('.auth-msg').html('Authenticating...');
-    S.ajax.post('Pay/Stripe', response,4621 9210 0236 0236
+function paymentSuccess(token) {
+    message('Processing Payment...');
+    S.ajax.post('Pay/Stripe',
+        { 
+            devkey: devkey,
+            email: email,
+            planId: planId,
+            users: users,
+            stripeToken: token 
+        },
         function () {
-            $('.auth-msg').html('Payment success! please wait...');
+            message('Payment success! please wait...');
             chrome.runtime.sendMessage(extensionId, { path: 'subscribe', method:'stripe' },
                 function (response) {
                     if (response == 'success') {
@@ -50,6 +82,10 @@ function paymentSuccess() {
     );
 }
 
+function message(msg) {
+    $('.pay-msg').removeClass('error').html(msg);
+}
+
 function error(msg) {
-    $('.auth-msg').html(msg + '<div class="retry"><a href="javascript:" onclick="pay()">Retry</a></div>');
+    $('.pay-msg').addClass('error').html(msg);
 } 

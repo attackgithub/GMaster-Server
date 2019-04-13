@@ -29,5 +29,29 @@ namespace Query
                 }
             );
         }
+
+        public static Models.Team GetByOwner(int userId)
+        {
+            var results = Sql.Populate<Models.Team>(
+                "Team_GetByOwner",
+                new Dictionary<string, object>()
+                {
+                    { "userId", userId }
+                }
+            );
+            if(results.Count > 0) { return results[0]; }
+            return null;
+        }
+
+        public static List<Models.Team> GetByMember(int userId)
+        {
+            return Sql.Populate<Models.Team>(
+                "Teams_GetByMember",
+                new Dictionary<string, object>()
+                {
+                    { "userId", userId }
+                }
+            );
+        }
     }
 }

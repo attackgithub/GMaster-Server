@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Query.Models
+﻿namespace Query.Models
 {
     public class LogApi
     {
         public enum Names
         {
-            GoogleOAuth2 = 0,
-            PlansGetInfo = 1,
-            SubscriptionsGetInfo = 2,
-            UserAuthenticate = 3,
-            UserCreate = 4
+            Unknown = 0,
+            GoogleOAuth2 = 1,
+            PlansGetInfo = 2,
+            SubscriptionsGetInfo = 3,
+            UserAuthenticate = 4,
+            UserCreate = 5
         }
     }
 }

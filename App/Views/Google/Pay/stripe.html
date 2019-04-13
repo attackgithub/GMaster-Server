@@ -3,11 +3,14 @@
     .logo{padding-top:30px; width:100%; text-align:center;}
     .logo img{width:200px;}
     .pay-msg{padding:0 20px 20px 20px; font-size:17px; text-align:center; width:100%; box-sizing:border-box;}
+    .pay-msg.error{color:#cc0000;}
     .retry{width:100%; text-align:center; padding-top:50px;}
     .summary{width:100%; text-align:center; font-size:15px; opacity:0.5;}
     .retry a{border-radius:4px; text-decoration:none; font-size:16px; font-weight:400; padding:8px 20px;}
     .retry a:link{color:#fff; background-color:#1b408d;}
     .retry a:hover{color:#fff; background-color:#005ce2;}
+    .pay-price{font-size:24px; width:100%; text-align:center; padding-bottom:10px;}
+    .pay-price span{font-size:17px;}
 
     /* Stripe Payment Form */
     .StripeElement {
@@ -26,6 +29,7 @@
 <div class="logo">
     <img src="/images/logo-xs.png" />
 </div>
+<div class="pay-price">{{price}} <span>/ month</span></div>
 <div class="pay-msg">Secure Pay with Stripe</div>
 <form action="/charge" method="post" id="payment-form">
     <div class="form-row">
@@ -40,6 +44,8 @@
     </div>
 </form>
 <script type="text/javascript">
+    var devkey = '{{devkey}}';
+    var email = '{{email}}';
     var planId = '{{planId}}';
     var users = '{{users}}';
     var stripeKey = '{{stripe-key}}';

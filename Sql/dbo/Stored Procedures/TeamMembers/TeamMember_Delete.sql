@@ -3,4 +3,5 @@
 	@email nvarchar(64)
 AS
 	DELETE FROM TeamMembers 
-	WHERE teamId=@teamId AND email=@email
+	WHERE teamId=@teamId 
+	AND email=@email

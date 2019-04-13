@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Stripe;
 
 public class Startup: Datasilk.Startup
 {
@@ -67,6 +68,9 @@ public class Startup: Datasilk.Startup
             //Stripe settings
             GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
             GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
+
+            //Stripe Configuration
+            StripeConfiguration.SetApiKey(GMaster.Settings.Stripe.Keys.privateKey);
         }
 
 

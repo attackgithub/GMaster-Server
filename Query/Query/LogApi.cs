@@ -4,12 +4,12 @@ namespace Query
 {
     public static class LogApi
     {
-        public static void Log(short api, int userId, int teamId, int? campaignId = null, int? addressId = null, bool authorized = true, string ipaddress = "0.0.0.0")
+        public static void Log(Models.LogApi.Names api, int userId, int teamId = 0, int campaignId = 0, int addressId = 0, bool authorized = true, string ipaddress = "0.0.0.0")
         {
             Sql.ExecuteNonQuery("LogApi_Create",
                 new Dictionary<string, object>()
                 {
-                    {"api", api },
+                    {"api", (short)api },
                     {"userId", userId },
                     {"teamId", teamId },
                     {"campaignId", campaignId },

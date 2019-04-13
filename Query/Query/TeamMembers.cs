@@ -4,13 +4,14 @@ namespace Query
 {
     public static class TeamMembers
     {
-        public static int Create(int teamId, string email, int? userId = null)
+        public static int Create(int teamId, short roleType, string email, int? userId = null)
         {
             return Sql.ExecuteScalar<int>(
                 "TeamMember_Create",
                 new Dictionary<string, object>()
                 {
                     {"teamId", teamId },
+                    {"roleType", roleType},
                     {"userId", userId },
                     {"email", email }
                 }
@@ -25,6 +26,17 @@ namespace Query
                 {
                     {"teamId", teamId },
                     {"email", email }
+                }
+            );
+        }
+
+        public static List<Models.TeamMemberInfo> GetList(int userId)
+        {
+            return Sql.Populate<Models.TeamMemberInfo>(
+                "TeamMembers_GetList",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId }
                 }
             );
         }

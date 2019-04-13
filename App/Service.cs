@@ -7,7 +7,7 @@ namespace GMaster
         public Service(HttpContext context, Parameters parameters) : base(context, parameters)
         {
             //validate developer key for Web API calls via gmail
-            if (context.Request.Path.StartsWithSegments("/gmail"))
+            if (context.Request.Path.StartsWithSegments("/gmail") || parameters.ContainsKey("devkey"))
             {
                 var developerKey = parameters.ContainsKey("devkey") ? parameters["devkey"] : "";
                 var email = parameters.ContainsKey("email") ? parameters["email"] : "";
@@ -67,6 +67,9 @@ namespace GMaster
                     context.Response.StatusCode = 401;
                     context.Response.WriteAsync("Access Denied");
                 }
+                //log API request
+                Common.Log.Api(context, Query.Models.LogApi.Names.Unknown, 0, null, null, false);
+
                 return false;
             }
             return true;

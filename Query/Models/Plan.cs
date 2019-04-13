@@ -16,5 +16,6 @@
         public bool hasQAPolls { get; set; }
         public bool hasSendGrid { get; set; }
         public bool canCollaborate { get; set; }
+        public string stripePlanName { get; set; }
     }
 }
