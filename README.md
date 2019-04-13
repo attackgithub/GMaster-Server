@@ -92,6 +92,32 @@ Marketing teams will be able to achieve everything a professional user can do wh
 ## Everyone Gets A Team
 Even if a user signs up for an individual plan, a **Team** record is generated for them. This happens because the user can always upgrade to a team subscription. Also, this allows campaigns & address book entries to be created on a per-team basis instead of a per-user basis and enables collaboration between users who are a part of the same team.
 
+## Subscription System
+Users must be able to subscribe to Gmaster & manage their subscription from within Gmail. The following features must be available.
+* **Subscribe** to any plan
+* **Upgrade** current subscription (adding team members)
+* **Downgrade** current subscription (from Team plan only)
+* **Unsubscribe** from Gmaster
+  * If the user unsubscribes from Gmaster within **5 business days** without launching any campaigns, the will receive a **full refund**.
+
+## Team Security
+The owner of the team can assign moderators & contributers to a team.
+* **Moderators** can update permissions for specific Campaigns so contributers can only collaborate on specific campaigns
+* **Contributers** simply collaborate on team campaigns and if they have permission, can create their own campaigns.
+
+## Using Stripe API with Gmaster
+Issues arise when trying to use the Stripe API with Gmaster's Chrome extension. The Stripe JavaScript library cannot be injected within the Gmail web page because the Chrome extension's content script cannot access the Stripe object loaded within the web page. The Stripe JavaScript library also cannot be loaded within the Chrome extension's background script because Stripe will raise an error claiming that the connection is not secure using HTTPS (the Chrome extension uses *chrome://* instead of *https://*). Thus, the Stripe API can only be loaded within a popup window loaded by the background script, and the popup window must load a secure web page from the Gmaster server. Communication between Stripe, the Gmaster web server, and the Chrome extension background script & content script will work very similar to the Google Sign-In system for Gmaster. 
+
+1. User clicks **subscribe** button located within Gmaster's **Available Plans** page that was loaded within the Gmail web page
+2. Modal popup appears asking user to select either Credit Card or PayPal
+3. User selects **Credit Card** option
+2. Chrome opens a popup window to *https://gmaster.datasilk.io/chrome/stripe*
+2. User types in credit card information and clicks **Pay** button
+3. Stripe JavaScript API sends info to Stripe server & returns a customer ID
+4. Gmaster stores **Stripe customerID** in database associated with Gmaster user account
+5. popup window closes and Modal popup within the Gmail web page displays payment & subscription details
+6. Gmaster loads UI within Gmail so user can start using Gmaster features
+
 ## Reporting
 Users will be able to view reports about a campaign after it has started running. 
 
