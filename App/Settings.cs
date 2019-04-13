@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GMaster
+﻿namespace GMaster
 {
     public static class Settings
     {
@@ -21,6 +19,15 @@ namespace GMaster
                     "gmail.com",
                     "googlemail.com"
                 }; 
+            }
+        }
+
+        public static class Stripe
+        {
+            public static class Keys
+            {
+                public static string publicKey { get; set; }
+                public static string privateKey { get; set; }
             }
         }
     }

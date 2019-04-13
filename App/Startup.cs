@@ -49,21 +49,24 @@ public class Startup: Datasilk.Startup
         {
             IConfigurationRoot authConfig = new ConfigurationBuilder()
                 .AddJsonFile(Server.MapPath("auth.json")).Build();
-            
-            GMaster.Settings.Google.OAuth2.clientId = authConfig.GetSection("google:OAuth2:clientId").Value;
-            GMaster.Settings.Google.OAuth2.secret = authConfig.GetSection("google:OAuth2:secret").Value;
-            GMaster.Settings.Google.OAuth2.extensionId = authConfig.GetSection("google:OAuth2:extensionId").Value;
+            var environment = "development";
             switch (Server.environment)
             {
                 case Server.Environment.development:
-                    GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:development").Value;
                     break;
                 case Server.Environment.production:
-                    GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:production").Value;
+                    environment = "production";
                     break;
             }
-            
-            
+
+            //Google settings
+            GMaster.Settings.Google.OAuth2.clientId = authConfig.GetSection("google:OAuth2:clientId").Value;
+            GMaster.Settings.Google.OAuth2.secret = authConfig.GetSection("google:OAuth2:secret").Value;
+            GMaster.Settings.Google.OAuth2.extensionId = authConfig.GetSection("google:OAuth2:extensionId").Value;
+            GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:" + environment).Value;
+            //Stripe settings
+            GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
+            GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
         }
 
 
