@@ -10,20 +10,7 @@ public class Startup: Datasilk.Startup
     public override void ConfiguringServices(IServiceCollection services)
     {
         base.ConfiguringServices(services);
-
-        services.AddCors(options =>
-        {
-            options.AddPolicy("google",
-                builder =>
-                {
-                    builder.WithOrigins(
-                        "chrome-extension://kdcpigikfhpokfbbklgdeeheajkndiam"
-                    )
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-                }
-            );
-        });
+        services.AddCors();
     }
     public override void Configured(IApplicationBuilder app, IHostingEnvironment env, IConfigurationRoot config)
     {
@@ -37,13 +24,6 @@ public class Startup: Datasilk.Startup
             app.UseHsts();
         }
         app.UseHttpsRedirection();
-
-        //use CORS for cross-domain requests
-        app.UseCors("google");
-
-        //set up database
-        Query.Sql.connectionString = Server.sqlConnectionString;
-        Server.hasAdmin = Query.Users.HasAdmin();
 
         //load global settings (auth.json)
         if (System.IO.File.Exists(Server.MapPath("auth.json")))
@@ -72,6 +52,22 @@ public class Startup: Datasilk.Startup
             //Stripe Configuration
             StripeConfiguration.SetApiKey(GMaster.Settings.Stripe.Keys.privateKey);
         }
+
+        //use CORS for cross-domain requests
+        app.UseCors(builder =>
+        {
+            builder.WithOrigins(
+                "chrome-extension://" + GMaster.Settings.Google.OAuth2.extensionId
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+
+        //set up database
+        Query.Sql.connectionString = Server.sqlConnectionString;
+        Server.hasAdmin = Query.Users.HasAdmin();
+
+        
 
 
         base.Configured(app, env, config);
