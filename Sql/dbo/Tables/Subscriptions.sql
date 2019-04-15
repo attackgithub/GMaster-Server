@@ -4,9 +4,10 @@
     [userId] INT NOT NULL, 
     [planId] INT NOT NULL, 
     [datestarted] DATE NOT NULL DEFAULT GETDATE(), 
+    [dateended] DATE NULL, 
     [billingDay] INT NOT NULL DEFAULT DAY(GETDATE()), 
     [pricePerUser] FLOAT NOT NULL, 
     [paySchedule] BIT NOT NULL, /* 0 = monthly, 1 = yearly */
     [totalUsers] INT NOT NULL, 
-    [status] TINYINT NOT NULL DEFAULT 1
+    [status] BIT NOT NULL DEFAULT 1
 )

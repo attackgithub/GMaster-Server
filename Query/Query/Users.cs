@@ -14,8 +14,8 @@ namespace Query
                     {"password", !string.IsNullOrEmpty(user.password) ? user.password : "" },
                     {"name", user.name },
                     {"gender", user.gender },
-                    {"locale", !string.IsNullOrEmpty(user.locale) ? user.locale : "" },
-                    {"refreshToken", !string.IsNullOrEmpty(user.refreshToken) ? user.refreshToken : "" },
+                    {"locale", user.locale ?? "" },
+                    {"refreshToken", user.refreshToken ?? "" },
                 }
             );
         }
@@ -139,6 +139,29 @@ namespace Query
                 {
                     {"userId", userId },
                     {"refreshToken", refreshToken }
+                }
+            );
+        }
+
+        public static void UpdateStripeCustomerId(int userId, string customerId)
+        {
+            Sql.ExecuteNonQuery("User_UpdateRefreshToken",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"customerId", customerId }
+                }
+            );
+        }
+
+        public static void UpdateLocation(int userId, string zipcode, string country = "")
+        {
+            Sql.ExecuteNonQuery("User_UpdateLocation",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"zipcode", zipcode },
+                    {"country", country }
                 }
             );
         }

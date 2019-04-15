@@ -46,7 +46,7 @@ public class Startup: Datasilk.Startup
         Server.hasAdmin = Query.Users.HasAdmin();
 
         //load global settings (auth.json)
-        if (File.Exists(Server.MapPath("auth.json")))
+        if (System.IO.File.Exists(Server.MapPath("auth.json")))
         {
             IConfigurationRoot authConfig = new ConfigurationBuilder()
                 .AddJsonFile(Server.MapPath("auth.json")).Build();
@@ -67,7 +67,7 @@ public class Startup: Datasilk.Startup
             GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:" + environment).Value;
             //Stripe settings
             GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
-            GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
+            GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":secret").Value;
 
             //Stripe Configuration
             StripeConfiguration.SetApiKey(GMaster.Settings.Stripe.Keys.privateKey);

@@ -14,5 +14,18 @@ namespace Query
                 }
             );
         }
+
+        public static int Create(int invoiceId, int subscriptionId, double price, int quantity)
+        {
+            return Sql.ExecuteScalar<int>("InvoiceItem_Create",
+                new Dictionary<string, object>()
+                {
+                    {"invoiceId", invoiceId },
+                    {"subscriptionId", subscriptionId },
+                    {"price", price },
+                    {"quantity", quantity }
+                }
+            );
+        }
     }
 }

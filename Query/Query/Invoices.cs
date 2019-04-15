@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Query
 {
@@ -13,6 +14,18 @@ namespace Query
                     {"userId", userId },
                     {"page", page },
                     {"length", length }
+                }
+            );
+        }
+
+        public static int Create(int userId, double subTotal, DateTime dateDue)
+        {
+            return Sql.ExecuteScalar<int>("Invoice_Create",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"subtotal", subTotal },
+                    {"datedue", dateDue }
                 }
             );
         }

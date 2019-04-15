@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[LogErrors]
+(
+	[logId] INT NOT NULL PRIMARY KEY,
+	[datecreated] DATETIME NOT NULL DEFAULT GETDATE(), 
+    [userId] INT NOT NULL DEFAULT 0, 
+    [url] VARCHAR(64) NOT NULL DEFAULT '', 
+    [area] VARCHAR(32) NOT NULL DEFAULT '', 
+    [message] VARCHAR(512) NOT NULL DEFAULT '', 
+    [stacktrace] VARCHAR(512) NOT NULL DEFAULT ''
+)

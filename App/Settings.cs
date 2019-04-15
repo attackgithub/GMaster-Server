@@ -2,6 +2,15 @@
 {
     public static class Settings
     {
+        public static class ContactInfo
+        {
+            public static class CustomerService
+            {
+                public static string email = "mark@datasilk.io";
+                public static string phone = "";
+            }
+        }
+
         public static class Google
         {
             public static class OAuth2

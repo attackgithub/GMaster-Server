@@ -231,4 +231,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="datecreated" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="8d40c90f-5e01-4421-af6b-447cb6630a50" ChangeDateTime="04/14/2019 17:45:11">
+    <Property Name="ElementName" Value="[dbo].[StateZipcodes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[StateZipcodes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="state" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="27aac75b-f125-44c4-8a6b-ef0efffb7a36" ChangeDateTime="04/14/2019 17:46:05">
+    <Property Name="ElementName" Value="[dbo].[StateTaxes].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[StateTaxes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="state" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="75e98479-dde4-400f-b2d3-985b2048bbab" ChangeDateTime="04/14/2019 18:01:58">
+    <Property Name="ElementName" Value="[dbo].[StateZipcodes].[state]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[StateZipcodes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="stateAbbr" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="976fd404-83fd-4e18-b1d7-5aed2b00c580" ChangeDateTime="04/14/2019 18:02:02">
+    <Property Name="ElementName" Value="[dbo].[StateTaxes].[state]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[StateTaxes]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="stateAbbr" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4f8f35ca-42c3-4314-b094-0a33ae708f06" ChangeDateTime="04/15/2019 06:07:28">
+    <Property Name="ElementName" Value="[dbo].[LogErrors].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[LogErrors]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="datecreated" />
+  </Operation>
 </Operations>

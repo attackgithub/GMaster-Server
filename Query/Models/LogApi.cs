@@ -9,7 +9,8 @@
             PlansGetInfo = 2,
             SubscriptionsGetInfo = 3,
             UserAuthenticate = 4,
-            UserCreate = 5
+            UserCreate = 5,
+            Subscribe = 6
         }
     }
 }

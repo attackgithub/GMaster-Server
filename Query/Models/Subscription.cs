@@ -17,7 +17,7 @@ namespace Query.Models
         public double pricePerUser { get; set; }
         public PaySchedule paySchedule { get; set; }
         public int totalUsers { get; set; }
-        public byte status { get; set; }
+        public bool status { get; set; }
     }
 
     public class SubscriptionInfo : Subscription

@@ -79,6 +79,8 @@
     <Folder Include="dbo\Stored Procedures\InvoiceItems" />
     <Folder Include="dbo\Functions" />
     <Folder Include="dbo\Stored Procedures\Log" />
+    <Folder Include="Scripts" />
+    <Folder Include="dbo\Stored Procedures\StateTaxes" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Users.sql" />
@@ -171,11 +173,28 @@
     <Build Include="dbo\Stored Procedures\Teams\Team_GetByOwner.sql" />
     <Build Include="dbo\Stored Procedures\TeamMembers\TeamMembers_GetList.sql" />
     <Build Include="dbo\Stored Procedures\Teams\Teams_GetByMember.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdateStripeCustomerId.sql" />
+    <Build Include="dbo\Tables\StateZipcodes.sql" />
+    <Build Include="dbo\Tables\StateTaxes.sql" />
+    <Build Include="dbo\Stored Procedures\InvoiceItems\InvoiceItem_Create.sql" />
+    <Build Include="dbo\Stored Procedures\Invoices\Invoice_Create.sql" />
+    <Build Include="dbo\Sequences\SequenceInvoices.sql" />
+    <Build Include="dbo\Stored Procedures\StateTaxes\StateTaxes_Calculate.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdateLocation.sql" />
+    <Build Include="dbo\Tables\LogStripeWebhooks.sql" />
+    <Build Include="dbo\Stored Procedures\Log\LogStripeWebhooks_Create.sql" />
+    <Build Include="dbo\Sequences\SequenceLogStripeWebhooks.sql" />
+    <Build Include="dbo\Tables\LogErrors.sql" />
+    <Build Include="dbo\Sequences\SequenceLogApis.sql" />
+    <Build Include="dbo\Sequences\SequenceLogErrors.sql" />
+    <Build Include="dbo\Stored Procedures\Log\LogError_Create.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Sql.publish.xml" />
+    <None Include="Scripts\ImportStateZipcodes.sql" />
+    <None Include="Scripts\UpdateStateTaxes.sql" />
   </ItemGroup>
 </Project>

@@ -56,13 +56,15 @@ function pay() {
 
 function paymentSuccess(token) {
     message('Processing Payment...');
-    S.ajax.post('Pay/Stripe',
+    console.log(token);
+    S.ajax.post('Subscriptions/Subscribe',
         { 
             devkey: devkey,
             email: email,
             planId: planId,
             users: users,
-            stripeToken: token 
+            zipcode: token.card.address_zip || '',
+            stripeToken: token.id
         },
         function () {
             message('Payment success! please wait...');

@@ -18,3 +18,4 @@ AS
 			WHERE tm.userId=@userId
 		)
 	)
+	AND [status] = 1

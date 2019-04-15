@@ -95,10 +95,22 @@ Even if a user signs up for an individual plan, a **Team** record is generated f
 ## Subscription System
 Users must be able to subscribe to Gmaster & manage their subscription from within Gmail. The following features must be available.
 * **Subscribe** to any plan
-* **Upgrade** current subscription (adding team members)
-* **Downgrade** current subscription (from Team plan only)
+* **Upgrade** current subscription (or adding team members)
+* **Downgrade** current subscription
 * **Unsubscribe** from Gmaster
-  * If the user unsubscribes from Gmaster within **5 business days** without launching any campaigns, the will receive a **full refund**.
+  * If the user unsubscribes from Gmaster within **5 business days** without launching any campaigns, they will receive a **full refund**.
+
+## Billing System
+Because we'll be utilizing both Stripe & PayPal, we'll need to build an in-house billing system that can track a user's payment methods, invoices, payments, and any over-due payments or account credits. Both Stripe & PayPal will need an API point within Gmaster for push notifications of customer payment changes, such as charge-backs, credit card declines, and so on.
+
+#### Invoicing
+Upon creating a new subscription, the user is invoiced and charged for the first month of the subscription. If the user had a previous subscription, it is given an end date and any extra days that the old subscription did not use will be added as a credit line item to the invoice. The same will happen if the user cancels their subscription, and in this case, the user will be sent a refund back to their credit card or PayPal account.
+
+#### Sales Tax
+Since Gmaster is a Saas company, we'll have to pay taxes in every state that Gmaster sold services to customers where the state has sales tax laws pertaining to Saas services. Because of this, Gmaster will have to maintain tables in the database for mapping zipcodes to states and determining the state tax percentage per applicable state.
+
+### Payments
+When a user makes a payment, it is applied to incomplete invoices by order of the date the invoice was created. Older invoices are paid first. If a charge-back is issued, a new payment record will be created with a negative amount.
 
 ## Team Security
 The owner of the team can assign moderators & contributers to a team.
@@ -117,6 +129,11 @@ Issues arise when trying to use the Stripe API with Gmaster's Chrome extension. 
 4. Gmaster stores **Stripe customerID** in database associated with Gmaster user account
 5. popup window closes and Modal popup within the Gmail web page displays payment & subscription details
 6. Gmaster loads UI within Gmail so user can start using Gmaster features
+
+## Using Webhook Relay
+https://my.webhookrelay.com/
+
+This 3rd-party service allows you to redirect Stripe API webhooks to https://localhost so you can test webhooks from Stripe
 
 ## Reporting
 Users will be able to view reports about a campaign after it has started running. 

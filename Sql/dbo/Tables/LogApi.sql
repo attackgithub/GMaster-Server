@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [dbo].[LogApi]
 (
-	[datecreated] DATETIME NOT NULL PRIMARY KEY, 
+	[logId] INT NOT NULL PRIMARY KEY,
+	[datecreated] DATETIME NOT NULL DEFAULT GETDATE(), 
     [api] SMALLINT NOT NULL, 
     [userId] INT NOT NULL, 
     [teamId] INT NOT NULL DEFAULT 0, 
