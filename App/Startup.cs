@@ -1,16 +1,17 @@
-﻿using System.IO;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using GMaster.Common.Middleware;
 using Stripe;
 
 public class Startup: Datasilk.Startup
 {
     public override void ConfiguringServices(IServiceCollection services)
     {
-        base.ConfiguringServices(services);
         services.AddCors();
+
+        base.ConfiguringServices(services);
     }
     public override void Configured(IApplicationBuilder app, IHostingEnvironment env, IConfigurationRoot config)
     {
@@ -43,7 +44,7 @@ public class Startup: Datasilk.Startup
             //Google settings
             GMaster.Settings.Google.OAuth2.clientId = authConfig.GetSection("google:OAuth2:clientId").Value;
             GMaster.Settings.Google.OAuth2.secret = authConfig.GetSection("google:OAuth2:secret").Value;
-            GMaster.Settings.Google.OAuth2.extensionId = authConfig.GetSection("google:OAuth2:extensionId").Value;
+            GMaster.Settings.Google.Chrome.Extension.Id = authConfig.GetSection("google:chrome:extension:" + environment + ":id").Value;
             GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:" + environment).Value;
             //Stripe settings
             GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
@@ -54,21 +55,21 @@ public class Startup: Datasilk.Startup
         }
 
         //use CORS for cross-domain requests
+        app.UseOptionsRequest();
         app.UseCors(builder =>
         {
             builder.WithOrigins(
-                "chrome-extension://" + GMaster.Settings.Google.OAuth2.extensionId
+                "chrome-extension://" + GMaster.Settings.Google.Chrome.Extension.Id,
+                "https://mail.google.com"
             )
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+            .WithHeaders("GET", "POST", "OPTIONS" )
+            .WithHeaders("*")
+            .AllowCredentials();
         });
 
         //set up database
         Query.Sql.connectionString = Server.sqlConnectionString;
         Server.hasAdmin = Query.Users.HasAdmin();
-
-        
-
 
         base.Configured(app, env, config);
     }

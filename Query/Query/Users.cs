@@ -145,7 +145,7 @@ namespace Query
 
         public static void UpdateStripeCustomerId(int userId, string customerId)
         {
-            Sql.ExecuteNonQuery("User_UpdateRefreshToken",
+            Sql.ExecuteNonQuery("User_UpdateStripeCustomerId",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },
@@ -154,9 +154,9 @@ namespace Query
             );
         }
 
-        public static void UpdateLocation(int userId, string zipcode, string country = "")
+        public static Models.UserLocation UpdateLocation(int userId, string zipcode, string country = "")
         {
-            Sql.ExecuteNonQuery("User_UpdateLocation",
+            var list = Sql.Populate<Models.UserLocation>("User_UpdateLocation",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },
@@ -164,6 +164,8 @@ namespace Query
                     {"country", country }
                 }
             );
+            if(list.Count > 0) { return list[0]; }
+            return null;
         }
     }
 }

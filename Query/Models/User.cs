@@ -14,4 +14,10 @@ namespace Query.Models
         public string locale { get; set; }
         public string stripeCustomerId { get; set; }
     }
+
+    public class UserLocation
+    {
+        public string zipcode { get; set; }
+        public string stateAbbr { get; set; }
+    }
 }

@@ -73,7 +73,7 @@ function paymentSuccess(token) {
                     if (response == 'success') {
                         window.close();
                     } else {
-                        error('Error authenticating. Please try again.');
+                        error('Payment Error. Please try again.');
                     }
                 }
             );

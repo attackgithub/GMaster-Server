@@ -42,20 +42,28 @@ namespace GMaster.Services
             //check if Stripe customer exists
             var user = Query.Users.GetInfo(User.userId);
             var customerId = user.stripeCustomerId ?? "";
+
             if(user.stripeCustomerId != "")
             {
                 //check if user has a subscription
                 var subscriptions = Query.Subscriptions.GetInfo(User.userId);
                 if(subscriptions != null && subscriptions.Count > 0 && subscriptions.Where(s => s.userId == User.userId).Count() > 0)
                 {
+                    //check if any invoices exist for this subscription
+                    if (!Query.InvoiceItems.HasSubscription(subscriptions.First().subscriptionId))
+                    {
+                        return Error("Your account is already subscribed to the Gmaster " + Common.Plans.NameFromId(subscriptions.First().planId) + 
+                            " Plan, but no invoice was generated. Please report error to " + Settings.ContactInfo.CustomerService.email);
+                    }
                     return Error("Your account is already subscribed to the Gmaster " + Common.Plans.NameFromId(subscriptions.First().planId) + " Plan");
                 }
             }
 
             //update user location information
+            var location = new Query.Models.UserLocation();
             try
             {
-                Query.Users.UpdateLocation(User.userId, zipcode);
+                location = Query.Users.UpdateLocation(User.userId, zipcode);
             }
             catch (Exception ex)
             {
@@ -68,21 +76,61 @@ namespace GMaster.Services
                 //create Stripe customer
                 try
                 {
+                    //check if Stripe already has an existing customer with the same email address,
+                    //but it wasn't saved within the local database
                     var customerService = new CustomerService();
-                    var customer = customerService.Create(new CustomerCreateOptions
+                    Customer customer;
+                    var exists = customerService.List(new CustomerListOptions()
                     {
-                        Description = "Customer for " + user.email + " (" + user.userId + ")",
-                        SourceToken = stripeToken
+                        Email =  user.email
                     });
-                    customerId = customer.Id;
-
-                    //save Stripe customer ID to database
-                    Query.Users.UpdateStripeCustomerId(User.userId, customerId);
+                    if(exists.Count() > 0)
+                    {
+                        //found existing Stripe customer 
+                        customerId = exists.First().Id;
+                        //update existing Stripe customer
+                        customerService.Update(customerId, new CustomerUpdateOptions()
+                        {
+                            Metadata = new Dictionary<string, string>()
+                            {
+                                {"name", user.name },
+                                {"state", location.stateAbbr.ToUpper() },
+                                {"userId", user.userId.ToString() }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        //Stripe doesn't have a customer yet, so create a new one
+                        customer = customerService.Create(new CustomerCreateOptions
+                        {
+                            Description = "Customer for " + user.email + " (" + user.userId + ")",
+                            SourceToken = stripeToken,
+                            Email = user.email,
+                            Metadata = new Dictionary<string, string>()
+                            {
+                                {"name", user.name },
+                                {"state", location.stateAbbr.ToUpper() },
+                                {"userId", user.userId.ToString() }
+                            }
+                        });
+                        customerId = customer.Id;
+                    }
                 }
                 catch (Exception ex)
                 {
                     Query.LogErrors.Create(User.userId, "Create Stripe Customer", context.Request.Path, ex.Message, ex.StackTrace);
                     return Error("Error purchasing subscription (10011). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                }
+                try
+                {
+                    //save Stripe customer ID to database
+                    Query.Users.UpdateStripeCustomerId(User.userId, customerId);
+                }
+                catch (Exception ex)
+                {
+                    Query.LogErrors.Create(User.userId, "Link Stripe Customer ID to User", context.Request.Path, ex.Message, ex.StackTrace);
+                    return Error("Error purchasing subscription (10012). Please report error to " + Settings.ContactInfo.CustomerService.email);
                 }
             }
 
@@ -106,7 +154,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error purchasing subscription (10012). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error purchasing subscription (10013). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             //create subscription record
@@ -128,7 +176,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Subscription Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating subscription (10013). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             try
@@ -142,7 +190,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Invoice Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating invoice (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error creating invoice (10015). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             return Success();

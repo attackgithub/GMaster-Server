@@ -18,7 +18,6 @@
                 public static string clientId { get; set; }
                 public static string secret { get; set; }
                 public static string redirectURI { get; set; }
-                public static string extensionId { get; set; }
             }
 
             public static class Gmail
@@ -28,6 +27,14 @@
                     "gmail.com",
                     "googlemail.com"
                 }; 
+            }
+
+            public static class Chrome
+            {
+                public static class Extension
+                {
+                    public static string Id { get; set; }
+                }
             }
         }
 

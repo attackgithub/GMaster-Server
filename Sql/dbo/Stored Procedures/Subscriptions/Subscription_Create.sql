@@ -22,3 +22,5 @@ AS
 		@subscriptionId, @userId, @planId, @datestarted, @billingDay,
 		@pricePerUser, @paySchedule, @totalUsers, @status
 	)
+
+	SELECT @subscriptionId

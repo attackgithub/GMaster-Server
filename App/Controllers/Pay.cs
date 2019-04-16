@@ -16,7 +16,7 @@ namespace GMaster.Controllers
                 var scaffold = new Scaffold("/Views/Google/Pay/stripe.html");
                 var users = int.Parse(parameters["users"]);
                 var planId = int.Parse(parameters["planId"]);
-                scaffold.Data["stripe-key"] = Settings.Stripe.Keys.publicKey;
+                scaffold.Data["extensionId"] = Settings.Google.Chrome.Extension.Id;
                 scaffold.Data["devkey"] = parameters["key"];
                 scaffold.Data["email"] = parameters["email"];
                 scaffold.Data["planId"] = planId.ToString();

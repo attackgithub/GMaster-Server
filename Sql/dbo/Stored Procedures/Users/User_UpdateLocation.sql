@@ -15,3 +15,5 @@ AS
 	UPDATE Users SET zipcode=@zipcode, stateAbbr=@stateAbbr, country=@country
 	WHERE userId=@userId
 
+	SELECT @zipcode AS zipcode, @stateAbbr AS stateAbbr
+

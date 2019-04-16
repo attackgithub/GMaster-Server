@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[User_StripeCustomerId]
+﻿CREATE PROCEDURE [dbo].[User_UpdateStripeCustomerId]
 	@userId int,
 	@customerId varchar(25)
 AS
