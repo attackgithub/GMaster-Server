@@ -16,7 +16,7 @@ namespace GMaster.Controllers
                 var layout = new Scaffold("/Views/Shared/layout_support.html");
                 var scaffold = new Scaffold("/Views/Support/" + page + ".html");
                 layout.Data["body"] = scaffold.Render();
-                return layout.Render();
+                return RenderCORS(layout.Render());
             }
             var scaffold2 = new Scaffold("/Views/Support/support.html");
             return base.Render(path, scaffold2.Render(), metadata);

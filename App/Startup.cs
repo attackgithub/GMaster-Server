@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using GMaster.Common.Middleware;
 using Stripe;
 
 public class Startup: Datasilk.Startup
@@ -55,12 +54,10 @@ public class Startup: Datasilk.Startup
         }
 
         //use CORS for cross-domain requests
-        app.UseOptionsRequest();
         app.UseCors(builder =>
         {
             builder.WithOrigins(
-                "chrome-extension://" + GMaster.Settings.Google.Chrome.Extension.Id,
-                "https://mail.google.com"
+                "chrome-extension://" + GMaster.Settings.Google.Chrome.Extension.Id
             )
             .WithHeaders("GET", "POST", "OPTIONS" )
             .WithHeaders("*")

@@ -8,19 +8,19 @@ public class Routes: Datasilk.Web.Routes
     {
         switch (name)
         {
-            case "Home": case "":
+            case "home": case "":
                 return new GMaster.Controllers.Home(context, parameters);
-            case "Login":
+            case "login":
                 return new GMaster.Controllers.Login(context, parameters);
-            case "Dashboard":
+            case "dashboard":
                 return new GMaster.Controllers.Dashboard(context, parameters);
-            case "GoogleSignIn":
+            case "googlesignin":
                 return new GMaster.Controllers.GoogleSignIn(context, parameters);
-            case "Features":
+            case "features":
                 return new GMaster.Controllers.Features(context, parameters);
-            case "Pay":
+            case "pay":
                 return new GMaster.Controllers.Pay(context, parameters);
-            case "Support":
+            case "support":
                 return new GMaster.Controllers.Support(context, parameters);
         }
         return base.FromControllerRoutes(context, parameters, name);
@@ -30,15 +30,15 @@ public class Routes: Datasilk.Web.Routes
     {
         switch (name)
         {
-            case "AddressBook" :
+            case "addressbook" :
                 return new GMaster.Services.AddressBook(context, parameters);
-            case "Google":
+            case "google":
                 return new GMaster.Services.Google(context, parameters);
-            case "Plans":
+            case "plans":
                 return new GMaster.Services.Plans(context, parameters);
-            case "Subscriptions":
+            case "subscriptions":
                 return new GMaster.Services.Subscriptions(context, parameters);
-            case "User":
+            case "user":
                 return new GMaster.Services.User(context, parameters);
         }
         return base.FromServiceRoutes(context, parameters, name);

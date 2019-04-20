@@ -24,5 +24,10 @@ namespace GMaster
 
             return scaffold.Render();
         }
+
+        public string RenderCORS(string body = "")
+        {
+            return "<span style=\"display:none\"></span>\n" + body;
+        }
     }
 }
