@@ -10,7 +10,8 @@
             SubscriptionsGetInfo = 3,
             UserAuthenticate = 4,
             UserCreate = 5,
-            Subscribe = 6
+            Subscribe = 6,
+            SubscriptionPage = 7
         }
     }
 }

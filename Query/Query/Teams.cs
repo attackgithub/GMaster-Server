@@ -53,5 +53,16 @@ namespace Query
                 }
             );
         }
+
+        public static void UpdateName(int teamId, string name)
+        {
+            Sql.ExecuteNonQuery("Team_UpdateName",
+                new Dictionary<string, object>()
+                {
+                    {"teamId", teamId },
+                    {"name", name }
+                }
+            );
+        }
     }
 }

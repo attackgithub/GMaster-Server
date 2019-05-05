@@ -41,7 +41,6 @@ namespace GMaster
                 else
                 {
                     //check developer key if it is valid
-                    string[] paths = context.Request.Path.Value.Split('/');
                     var userId = Query.DeveloperKeys.Authenticate(developerKey, email);
                     if (userId.HasValue == false)
                     {
@@ -58,7 +57,7 @@ namespace GMaster
             }
         }
 
-        public bool HasPermissions()
+        public bool HasPermissions(Query.Models.LogApi.Names api = 0)
         {
             if (User.userId == 0)
             {
@@ -68,7 +67,7 @@ namespace GMaster
                     context.Response.WriteAsync("Access Denied");
                 }
                 //log API request
-                Common.Log.Api(context, Query.Models.LogApi.Names.Unknown, 0, null, null, false);
+                Common.Log.Api(context, api, 0, null, null, false);
 
                 return false;
             }

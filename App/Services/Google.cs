@@ -5,6 +5,7 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Services;
 using GMaster.Common.Google;
+using Utility.Serialization;
 
 namespace GMaster.Services
 {
@@ -79,7 +80,7 @@ namespace GMaster.Services
                 //log API request
                 Common.Log.Api(context, Query.Models.LogApi.Names.GoogleOAuth2, userId);
                 
-                return developerKey;
+                return Serializer.WriteObjectToString(new { devkey = developerKey, userId });
             }
             catch (Exception)
             {

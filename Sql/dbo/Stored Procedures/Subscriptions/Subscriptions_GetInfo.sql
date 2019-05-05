@@ -1,21 +1,12 @@
 ﻿CREATE PROCEDURE [dbo].[Subscriptions_GetInfo]
 	@userId int
 AS
-/* Get Info about all subscriptions belonging to a user */
-	SELECT s.*, 
-	u.[name] AS ownerName, u.email AS ownerEmail
+/* Get Info about all subscriptions that a user belongs to */
+	SELECT s.*, t.[name] AS teamName, u.[name] AS ownerName, u.email AS ownerEmail, tm.roleType
 	FROM Subscriptions s
 	INNER JOIN Users u ON u.userId=s.userId
-	WHERE 
-	(
-		s.userId=@userId
-		OR s.subscriptionId IN 
-		(
-			SELECT DISTINCT ts.subscriptionId
-			FROM TeamMembers tm
-			JOIN Teams t ON t.teamId=tm.teamId
-			JOIN Subscriptions ts ON ts.userId=t.ownerId
-			WHERE tm.userId=@userId
-		)
-	)
-	AND [status] = 1
+	INNER JOIN Teams t ON t.ownerId = s.userId
+	INNER JOIN TeamMembers tm ON tm.teamId = t.teamId
+	WHERE s.userId = @userId
+	OR tm.userId = @userId
+	AND s.[status] = 1

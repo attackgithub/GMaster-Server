@@ -28,10 +28,8 @@ namespace GMaster.Services
             }
             catch (Exception ex)
             {
-                //log API request
-                Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetInfo, User.userId, null, null, false);
-
-                return Error(ex.Message);
+                Query.LogErrors.Create(User.userId, "Get Customer Subscriptions", context.Request.Path, ex.Message, ex.StackTrace);
+                return Error("Error retrieving your subscriptions (10009). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
         }
 
@@ -43,7 +41,7 @@ namespace GMaster.Services
             var user = Query.Users.GetInfo(User.userId);
             var customerId = user.stripeCustomerId ?? "";
 
-            if(user.stripeCustomerId != "")
+            if(customerId != "")
             {
                 //check if user has a subscription
                 var subscriptions = Query.Subscriptions.GetInfo(User.userId);
@@ -135,21 +133,42 @@ namespace GMaster.Services
             }
 
             //create Stripe subscription
+            var subscriptionId = 0;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
             var billingCycleStart = DateTime.Now.AddMinutes(1); //start their billing cycle right now
             try
             {
                 var subscriptionService = new SubscriptionService();
-                Subscription subscription = subscriptionService.Create(new SubscriptionCreateOptions
+
+                //check Stripe for existing subscription
+                Subscription subscription = subscriptionService.List(new SubscriptionListOptions()
                 {
-                    CustomerId = customerId,
-                    Items = new List<SubscriptionItemOption> {
-                    new SubscriptionItemOption {
-                        PlanId = plan.stripePlanName
-                    }
-                },
-                    BillingCycleAnchor = billingCycleStart
-                });
+                    CustomerId = customerId
+                }).FirstOrDefault();
+
+                if(subscription != null)
+                {
+                    //customer already has a subscription, fix subscription in database
+                    planId = Common.Plans.IdFromStripePlanId(subscription.Plan.Id);
+                    plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
+                    if(plan.minUsers > users) { users = plan.minUsers; }
+                    if(plan.maxUsers < users) { users = plan.maxUsers; }
+                    Query.LogErrors.Create(User.userId, "Orphaned Stripe Subscription", context.Request.Path, "Customer (" + customerId + ") already has a subscription within Stripe for (" + planId + ")", "");
+                }
+                else
+                {
+                    //no subscription yet, create one within Stripe
+                    subscription = subscriptionService.Create(new SubscriptionCreateOptions
+                    {
+                        CustomerId = customerId,
+                        BillingCycleAnchor = billingCycleStart,
+                        Items = new List<SubscriptionItemOption>(){
+                            new SubscriptionItemOption {
+                                PlanId = plan.stripePlanName
+                            }
+                        }
+                    });
+                }
             }
             catch (Exception ex)
             {
@@ -158,7 +177,6 @@ namespace GMaster.Services
             }
 
             //create subscription record
-            var subscriptionId = 0;
             try
             {
                 subscriptionId = Query.Subscriptions.Create(new Query.Models.Subscription()

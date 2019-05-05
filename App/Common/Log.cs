@@ -12,8 +12,7 @@ namespace GMaster.Common
             {
                 addr = "127.0.0.1";
             }
-            Query.LogApi.Create(Query.Models.LogApi.Names.GoogleOAuth2, userId, 
-                teamId ?? 0, campaignId ?? 0, addressId ?? 0, authenticated, addr);
+            Query.LogApi.Create(api, userId, teamId ?? 0, campaignId ?? 0, addressId ?? 0, authenticated, addr);
 
         }
     }

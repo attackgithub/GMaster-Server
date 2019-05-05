@@ -13,5 +13,17 @@
                 default: return "";
             }
         }
+
+        public static int IdFromStripePlanId(string planId)
+        {
+            switch (planId)
+            {
+                case "gmaster-beginner": return 1;
+                case "gmaster-daily": return 2;
+                case "gmaster-pro": return 3;
+                case "gmaster-team": return 4;
+            }
+            return 0;
+        }
     }
 }

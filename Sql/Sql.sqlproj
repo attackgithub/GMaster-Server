@@ -189,6 +189,7 @@
     <Build Include="dbo\Sequences\SequenceLogErrors.sql" />
     <Build Include="dbo\Stored Procedures\Log\LogError_Create.sql" />
     <Build Include="dbo\Stored Procedures\InvoiceItems\InvoiceItems_HasSubscription.sql" />
+    <Build Include="dbo\Stored Procedures\Teams\Team_UpdateName.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

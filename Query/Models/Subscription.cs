@@ -7,6 +7,15 @@ namespace Query.Models
         monthly = 0,
         yearly = 1
     }
+
+    public enum RoleType
+    {
+        owner = 0,
+        moderator = 1,
+        contributer = 2,
+        viewer = 3
+    }
+
     public class Subscription
     {
         public int subscriptionId { get; set; }
@@ -22,7 +31,9 @@ namespace Query.Models
 
     public class SubscriptionInfo : Subscription
     {
+        public string teamName { get; set; }
         public string ownerName { get; set; }
         public string ownerEmail { get; set; }
+        public RoleType roleType { get; set; }
     }
 }

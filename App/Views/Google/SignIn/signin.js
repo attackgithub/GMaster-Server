@@ -22,9 +22,10 @@ function openGoogleSignin() {
         function (response) {
             $('.auth-msg').html('Authenticating...');
             S.ajax.post('Google/OAuth2', response,
-                function (devkey) {
+                function (d) {
+                    var data = JSON.parse(d);
                     $('.auth-msg').html('Authenticated! Please wait...');
-                    chrome.runtime.sendMessage(extensionId, { devkey: devkey },
+                    chrome.runtime.sendMessage(extensionId, { devkey: data.devkey, userId:data.userId },
                         function (response) {
                             if (response == 'success') {
                                 window.close();

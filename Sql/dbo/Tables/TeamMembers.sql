@@ -2,6 +2,6 @@
 (
 	[userId] INT NOT NULL PRIMARY KEY, 
     [teamId] INT NOT NULL, 
-    [roleType] SMALLINT NOT NULL DEFAULT 1 /* 0 = owner, 1 = contributer, 2 = viewer */, 
+    [roleType] SMALLINT NOT NULL DEFAULT 3, /* 0 = owner, 1 = moderator, 2 = contributer, 3 = viewer */
     [email] NVARCHAR(64) NOT NULL DEFAULT ''
 )

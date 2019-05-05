@@ -20,8 +20,8 @@ public class Routes: Datasilk.Web.Routes
                 return new GMaster.Controllers.Features(context, parameters);
             case "pay":
                 return new GMaster.Controllers.Pay(context, parameters);
-            case "support":
-                return new GMaster.Controllers.Support(context, parameters);
+            case "subscription":
+                return new GMaster.Controllers.Subscription(context, parameters);
         }
         return base.FromControllerRoutes(context, parameters, name);
     }
