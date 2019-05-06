@@ -48,6 +48,7 @@ public class Startup: Datasilk.Startup
             //Stripe settings
             GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
             GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":secret").Value;
+            GMaster.Settings.Stripe.Webhook.SigningSecret = authConfig.GetSection("stripe:webhook:signingsecret").Value;
 
             //Stripe Configuration
             StripeConfiguration.SetApiKey(GMaster.Settings.Stripe.Keys.privateKey);

@@ -36,6 +36,8 @@ public class Routes: Datasilk.Web.Routes
                 return new GMaster.Services.Google(context, parameters);
             case "plans":
                 return new GMaster.Services.Plans(context, parameters);
+            case "stripewebhook":
+                return new GMaster.Services.StripeWebHook(context, parameters);
             case "subscriptions":
                 return new GMaster.Services.Subscriptions(context, parameters);
             case "user":

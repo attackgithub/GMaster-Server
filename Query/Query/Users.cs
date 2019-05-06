@@ -132,6 +132,18 @@ namespace Query
             return null;
         }
 
+        public static Models.User GetByStripeCustomerId(string customerId)
+        {
+            var list = Sql.Populate<Models.User>("User_GetByStripeCustomerId",
+                new Dictionary<string, object>()
+                {
+                    {"customerId", customerId }
+                }
+            );
+            if (list.Count > 0) { return list[0]; }
+            return null;
+        }
+
         public static void UpdateRefreshToken(int userId, string refreshToken)
         {
             Sql.ExecuteNonQuery("User_UpdateRefreshToken",

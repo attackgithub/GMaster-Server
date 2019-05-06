@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Invoice_Create]
 	@userId int,
-	@subtotal float,
+	@subtotal money,
 	@datedue date
 AS
 	/* get taxes */

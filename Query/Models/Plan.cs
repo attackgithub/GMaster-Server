@@ -5,6 +5,7 @@
         public int planId { get; set; }
         public string name { get; set; }
         public double price { get; set; }
+        public PaySchedule schedule { get; set; }
         public int minUsers { get; set; }
         public int maxUsers { get; set; }
         //public string summary { get; set; }

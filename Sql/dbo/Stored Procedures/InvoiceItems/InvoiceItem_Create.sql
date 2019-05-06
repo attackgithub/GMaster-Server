@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[InvoiceItem_Create]
 	@invoiceId int,
 	@subscriptionId int,
-	@price float,
+	@price money,
 	@quantity int = 1
 AS
 	DECLARE @invoiceItemId int = 1

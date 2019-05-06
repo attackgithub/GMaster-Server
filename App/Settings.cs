@@ -45,6 +45,11 @@
                 public static string publicKey { get; set; }
                 public static string privateKey { get; set; }
             }
+
+            public static class Webhook
+            {
+                public static string SigningSecret { get; set; }
+            }
         }
     }
 }

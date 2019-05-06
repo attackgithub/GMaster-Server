@@ -3,7 +3,7 @@
 	[itemId] INT NOT NULL, 
     [invoiceId] INT NOT NULL,
 	[subscriptionId] INT NOT NULL, 
-    [price] FLOAT NOT NULL, 
+    [price] MONEY NOT NULL, 
     [quantity] INT NOT NULL DEFAULT 1, 
     PRIMARY KEY (itemId, invoiceId)
 )

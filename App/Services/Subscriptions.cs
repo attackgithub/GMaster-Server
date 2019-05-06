@@ -33,7 +33,7 @@ namespace GMaster.Services
             }
         }
 
-        public string Subscribe(int planId, int users, string zipcode, string stripeToken)
+        public string Subscribe(int planId, int users, Query.Models.PaySchedule schedule, string zipcode, string stripeToken)
         {
             if (!HasPermissions()) { return ""; }
 
@@ -135,7 +135,8 @@ namespace GMaster.Services
             //create Stripe subscription
             var subscriptionId = 0;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
-            var billingCycleStart = DateTime.Now.AddMinutes(1); //start their billing cycle right now
+            var billingCycleStart = plan.schedule == Query.Models.PaySchedule.monthly ? DateTime.Now.AddMonths(1) : DateTime.Now.AddYears(1); //set their billing cycle
+            billingCycleStart = new DateTime(billingCycleStart.Year, billingCycleStart.Month, billingCycleStart.Day, 0, 0, 0); //reset time to midnight
             try
             {
                 var subscriptionService = new SubscriptionService();

@@ -4,11 +4,12 @@ namespace Query
 {
     public static class LogStripeWebhooks
     {
-        public static void Create(string data)
+        public static int Create(string eventName, string data)
         {
-            Sql.ExecuteNonQuery("LogStripeWebhooks_Create",
+            return Sql.ExecuteScalar<int>("LogStripeWebhooks_Create",
                 new Dictionary<string, object>()
                 {
+                    {"event", eventName},
                     {"data", data }
                 }
             );
