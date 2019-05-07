@@ -193,6 +193,7 @@
     <Build Include="dbo\Stored Procedures\Payments\Payment_Create.sql" />
     <Build Include="dbo\Sequences\SequencePayments.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_GetByStripeCustomerId.sql" />
+    <Build Include="dbo\Stored Procedures\Invoices\Invoice_GetOutstandingBalance.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
@@ -201,5 +202,8 @@
     <None Include="Sql.publish.xml" />
     <None Include="Scripts\ImportStateZipcodes.sql" />
     <None Include="Scripts\UpdateStateTaxes.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment.sql" />
   </ItemGroup>
 </Project>
