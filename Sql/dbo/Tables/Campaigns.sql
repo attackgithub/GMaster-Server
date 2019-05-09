@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Campaigns]
 (
-	[campaignId] INT NOT NULL PRIMARY KEY, 
+	[campaignId] INT NOT NULL , 
 	[friendlyId] CHAR(7) NOT NULL,
     [userId] INT NOT NULL, 
     [serverId] INT NOT NULL DEFAULT 0, /* 0 = Gmail, 1 = SendGrid */
@@ -9,11 +9,9 @@
     [draftsOnly] BIT NOT NULL DEFAULT 0, /* if 1, only create draft messages */
     [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE(), 
     [schedule] DATETIME2 NOT NULL DEFAULT GETDATE(), 
-    [queueperday] INT NOT NULL DEFAULT 1000000
+    [queueperday] INT NOT NULL DEFAULT 1000000, 
+    CONSTRAINT [PK_Campaigns] PRIMARY KEY (userId, campaignId)
 )
 
-GO
-
-CREATE INDEX [IX_Campaigns_UserId_DateCreated] ON [dbo].[Campaigns] ([userId], [datecreated])
 GO
 CREATE INDEX [IX_Campaigns_FriendlyId] ON [dbo].[Campaigns] ([friendlyId])

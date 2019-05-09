@@ -5,5 +5,5 @@
 	[subscriptionId] INT NOT NULL, 
     [price] MONEY NOT NULL, 
     [quantity] INT NOT NULL DEFAULT 1, 
-    PRIMARY KEY (itemId, invoiceId)
+    PRIMARY KEY (invoiceId, itemId)
 )

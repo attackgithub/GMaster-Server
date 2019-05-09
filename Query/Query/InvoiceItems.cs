@@ -15,7 +15,7 @@ namespace Query
             );
         }
 
-        public static int Create(int invoiceId, int subscriptionId, double price, int quantity)
+        public static int Create(int invoiceId, int subscriptionId, decimal price, int quantity)
         {
             return Sql.ExecuteScalar<int>("InvoiceItem_Create",
                 new Dictionary<string, object>()

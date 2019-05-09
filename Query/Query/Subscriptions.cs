@@ -55,5 +55,29 @@ namespace Query
                 }
             );
         }
+
+        public static Models.OutstandingBalance GetOutstandingBalance(int userId)
+        {
+            var list = Sql.Populate<Models.OutstandingBalance>(
+                "Subscription_GetOutstandingBalance",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId }
+                }
+            );
+            if(list.Count > 0) { return list[0]; }
+            return null;
+        }
+
+        public static void UpdateStatus(int subscriptionId, bool status)
+        {
+            Sql.ExecuteNonQuery("Subscription_UpdateStatus",
+                new Dictionary<string, object>()
+                {
+                    {"subscriptionId", subscriptionId },
+                    {"status", status }
+                }
+            );
+        }
     }
 }

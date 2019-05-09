@@ -2,5 +2,5 @@
 (
 	[stateAbbr] VARCHAR(2) NOT NULL, 
     [zipcode] VARCHAR(6) NOT NULL,
-	PRIMARY KEY (stateAbbr, zipcode)
+	PRIMARY KEY (zipcode, stateAbbr)
 )

@@ -16,15 +16,29 @@ namespace GMaster.Services
             if (!HasPermissions()) { return ""; }
             try
             {
-                var json = Serializer.WriteObjectToString(
-                    Query.Subscriptions.GetInfo(User.userId),
+                var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
+                var json = Serializer.WriteObjectToString(new
+                    {
+                        response = new
+                        {
+                            //display any outstanding invoice data to lock out account or warn user
+                            outstanding = new
+                            {
+                                outstanding.totalOwed,
+                                outstanding.duedate,
+                                outstanding.schedule,
+                                outstanding.status,
+                                outstanding.subscriptionId
+                            },
+                            subscriptions = Query.Subscriptions.GetInfo(User.userId)
+                        }
+                    },
                     Newtonsoft.Json.Formatting.Indented
                 );
 
                 //log API request
                 Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetInfo, User.userId);
-
-                return json;
+                return "[" + json + "]";
             }
             catch (Exception ex)
             {
@@ -190,7 +204,7 @@ namespace GMaster.Services
                     paySchedule = Query.Models.PaySchedule.monthly,
                     billingDay = billingCycleStart.Day,
                     datestarted = billingCycleStart,
-                    status = true
+                    status = false
                 });
             }
             catch (Exception ex)

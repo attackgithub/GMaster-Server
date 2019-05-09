@@ -6,7 +6,7 @@
         public int invoiceId { get; set; }
         public int planId { get; set; }
         public int totalUsers { get; set; }
-        public double price { get; set; }
+        public decimal price { get; set; }
         public int quantity { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace GMaster.Common.Stripe
             //calculate subtotal & fees
             var users = (int)invoiceItem.Quantity.Value;
             var subtotal = Math.Round(plan.price * users, 2);
-            var fees = Math.Round(subtotal - (invoice.Total / 100.0), 2);
+            var fees = Math.Round(subtotal - (invoice.Total / 100.0M), 2);
 
             //create invoice record
             var invoiceId = Query.Invoices.Create(user.userId, subtotal, fees, DateTime.Now);

@@ -8,3 +8,7 @@
     [status] TINYINT NOT NULL DEFAULT 0, /* 0 = pending, 1 = paid, 2 = failed, 3 = charge back */
     [receiptId] NVARCHAR(32) NOT NULL DEFAULT '', 
 )
+
+GO
+
+CREATE INDEX [IX_Payments_userId] ON [dbo].[Payments] (userId)

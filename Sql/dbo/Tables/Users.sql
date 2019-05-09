@@ -17,3 +17,7 @@
 GO
 
 CREATE INDEX [IX_Users_Email] ON [dbo].[Users] ([email])
+
+GO
+
+CREATE INDEX [IX_Users_stripe] ON [dbo].[Users] (stripeCustomerId)

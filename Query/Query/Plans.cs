@@ -12,7 +12,7 @@ namespace Query
                 {
                     planId = 1,
                     name = "Beginner",
-                    price = 9.95,
+                    price = 9.95M,
                     schedule = Models.PaySchedule.monthly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -32,7 +32,7 @@ namespace Query
                 {
                     planId = 2,
                     name = "Daily",
-                    price = 14.95,
+                    price = 14.95M,
                     schedule = Models.PaySchedule.monthly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -52,7 +52,7 @@ namespace Query
                 {
                     planId = 3,
                     name = "Pro",
-                    price = 24.95,
+                    price = 24.95M,
                     schedule = Models.PaySchedule.monthly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -72,7 +72,7 @@ namespace Query
                 {
                     planId = 4,
                     name = "Team",
-                    price = 19.95,
+                    price = 19.95M,
                     schedule = Models.PaySchedule.monthly,
                     minUsers = 2,
                     maxUsers = 10000,
@@ -92,7 +92,7 @@ namespace Query
                 {
                     planId = 5,
                     name = "Beginner",
-                    price = 99.95,
+                    price = 99.95M,
                     schedule = Models.PaySchedule.yearly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -112,7 +112,7 @@ namespace Query
                 {
                     planId = 6,
                     name = "Daily",
-                    price = 159.95,
+                    price = 159.95M,
                     schedule = Models.PaySchedule.yearly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -132,7 +132,7 @@ namespace Query
                 {
                     planId = 7,
                     name = "Pro",
-                    price = 269.95,
+                    price = 269.95M,
                     schedule = Models.PaySchedule.yearly,
                     minUsers = 1,
                     maxUsers = 1,
@@ -152,7 +152,7 @@ namespace Query
                 {
                     planId = 8,
                     name = "Team",
-                    price = 189.95,
+                    price = 189.95M,
                     schedule = Models.PaySchedule.yearly,
                     minUsers = 2,
                     maxUsers = 10000,

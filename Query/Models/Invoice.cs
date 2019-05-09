@@ -6,10 +6,10 @@ namespace Query.Models
     {
         public int invoiceId { get; set; }
         public int subscriptionId { get; set; }
-        public double subtotal { get; set; }
-        public double tax { get; set; }
-        public double fees { get; set; }
-        public double total { get; set; }
+        public decimal subtotal { get; set; }
+        public decimal tax { get; set; }
+        public decimal fees { get; set; }
+        public decimal total { get; set; }
         public string memo { get; set; }
         public DateTime datedue { get; set; }
         public DateTime datecreated { get; set; }

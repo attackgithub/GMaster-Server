@@ -94,7 +94,7 @@
     <Build Include="dbo\Tables\CampaignQueue.sql" />
     <Build Include="dbo\Tables\CampaignMessage.sql" />
     <Build Include="dbo\Tables\CampaignFollowupRules.sql" />
-    <Build Include="dbo\Tables\CampaignPollQA.sql" />
+    <Build Include="dbo\Tables\CampaignSurveys.sql" />
     <Build Include="dbo\Sequences\SequenceAddressBookEntries.sql" />
     <Build Include="dbo\Sequences\SequenceAddressFields.sql" />
     <Build Include="dbo\Sequences\SequenceCampaigns.sql" />
@@ -193,7 +193,8 @@
     <Build Include="dbo\Stored Procedures\Payments\Payment_Create.sql" />
     <Build Include="dbo\Sequences\SequencePayments.sql" />
     <Build Include="dbo\Stored Procedures\Users\User_GetByStripeCustomerId.sql" />
-    <Build Include="dbo\Stored Procedures\Invoices\Invoice_GetOutstandingBalance.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_GetOutstandingBalance.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_UpdateStatus.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

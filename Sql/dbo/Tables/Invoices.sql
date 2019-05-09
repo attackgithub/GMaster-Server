@@ -9,3 +9,7 @@
     [datedue] DATE NOT NULL, 
     [datecreated] DATETIME NOT NULL DEFAULT GETDATE()
 )
+
+GO
+
+CREATE INDEX [IX_Invoices_userId] ON [dbo].[Invoices] (userId)

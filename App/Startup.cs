@@ -61,7 +61,6 @@ public class Startup: Datasilk.Startup
                 "chrome-extension://" + GMaster.Settings.Google.Chrome.Extension.Id
             )
             .WithHeaders("GET", "POST", "OPTIONS" )
-            .WithHeaders("*")
             .AllowCredentials();
         });
 

@@ -23,7 +23,7 @@ namespace Query.Models
         public int planId { get; set; }
         public DateTime datestarted { get; set; }
         public int billingDay { get; set; }
-        public double pricePerUser { get; set; }
+        public decimal pricePerUser { get; set; }
         public PaySchedule paySchedule { get; set; }
         public int totalUsers { get; set; }
         public bool status { get; set; }
@@ -35,5 +35,20 @@ namespace Query.Models
         public string ownerName { get; set; }
         public string ownerEmail { get; set; }
         public RoleType roleType { get; set; }
+    }
+
+    public class OutstandingBalance
+    {
+        public decimal totalBilled { get; set; }
+        public decimal totalFees { get; set; }
+        public decimal totalPaid { get; set; }
+        public decimal totalOwed { get; set; }
+        public DateTime? duedate { get; set; }
+        public int? unpaidInvoiceId { get; set; }
+        public int invoiceCount { get; set; }
+        public int? subscriptionId { get; set; }
+        public PaySchedule schedule { get; set; }
+        public DateTime? datestarted { get; set; }
+        public bool status { get; set; }
     }
 }

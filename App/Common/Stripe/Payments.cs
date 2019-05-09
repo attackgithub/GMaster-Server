@@ -20,6 +20,14 @@ namespace GMaster.Common.Stripe
                     status = Query.Models.PaymentStatus.paid,
                     receiptId = invoice.Id
                 });
+
+                //get user's subscription outstanding balance
+                var balance = Query.Subscriptions.GetOutstandingBalance(user.userId);
+                if(balance.totalOwed <= 0 && balance.status == false && balance.subscriptionId.HasValue)
+                {
+                    //user paid past-due balance, update user's subscription status to true
+                    Query.Subscriptions.UpdateStatus(balance.subscriptionId.Value, true);
+                }
             }
             else
             {

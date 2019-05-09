@@ -11,3 +11,6 @@
     [totalUsers] INT NOT NULL, 
     [status] BIT NOT NULL DEFAULT 1
 )
+GO
+
+CREATE INDEX [IX_Subscriptions_userId] ON [dbo].[Subscriptions] (userId)
