@@ -26,6 +26,7 @@ namespace GMaster.Controllers
                 //get price based on users
                 var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
                 scaffold.Data["price"] = (plan.price * users).ToString("C");
+                scaffold.Data["scheduleId"] = ((int)plan.schedule).ToString();
                 scaffold.Data["schedule"] = plan.schedule == Query.Models.PaySchedule.monthly ? "month" : "year";
 
                 title = "Gmaster - Secure Pay with Stripe";

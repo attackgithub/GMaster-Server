@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[Invoice_Create]
 	@userId int,
 	@subtotal money,
+	@fees money,
 	@datedue date
 AS
 	/* get taxes */
@@ -12,7 +13,7 @@ AS
 	SELECT @taxestotal = taxes FROM @taxes
 
 	DECLARE @invoiceId int = NEXT VALUE FOR SequenceInvoices
-	INSERT INTO Invoices (invoiceId, userId, subtotal, tax, total, datedue, datecreated)
-	VALUES (@invoiceId, @userId, @subtotal, @taxestotal, @subtotal + @taxestotal, @datedue, GETDATE())
+	INSERT INTO Invoices (invoiceId, userId, subtotal, tax, fees, total, datedue, datecreated)
+	VALUES (@invoiceId, @userId, @subtotal, @taxestotal, @fees, @subtotal + @taxestotal - @fees, @datedue, GETDATE())
 
 	SELECT @invoiceId

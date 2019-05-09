@@ -30,15 +30,15 @@ namespace GMaster.Services
                         break;
 
                     case "invoice.payment_succeeded":
-                        Invoices.PaymentSucceeded(ev.Data.Object as Invoice);
+                        Payments.PaymentSucceeded(ev.Data.Object as Invoice);
                         break;
 
                     case "invoice.payment_failed":
-                        Invoices.PaymentFailed(ev.Data.Object as Invoice);
+                        Payments.PaymentFailed(ev.Data.Object as Invoice);
                         break;
 
                     case "invoice.payment_action_required":
-                        Invoices.PaymentActionRequired(ev.Data.Object as Invoice);
+                        Payments.PaymentActionRequired(ev.Data.Object as Invoice);
                         break;
                     default:
                         return BadRequest();

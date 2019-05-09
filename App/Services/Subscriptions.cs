@@ -165,7 +165,8 @@ namespace GMaster.Services
                         BillingCycleAnchor = billingCycleStart,
                         Items = new List<SubscriptionItemOption>(){
                             new SubscriptionItemOption {
-                                PlanId = plan.stripePlanName
+                                PlanId = plan.stripePlanName,
+                                Quantity = users
                             }
                         }
                     });
@@ -198,19 +199,7 @@ namespace GMaster.Services
                 return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
-            try
-            {
-                //create invoice record
-                var invoiceId = Query.Invoices.Create(User.userId, plan.price * users, DateTime.Now);
-
-                //create invoice item records
-                var invoiceItemId = Query.InvoiceItems.Create(invoiceId, subscriptionId, plan.price, users);
-            }
-            catch (Exception ex)
-            {
-                Query.LogErrors.Create(User.userId, "Create Invoice Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating invoice (10015). Please report error to " + Settings.ContactInfo.CustomerService.email);
-            }
+            //finally, rely on Stripe to execute two Gmaster Stripe webhooks, one to finalize an invoice, the other to submit a payment success.
 
             return Success();
         }

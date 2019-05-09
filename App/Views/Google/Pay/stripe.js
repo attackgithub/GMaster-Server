@@ -3,6 +3,8 @@
 $(document).ready(() => {
     //generate Stripe elements
     stripe = Stripe(stripeKey);
+    $('.submit-payment').hide();
+    var isError = false;
 
     //set up Stripe elements
     var elements = stripe.elements();
@@ -28,21 +30,28 @@ $(document).ready(() => {
     card.addEventListener('change', ({ error }) => {
         if (error) {
             error(error.message);
+            $('.submit-payment').hide();
+            isError = true;
         } else {
             message('Secure Pay with Stripe');
+            $('.submit-payment').show();
+            isError = false;
         }
     });
 
     //cc form submit handler
     const form = $('#payment-form');
     form.on('submit', async (event) => {
+        if (isError == true) { return; }
         event.preventDefault();
+        $('.submit-payment').hide();
 
         const { token, error } = await stripe.createToken(card);
 
         if (error) {
             //error occurred
             error(error.message);
+            $('.submit-payment').show();
         } else {
             // Send the token to server
             paymentSuccess(token);
@@ -63,6 +72,7 @@ function paymentSuccess(token) {
             email: email,
             planId: planId,
             users: users,
+            schedule: scheduleId,
             zipcode: token.card.address_zip || '',
             stripeToken: token.id
         },
