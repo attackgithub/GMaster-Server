@@ -195,6 +195,10 @@
     <Build Include="dbo\Stored Procedures\Users\User_GetByStripeCustomerId.sql" />
     <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_GetOutstandingBalance.sql" />
     <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_UpdateStatus.sql" />
+    <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_GetInfo.sql" />
+    <PostDeploy Include="PostDeployment.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </PostDeploy>
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />
@@ -203,8 +207,5 @@
     <None Include="Sql.publish.xml" />
     <None Include="Scripts\ImportStateZipcodes.sql" />
     <None Include="Scripts\UpdateStateTaxes.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <PostDeploy Include="PostDeployment.sql" />
   </ItemGroup>
 </Project>

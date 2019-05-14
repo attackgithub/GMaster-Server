@@ -1,2 +1,33 @@
-﻿<h3>Settings</h3>
-{{content}}
+﻿<style>
+    .subscription-page > .title{padding:0 0 10px 5px; font-size:20px;}
+    .subscription-page .head{padding:15px 5px;}
+    .subscription-page .head .title{display:inline-block; padding-right:20px; vertical-align:bottom;}
+    .subscription-page .head .title > *{margin-block-start:0; margin-block-end:0; font-weight:400;}
+    .current-subscription{padding:8px 25px; background-color:rgba(242,245,245,0.8);}
+    .current-subscription:hover{box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)}
+    .current-subscription span{font-size:17px; padding-right:50px; display:inline-block;}
+    .current-subscription span.plan{font-weight:bold;}
+    .current-subscription a.button{border-radius:50px; display:inline-block; margin-left:20px; padding:5px 15px; background-color:#1a73e8; color:#fff;}
+    .current-subscription a.button:hover{background-color:#297be6; box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);}
+</style>
+<div class="head">
+    <div class="title"><h2>Settings for Gmaster</h2></div>
+</div>
+
+<div class="title">Current Subscription</div>
+
+<div class="current-subscription">
+    <span class="plan">{{subscription.name}} Plan</span>
+    <span class="price">{{subscription.price}} / {{subscription.schedule}}</span>
+    <span>{{subscription.users}} team member{{subscription.plural}}</span>
+    {{is-outstanding}}
+    <span>{{outstanding.price}} {{outstanding.when}} due on {{outstanding.duedate}}</span>
+    {{/is-outstanding}}
+    {{can-downgrade}}
+    <a href="javascript:" class="button downgrade">▼</a>
+    {{/can-downgrade}}
+    {{can-upgrade}}
+    <a href="javascript:" class="button upgrade">▲</a>
+    {{/can-upgrade}}
+    <a href="javascript:" class="button cancel">X</a>
+</div>

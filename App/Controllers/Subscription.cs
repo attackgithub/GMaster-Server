@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+
 
 namespace GMaster.Controllers
 {
@@ -16,28 +19,19 @@ namespace GMaster.Controllers
                 return "URL is missing parameters";
             }
             var subscriptionId = int.Parse(path[1]);
-            Scaffold scaffold;
+            var html = "";
             switch (path[2].ToLower())
             {
                 case "campaigns":
-                    scaffold = new Scaffold("/Views/Subscription/campaigns.html");
-                    scaffold.Data["content"] = GetCampaigns(subscriptionId);
                     break;
                 case "addressbook":
-                    scaffold = new Scaffold("/Views/Subscription/addressbook.html");
-                    scaffold.Data["content"] = GetAddressBook(subscriptionId);
                     break;
                 case "reports":
-                    scaffold = new Scaffold("/Views/Subscription/reports.html");
-                    scaffold.Data["content"] = GetReports(subscriptionId);
                     break;
                 case "team":
-                    scaffold = new Scaffold("/Views/Subscription/team.html");
-                    scaffold.Data["content"] = GetTeams(subscriptionId);
                     break;
                 case "settings":
-                    scaffold = new Scaffold("/Views/Subscription/settings.html");
-                    scaffold.Data["content"] = GetSettings(subscriptionId);
+                    html = GetSettings(subscriptionId);
                     break;
 
                 default:
@@ -47,9 +41,9 @@ namespace GMaster.Controllers
             }
             if (parameters.ContainsKey("nolayout"))
             {
-                return RenderCORS(scaffold.Render());
+                return RenderCORS(html);
             }
-            return base.Render(path, scaffold.Render(), metadata);
+            return base.Render(path, html, metadata);
         }
 
         private string GetCampaigns(int subscriptionId)
@@ -74,7 +68,43 @@ namespace GMaster.Controllers
 
         private string GetSettings(int subscriptionId)
         {
-            return "Settings!";
+            var subscription = Query.Subscriptions.GetInfo(subscriptionId);
+            var plans = Query.Plans.GetList();
+            var plan = plans.Where(p => p.planId == subscription.planId).First();
+            if(subscription != null)
+            {
+                var scaffold = new Scaffold("/Views/Subscription/settings.html");
+                scaffold.Bind(new
+                {
+                    subscription = new
+                    {
+                        plan.name,
+                        price = (subscription.pricePerUser * subscription.totalUsers).ToString("C"),
+                        users = subscription.totalUsers,
+                        schedule = subscription.paySchedule == 0 ? "month" : "year",
+                        plural = subscription.totalUsers > 1 ? "s" : ""
+                    }
+                });
+                if(subscription.userId == User.userId)
+                {
+                    var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
+                    scaffold.Bind(new
+                    {
+                        outstanding = new
+                        {
+                            price = outstanding.totalOwed.ToString("C"),
+                            duedate = outstanding.duedate.Value.ToShortDateString(),
+                            when = outstanding.duedate.Value < DateTime.Now ? "was" : "will be"
+                        }
+                    });
+                    scaffold.Data["is-outstanding"] = "1";
+                }
+                return scaffold.Render();
+            }
+            else
+            {
+                return Error("Subscription does not exist");
+            }
         }
     }
 }

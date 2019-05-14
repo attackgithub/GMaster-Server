@@ -5,10 +5,12 @@ AS
 			@invoiceAmount money = 0, 
 			@feesAmount money = 0
 
-	SELECT @paidAmount = SUM(payment) FROM Payments WHERE userId=@userId
-	SELECT @invoiceAmount = SUM(total), @feesAmount = SUM(fees) FROM Invoices WHERE userId=@userId
+	SELECT @paidAmount = ISNULL(SUM(payment), 0) FROM Payments WHERE userId=@userId
+	SELECT @invoiceAmount = ISNULL(SUM(total), 0), @feesAmount = ISNULL(SUM(fees), 0) FROM Invoices WHERE userId=@userId
+
 
 	DECLARE @owedAmount money = @invoiceAmount - @paidAmount,
+			@cost money = 0,
 			@duedate date = NULL, 
 			@subscriptionId int = NULL, 
 			@invoiceId int = NULL,
@@ -17,8 +19,8 @@ AS
 			@invoiceCount int = 0,
 			@status bit = 0
 
-	SELECT TOP 1 @schedule = p.schedule, @datestarted = s.datestarted, 
-	@subscriptionId = s.subscriptionId, @status = s.[status]
+	SELECT TOP 1 @schedule = p.schedule, @cost = CAST((s.pricePerUser * s.totalUsers) AS money),
+	@datestarted = s.datestarted, @subscriptionId = s.subscriptionId, @status = s.[status]
 	FROM Subscriptions s
 	JOIN Plans p ON p.planId=s.planId
 	WHERE s.userId=@userId
@@ -44,6 +46,7 @@ AS
 		END
 	END ELSE BEGIN
 		/* calculate when the next invoice due date will be */
+		SET @owedAmount = @cost
 		IF @datestarted IS NOT NULL BEGIN
 			IF @schedule = 0 BEGIN
 				/* monthly schedule */

@@ -45,7 +45,7 @@ namespace Query
             );
         }
 
-        public static List<Models.SubscriptionInfo> GetInfo(int userId)
+        public static List<Models.SubscriptionInfo> GetSubscriptions(int userId)
         {
             return Sql.Populate<Models.SubscriptionInfo>(
                 "Subscriptions_GetInfo",
@@ -54,6 +54,19 @@ namespace Query
                     {"userId", userId }
                 }
             );
+        }
+
+        public static Models.SubscriptionInfo GetInfo(int subscriptionId)
+        {
+            var list = Sql.Populate<Models.SubscriptionInfo>(
+                "Subscription_GetInfo",
+                new Dictionary<string, object>()
+                {
+                    {"subscriptionId", subscriptionId }
+                }
+            );
+            if(list.Count > 0) { return list[0]; }
+            return null;
         }
 
         public static Models.OutstandingBalance GetOutstandingBalance(int userId)

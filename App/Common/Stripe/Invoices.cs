@@ -12,7 +12,7 @@ namespace GMaster.Common.Stripe
             var user = User.GetUserFromCustomerId(invoice.CustomerId);
 
             //get subscription that belongs to user
-            var subscription = Query.Subscriptions.GetInfo(user.userId).Where(s => s.userId == user.userId).FirstOrDefault();
+            var subscription = Query.Subscriptions.GetSubscriptions(user.userId).Where(s => s.userId == user.userId).FirstOrDefault();
             if(subscription == null) { throw new Exception("Could not find subscription for user " + user.name + " (" + user.userId + ")"); }
 
             //get subscription plan from invoice

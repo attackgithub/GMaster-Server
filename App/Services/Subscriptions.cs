@@ -30,7 +30,7 @@ namespace GMaster.Services
                                 outstanding.status,
                                 outstanding.subscriptionId
                             },
-                            subscriptions = Query.Subscriptions.GetInfo(User.userId)
+                            subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
                         }
                     },
                     Newtonsoft.Json.Formatting.Indented
@@ -58,7 +58,7 @@ namespace GMaster.Services
             if(customerId != "")
             {
                 //check if user has a subscription
-                var subscriptions = Query.Subscriptions.GetInfo(User.userId);
+                var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
                 if(subscriptions != null && subscriptions.Count > 0 && subscriptions.Where(s => s.userId == User.userId).Count() > 0)
                 {
                     //check if any invoices exist for this subscription
