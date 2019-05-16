@@ -14,8 +14,8 @@ namespace GMaster.Controllers
                 title = "Gmaster - Authenticate with Google";
                 AddScript("https://apis.google.com/js/client:platform.js");
                 AddScript("/js/views/google/signin/signin.js");
-                scaffold.Data["clientId"] = Settings.Google.OAuth2.clientId;
-                scaffold.Data["extensionId"] = Settings.Google.Chrome.Extension.Id;
+                scaffold["clientId"] = Settings.Google.OAuth2.clientId;
+                scaffold["extensionId"] = Settings.Google.Chrome.Extension.Id;
                 return RenderModal(scaffold.Render());
             }
             return Error404();

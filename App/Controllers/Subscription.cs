@@ -87,6 +87,7 @@ namespace GMaster.Controllers
                 });
                 if(subscription.userId == User.userId)
                 {
+                    //subscription belongs to user, show billing info & other options (upgrade, downgrade, cancel)
                     var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
                     scaffold.Bind(new
                     {
@@ -97,7 +98,27 @@ namespace GMaster.Controllers
                             when = outstanding.duedate.Value < DateTime.Now ? "was" : "will be"
                         }
                     });
-                    scaffold.Data["is-outstanding"] = "1";
+                    scaffold.Show("is-outstanding");
+
+                    if(subscription.planId > 1)
+                    {
+                        //show downgrade option
+                        scaffold.Show("can-downgrade");
+                        if(subscription.totalUsers > 1)
+                        {
+                            scaffold.Show("is-team");
+                        }
+                        else
+                        {
+                            scaffold.Show("is-not-team");
+                        }
+                    }
+
+                    if ((subscription.planId != 4 && subscription.planId != 8) || subscription.totalUsers < 10000)
+                    {
+                        //show downgrade option
+                        scaffold.Show("can-upgrade");
+                    }
                 }
                 return scaffold.Render();
             }

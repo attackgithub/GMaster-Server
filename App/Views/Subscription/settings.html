@@ -2,32 +2,73 @@
     .subscription-page > .title{padding:0 0 10px 5px; font-size:20px;}
     .subscription-page .head{padding:15px 5px;}
     .subscription-page .head .title{display:inline-block; padding-right:20px; vertical-align:bottom;}
-    .subscription-page .head .title > *{margin-block-start:0; margin-block-end:0; font-weight:400;}
+    .subscription-page .head .title > *,
+    .subscription-page h1,
+    .subscription-page h2,
+    .subscription-page h3,
+    .subscription-page h4,
+    .subscription-page h5,
+    .subscription-page h6,
+    .subscription-page p{margin-block-start:0; margin-block-end:0; font-weight:400;}
+    .subscription-page h6{font-weight:bold;}
+    .subscription-page p{padding-bottom:15px;}
+
     .current-subscription{padding:8px 25px; background-color:rgba(242,245,245,0.8);}
     .current-subscription:hover{box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)}
     .current-subscription span{font-size:17px; padding-right:50px; display:inline-block;}
     .current-subscription span.plan{font-weight:bold;}
     .current-subscription a.button{border-radius:50px; display:inline-block; margin-left:20px; padding:5px 15px; background-color:#1a73e8; color:#fff;}
     .current-subscription a.button:hover{background-color:#297be6; box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);}
+
+    .subscription-page section{padding:30px 0 0 0;}
 </style>
 <div class="head">
     <div class="title"><h2>Settings for Gmaster</h2></div>
 </div>
 
-<div class="title">Current Subscription</div>
+<h3>Current Subscription</h3>
 
-<div class="current-subscription">
+<section class="current-subscription">
     <span class="plan">{{subscription.name}} Plan</span>
     <span class="price">{{subscription.price}} / {{subscription.schedule}}</span>
     <span>{{subscription.users}} team member{{subscription.plural}}</span>
     {{is-outstanding}}
     <span>{{outstanding.price}} {{outstanding.when}} due on {{outstanding.duedate}}</span>
     {{/is-outstanding}}
-    {{can-downgrade}}
-    <a href="javascript:" class="button downgrade">▼</a>
-    {{/can-downgrade}}
-    {{can-upgrade}}
-    <a href="javascript:" class="button upgrade">▲</a>
-    {{/can-upgrade}}
-    <a href="javascript:" class="button cancel">X</a>
-</div>
+</section>
+
+{{can-downgrade}}
+<section class="downgrade">
+    <h3>Downgrade</h3>
+    <p>
+        {{is-team}}You can remove specific team members, or remove all team members and downgrade to another plan.{{/is-team}}
+        {{is-not-team}}If there are features you aren't interested in using, downgrade to another plan.{{/is-not-team}}
+    </p>
+</section>
+{{/can-downgrade}}
+{{can-upgrade}}
+<section class="upgrade">
+    <h3>Upgrade</h3>
+    <p>
+        {{is-team}}
+        Add more members to your team.
+        {{/is-team}}
+        {{is-not-team}}
+        Upgrade your plan and unlock more features. If you'd like to collaborate on campaigns, upgrade to the <b>Team</b> plan.
+        {{/is-not-team}}
+    </p>
+</section>
+{{/can-upgrade}}
+{{can-cancel}}
+<section class="cancellation">
+    <h3>Cancel Subscription</h3>
+    <p>
+        {{is-new}}
+        Because you subscribed within the past 48 hours, you can cancel your subscription and get a full refund.
+        {{/is-new}}
+        {{is-old}}
+        Once you cancel, you'll have access to Gmaster until the end of the current billing cycle ({{outstanding.duedate}}.
+        {{/is-old}}
+    </p>
+</section>
+{{/can-cancel}}

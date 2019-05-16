@@ -149,8 +149,15 @@ namespace GMaster.Services
             //create Stripe subscription
             var subscriptionId = 0;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
+
+            //set up subscription start date
+            var subscriptionStart = DateTime.Now;
+            subscriptionStart = new DateTime(subscriptionStart.Year, subscriptionStart.Month, subscriptionStart.Day, 0, 0, 0); //reset time to midnight
+
+            //set up next invoice start date (1 month or year from now)
             var billingCycleStart = plan.schedule == Query.Models.PaySchedule.monthly ? DateTime.Now.AddMonths(1) : DateTime.Now.AddYears(1); //set their billing cycle
             billingCycleStart = new DateTime(billingCycleStart.Year, billingCycleStart.Month, billingCycleStart.Day, 0, 0, 0); //reset time to midnight
+
             try
             {
                 var subscriptionService = new SubscriptionService();
@@ -202,8 +209,8 @@ namespace GMaster.Services
                     totalUsers = users,
                     pricePerUser = plan.price,
                     paySchedule = Query.Models.PaySchedule.monthly,
-                    billingDay = billingCycleStart.Day,
-                    datestarted = billingCycleStart,
+                    billingDay = subscriptionStart.Day,
+                    datestarted = subscriptionStart,
                     status = false
                 });
             }

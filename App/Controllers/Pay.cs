@@ -16,18 +16,18 @@ namespace GMaster.Controllers
                 var scaffold = new Scaffold("/Views/Google/Pay/stripe.html");
                 var users = int.Parse(parameters["users"]);
                 var planId = int.Parse(parameters["planId"]);
-                scaffold.Data["extensionId"] = Settings.Google.Chrome.Extension.Id;
-                scaffold.Data["devkey"] = parameters["key"];
-                scaffold.Data["email"] = parameters["email"];
-                scaffold.Data["planId"] = planId.ToString();
-                scaffold.Data["users"] = users.ToString();
-                scaffold.Data["stripe-key"] = Settings.Stripe.Keys.publicKey;
+                scaffold["extensionId"] = Settings.Google.Chrome.Extension.Id;
+                scaffold["devkey"] = parameters["key"];
+                scaffold["email"] = parameters["email"];
+                scaffold["planId"] = planId.ToString();
+                scaffold["users"] = users.ToString();
+                scaffold["stripe-key"] = Settings.Stripe.Keys.publicKey;
 
                 //get price based on users
                 var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
-                scaffold.Data["price"] = (plan.price * users).ToString("C");
-                scaffold.Data["scheduleId"] = ((int)plan.schedule).ToString();
-                scaffold.Data["schedule"] = plan.schedule == Query.Models.PaySchedule.monthly ? "month" : "year";
+                scaffold["price"] = (plan.price * users).ToString("C");
+                scaffold["scheduleId"] = ((int)plan.schedule).ToString();
+                scaffold["schedule"] = plan.schedule == Query.Models.PaySchedule.monthly ? "month" : "year";
 
                 title = "Gmaster - Secure Pay with Stripe";
                 AddScript("https://js.stripe.com/v3/");

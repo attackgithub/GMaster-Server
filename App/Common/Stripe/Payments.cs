@@ -37,12 +37,12 @@ namespace GMaster.Common.Stripe
 
         public static void PaymentFailed(Invoice invoice)
         {
-
+            //send customer an email
         }
 
         public static void PaymentActionRequired(Invoice invoice)
         {
-
+            //send customer an email
         }
     }
 }
