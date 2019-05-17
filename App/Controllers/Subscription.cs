@@ -89,6 +89,7 @@ namespace GMaster.Controllers
                 {
                     //subscription belongs to user, show billing info & other options (upgrade, downgrade, cancel)
                     var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
+                    var subscriptionAge = ((TimeSpan)(DateTime.Now - subscription.datestarted)).Minutes;
                     scaffold.Bind(new
                     {
                         outstanding = new
@@ -119,6 +120,41 @@ namespace GMaster.Controllers
                         //show downgrade option
                         scaffold.Show("can-upgrade");
                     }
+
+                    scaffold.Show("can-cancel");
+                    if(subscriptionAge < 48 * 60)
+                    {
+                        //subscription is less than 2 days old, allow user to 
+                        //cancel subscription with a full refund
+                        scaffold.Show("is-new");
+                    }
+                    else
+                    {
+                        if(subscription.paySchedule == Query.Models.PaySchedule.yearly)
+                        {
+                            scaffold.Show("is-old-year");
+                            //get total months since subscription start until today
+                            var months = (int)Math.Round(((TimeSpan)(DateTime.Now - subscription.datestarted)).Days / 30.0);
+                            //calculate the end date for a yearly subscription ending 
+                            //at the end of this monthly billing cycle
+                            var subscriptionEnd = subscription.datestarted.AddMonths(months + 1);
+                            subscriptionEnd = new DateTime(subscriptionEnd.Year, subscriptionEnd.Month, subscriptionEnd.Day, 0, 0, 0); //reset time to midnight
+
+                            scaffold.Bind(new
+                            {
+                                cancellation = new
+                                {
+                                    enddate = subscriptionEnd.ToShortDateString()
+                                }
+                            });
+                        }
+                        else
+                        {
+                            scaffold.Show("is-old-month");
+                        }
+                    }
+
+
                 }
                 return scaffold.Render();
             }

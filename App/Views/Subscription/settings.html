@@ -12,15 +12,16 @@
     .subscription-page p{margin-block-start:0; margin-block-end:0; font-weight:400;}
     .subscription-page h6{font-weight:bold;}
     .subscription-page p{padding-bottom:15px;}
+    .subscription-page section{padding:30px 0 0 0;}
+    .subscription-page > h3{padding-bottom:10px;}
 
-    .current-subscription{padding:8px 25px; background-color:rgba(242,245,245,0.8);}
+    .subscription-page section.current-subscription{padding:8px 25px; background-color:rgba(242,245,245,0.8);}
     .current-subscription:hover{box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15)}
     .current-subscription span{font-size:17px; padding-right:50px; display:inline-block;}
     .current-subscription span.plan{font-weight:bold;}
     .current-subscription a.button{border-radius:50px; display:inline-block; margin-left:20px; padding:5px 15px; background-color:#1a73e8; color:#fff;}
     .current-subscription a.button:hover{background-color:#297be6; box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);}
 
-    .subscription-page section{padding:30px 0 0 0;}
 </style>
 <div class="head">
     <div class="title"><h2>Settings for Gmaster</h2></div>
@@ -31,9 +32,9 @@
 <section class="current-subscription">
     <span class="plan">{{subscription.name}} Plan</span>
     <span class="price">{{subscription.price}} / {{subscription.schedule}}</span>
-    <span>{{subscription.users}} team member{{subscription.plural}}</span>
+    <span><b>{{subscription.users}}</b> team member{{subscription.plural}}</span>
     {{is-outstanding}}
-    <span>{{outstanding.price}} {{outstanding.when}} due on {{outstanding.duedate}}</span>
+    <span>{{outstanding.price}} {{outstanding.when}} due on <b>{{outstanding.duedate}}</b></span>
     {{/is-outstanding}}
 </section>
 
@@ -41,8 +42,12 @@
 <section class="downgrade">
     <h3>Downgrade</h3>
     <p>
-        {{is-team}}You can remove specific team members, or remove all team members and downgrade to another plan.{{/is-team}}
-        {{is-not-team}}If there are features you aren't interested in using, downgrade to another plan.{{/is-not-team}}
+        {{is-team}}
+        You can remove specific team members, or remove all team members and downgrade to another plan.
+        {{/is-team}}
+        {{is-not-team}}
+        If there are features you aren't interested in using, downgrade to another plan.
+        {{/is-not-team}}
     </p>
 </section>
 {{/can-downgrade}}
@@ -66,9 +71,12 @@
         {{is-new}}
         Because you subscribed within the past 48 hours, you can cancel your subscription and get a full refund.
         {{/is-new}}
-        {{is-old}}
+        {{is-old-month}}
         Once you cancel, you'll have access to Gmaster until the end of the current billing cycle ({{outstanding.duedate}}.
-        {{/is-old}}
+        {{/is-old-month}}
+        {{is-old-year}}
+        Once you cancel, you'll have access to Gmaster until {{cancellation.enddate}}.
+        {{/is-old-year}}
     </p>
 </section>
 {{/can-cancel}}
