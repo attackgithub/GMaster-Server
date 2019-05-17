@@ -47,6 +47,42 @@ namespace GMaster.Services
             }
         }
 
+        public string GetUpgradeInfo(int subscriptionId)
+        {
+            if (!HasPermissions()) { return ""; }
+            try
+            {
+                var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
+                var json = Serializer.WriteObjectToString(new
+                {
+                    response = new
+                    {
+                        //display any outstanding invoice data to lock out account or warn user
+                        outstanding = new
+                        {
+                            outstanding.totalOwed,
+                            outstanding.duedate,
+                            outstanding.schedule,
+                            outstanding.status,
+                            outstanding.subscriptionId
+                        },
+                        subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
+                    }
+                },
+                    Newtonsoft.Json.Formatting.Indented
+                );
+
+                //log API request
+                Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetInfo, User.userId);
+                return "[" + json + "]";
+            }
+            catch (Exception ex)
+            {
+                Query.LogErrors.Create(User.userId, "Get Customer Upgrade Info", context.Request.Path, ex.Message, ex.StackTrace);
+                return Error("Error retrieving an upgrade list (10015). Please report error to " + Settings.ContactInfo.CustomerService.email);
+            }
+        }
+
         public string Subscribe(int planId, int users, Query.Models.PaySchedule schedule, string zipcode, string stripeToken)
         {
             if (!HasPermissions()) { return ""; }

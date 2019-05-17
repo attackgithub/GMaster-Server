@@ -74,6 +74,7 @@ namespace GMaster.Controllers
             if(subscription != null)
             {
                 var scaffold = new Scaffold("/Views/Subscription/settings.html");
+                scaffold["gmail-styles"] = RenderGmailStyles();
                 scaffold.Bind(new
                 {
                     subscription = new
@@ -89,7 +90,7 @@ namespace GMaster.Controllers
                 {
                     //subscription belongs to user, show billing info & other options (upgrade, downgrade, cancel)
                     var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
-                    var subscriptionAge = ((TimeSpan)(DateTime.Now - subscription.datestarted)).Minutes;
+                    var subscriptionAge = (DateTime.Now - subscription.datestarted).TotalMinutes;
                     scaffold.Bind(new
                     {
                         outstanding = new

@@ -1,0 +1,35 @@
+.gmaster-page button,
+.gmaster-page .button {
+  border: 0;
+  background-color: #1a73e8;
+  color: #fff;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  width: auto !important;
+  height: 30px !important;
+  padding: 0 16px;
+  line-height: 2.1;
+  display: inline-block;
+}
+.gmaster-page button:hover,
+.gmaster-page .button:hover {
+  text-decoration: none;
+  background-color: #0053ff;
+  cursor: pointer;
+}
+.gmaster-page button.btn-warn,
+.gmaster-page .button.btn-warn {
+  background-color: #ff6a00;
+}
+.gmaster-page button.btn-warn:hover,
+.gmaster-page .button.btn-warn:hover {
+  background-color: #ff4e00;
+}
+.gmaster-page button.btn-cancel,
+.gmaster-page .button.btn-cancel {
+  background-color: #ff0000;
+}
+.gmaster-page button.btn-cancel:hover,
+.gmaster-page .button.btn-cancel:hover {
+  background-color: #ff3e00;
+}

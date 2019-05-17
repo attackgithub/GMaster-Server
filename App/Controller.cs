@@ -83,5 +83,10 @@ namespace GMaster
         {
             return "<span style=\"display:none\"></span>\n" + body;
         }
+
+        public string RenderGmailStyles()
+        {
+            return "<style>\n" + Server.LoadFileFromCache("/CSS/gmail.css") + "\n</style>";
+        }
     }
 }

@@ -22,7 +22,9 @@
     .current-subscription a.button{border-radius:50px; display:inline-block; margin-left:20px; padding:5px 15px; background-color:#1a73e8; color:#fff;}
     .current-subscription a.button:hover{background-color:#297be6; box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);}
 
+    .subscription-page .buttons{padding:0 0 15px 0;}
 </style>
+{{gmail-styles}}
 <div class="head">
     <div class="title"><h2>Settings for Gmaster</h2></div>
 </div>
@@ -38,45 +40,64 @@
     {{/is-outstanding}}
 </section>
 
-{{can-downgrade}}
-<section class="downgrade">
-    <h3>Downgrade</h3>
-    <p>
-        {{is-team}}
-        You can remove specific team members, or remove all team members and downgrade to another plan.
-        {{/is-team}}
-        {{is-not-team}}
-        If there are features you aren't interested in using, downgrade to another plan.
-        {{/is-not-team}}
-    </p>
-</section>
-{{/can-downgrade}}
 {{can-upgrade}}
 <section class="upgrade">
     <h3>Upgrade</h3>
     <p>
         {{is-team}}
         Add more members to your team.
+        <div class="buttons">
+            <button class="add-members">Add Members</button>
+        </div>
         {{/is-team}}
         {{is-not-team}}
-        Upgrade your plan and unlock more features. If you'd like to collaborate on campaigns, upgrade to the <b>Team</b> plan.
+        Upgrade your subscription and unlock more features. If you'd like to collaborate on campaigns, upgrade to the <b>Team</b> plan.
+        <div class="buttons">
+            <button class="upgrade-plan">Upgrade Subscription</button>
+        </div>
         {{/is-not-team}}
     </p>
 </section>
 {{/can-upgrade}}
+
+{{can-downgrade}}
+<section class="downgrade">
+    <h3>Downgrade</h3>
+    <p>
+        {{is-team}}
+        You can remove specific team members, or remove all team members and downgrade to another plan.
+        <div class="buttons">
+            <button class="btn-warn downgrade-members">Remove Members</button>
+            <button class="btn-warn downgrade-plan">Downgrade</button>
+        </div>
+        {{/is-team}}
+        {{is-not-team}}
+        If there are features you aren't interested in using, downgrade to another plan.
+        <div class="buttons">
+            <button class="btn-warn downgrade-plan">Downgrade Subscription</button>
+        </div>
+        {{/is-not-team}}
+    </p>
+</section>
+{{/can-downgrade}}
+
 {{can-cancel}}
 <section class="cancellation">
     <h3>Cancel Subscription</h3>
     <p>
         {{is-new}}
-        Because you subscribed within the past 48 hours, you can cancel your subscription and get a full refund.
+        Because you subscribed within the past 48 hours, you can cancel your subscription and get a <b>full refund</b>.
         {{/is-new}}
         {{is-old-month}}
-        Once you cancel, you'll have access to Gmaster until the end of the current billing cycle ({{outstanding.duedate}}.
+        Once you cancel, you'll have access to all of your plan features until the end of the current billing cycle (<b>{{outstanding.duedate}}</b>).
         {{/is-old-month}}
         {{is-old-year}}
-        Once you cancel, you'll have access to Gmaster until {{cancellation.enddate}}.
+        Once you cancel, you'll have access to all of your plan features until <b>{{cancellation.enddate}}</b>, 
+        and you'll receive a partial refund based on the amount of time that has passed since your subscription has started.
         {{/is-old-year}}
+        <div class="buttons">
+            <button class="btn-cancel">Cancel Subscription</button>
+        </div>
     </p>
 </section>
 {{/can-cancel}}

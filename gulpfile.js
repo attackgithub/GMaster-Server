@@ -86,7 +86,7 @@ paths.compiled = {
     js: paths.webroot + 'js/',
     css: paths.webroot + 'css/',
     app: paths.webroot + 'css/',
-    themes: paths.webroot + 'css/themes/'
+    themes: paths.webroot + 'css/themes/',
 };
 
 //tasks for compiling javascript //////////////////////////////////////////////////////////////
@@ -177,6 +177,13 @@ gulp.task('less:utility', function () {
     return p.pipe(gulp.dest(paths.compiled.css + 'themes', { overwrite: true }));
 });
 
+gulp.task('less:gmail', function () {
+    var p = gulp.src(paths.css + 'gmail.less')
+        .pipe(less());
+    if (prod == true) { p = p.pipe(cleancss({ compatibility: 'ie8' })); }
+    return p.pipe(gulp.dest(paths.css, { overwrite: true }));
+});
+
 gulp.task('css:app', function () {
     var pathlist = paths.working.exclude.app.slice(0);
     pathlist.unshift(paths.working.css.app);
@@ -247,6 +254,11 @@ gulp.task('watch', function () {
     gulp.watch([
         paths.working.less.utility
     ], gulp.series('less:utility'));
+
+    //watch gmail LESS
+    gulp.watch([
+        paths.css + 'gmail.less'
+    ], gulp.series('less:gmail'));
 
     //watch app CSS
     var pathcss = [paths.working.css.app, ...paths.working.exclude.app.map(a => a + '*.css')];
