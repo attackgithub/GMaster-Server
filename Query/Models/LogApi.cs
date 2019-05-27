@@ -11,7 +11,8 @@
             UserAuthenticate = 4,
             UserCreate = 5,
             Subscribe = 6,
-            SubscriptionPage = 7
+            SubscriptionPage = 7,
+            SubscriptionsGetUpgradeInfo = 8
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GMaster.Services
             var plans = Query.Plans.GetList();
 
             //log API request
-            Common.Log.Api(context, Query.Models.LogApi.Names.GoogleOAuth2, User.userId);
+            Common.Log.Api(context, Query.Models.LogApi.Names.PlansGetInfo, User.userId);
 
             return Serializer.WriteObjectToString(plans, Newtonsoft.Json.Formatting.Indented);
 

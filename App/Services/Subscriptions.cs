@@ -47,17 +47,59 @@ namespace GMaster.Services
             }
         }
 
-        public string GetUpgradeInfo(int subscriptionId)
+        public string GetUpgradeInfo()
         {
             if (!HasPermissions()) { return ""; }
             try
             {
                 var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
+                if (!outstanding.subscriptionId.HasValue)
+                {
+                    throw new Exception("User does not have a subscription");
+                }
+                var subscription = Query.Subscriptions.GetInfo(outstanding.subscriptionId.Value);
+                var subIndex = subscription.planId;
+                if (subIndex > 4) { subIndex -= 4; }
+                var plans = Query.Plans.GetList().Where(p => 
+                {
+                    //determine which plans to display
+                    var display = false;
+                    var planIndex = p.planId;
+                    if(planIndex > 4) { planIndex -= 4; }
+                    if (subIndex <= planIndex || subIndex == 4)
+                    {
+                        //subscription plan is less than or equal to current plan
+                        if(
+                            (
+                                //subscription is not a team plan & is monthly while current plan is yearly
+                                (subIndex < 4 && subscription.paySchedule == 0 && p.schedule > 0) ||
+                                //subscription is team plan & current plan is also team plan
+                                (subIndex == 4 && planIndex == 4) || 
+                                //subscription index is less than current plan index
+                                (subIndex < planIndex)
+                            //make sure current plan schedule is same or more than subscription pay schedule
+                            ) && p.schedule >= subscription.paySchedule
+                        )
+                        {
+                            display = true;
+                        }
+                    }
+                    return display;
+                }).Select(p => new
+                {
+                    p.planId,
+                    p.name,
+                    minUsers = (p.minUsers > 1 && subscription.totalUsers >= p.minUsers ? subscription.totalUsers + 1 : p.minUsers),
+                    p.maxUsers,
+                    p.price,
+                    p.schedule
+                }).ToList();
+
                 var json = Serializer.WriteObjectToString(new
                 {
                     response = new
                     {
-                        //display any outstanding invoice data to lock out account or warn user
+                        plans,
                         outstanding = new
                         {
                             outstanding.totalOwed,
@@ -66,14 +108,20 @@ namespace GMaster.Services
                             outstanding.status,
                             outstanding.subscriptionId
                         },
-                        subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
+                        subscription = new {
+                            subscription.planId,
+                            subscription.paySchedule,
+                            subscription.totalUsers,
+                            subscription.pricePerUser
+                        },
+                        refund = Common.Subscriptions.CalculateRefund(subscription)
                     }
                 },
                     Newtonsoft.Json.Formatting.Indented
                 );
 
                 //log API request
-                Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetInfo, User.userId);
+                Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetUpgradeInfo, User.userId);
                 return "[" + json + "]";
             }
             catch (Exception ex)
@@ -232,7 +280,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error purchasing subscription (10013). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error purchasing subscription 413). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             //create subscription record
@@ -253,7 +301,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Subscription Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error creating subscription 314). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             //finally, rely on Stripe to execute two Gmaster Stripe webhooks, one to finalize an invoice, the other to submit a payment success.
