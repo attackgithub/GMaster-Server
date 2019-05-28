@@ -3,6 +3,6 @@
 	@data nvarchar(MAX)
 AS
 	DECLARE @id int = NEXT VALUE FOR SequenceLogStripeWebhooks
-	INSERT INTO LogStripeWebhooks (id, [event], [data]) VALUES (@id, @event, @data)
+	INSERT INTO LogStripeWebhooks (Id, [event], [data]) VALUES (@id, @event, @data)
 
 	SELECT @id;

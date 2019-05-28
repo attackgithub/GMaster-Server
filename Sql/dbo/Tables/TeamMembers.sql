@@ -1,9 +1,10 @@
 ﻿CREATE TABLE [dbo].[TeamMembers]
 (
-	[userId] INT NOT NULL PRIMARY KEY, 
+	[userId] INT NULL , 
     [teamId] INT NOT NULL, 
     [roleType] SMALLINT NOT NULL DEFAULT 3, /* 0 = owner, 1 = moderator, 2 = contributer, 3 = viewer */
-    [email] NVARCHAR(64) NOT NULL DEFAULT ''
+    [email] NVARCHAR(64) NOT NULL DEFAULT '', 
+    PRIMARY KEY ([email], [teamId])
 )
 
 GO

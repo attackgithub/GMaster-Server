@@ -101,8 +101,14 @@ namespace GMaster.Controllers
                         }
                     });
                     scaffold.Show("is-outstanding");
+                    scaffold.Show("can-cancel");
 
-                    if(subscription.planId > 1)
+                    if(subscription.paySchedule == Query.Models.PaySchedule.monthly)
+                    {
+                        scaffold.Show("is-monthly");
+                    }
+
+                    if (subscription.planId > 1)
                     {
                         //show downgrade option
                         scaffold.Show("can-downgrade");
@@ -121,8 +127,6 @@ namespace GMaster.Controllers
                         //show downgrade option
                         scaffold.Show("can-upgrade");
                     }
-
-                    scaffold.Show("can-cancel");
                     if(subscriptionAge < 48 * 60)
                     {
                         //subscription is less than 2 days old, allow user to 

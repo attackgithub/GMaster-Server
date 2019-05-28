@@ -30,12 +30,12 @@ namespace Query
 
         public static bool HasSubscription(int subscriptionId)
         {
-            return Sql.ExecuteScalar<bool>("InvoiceItems_HasSubscription",
+            return Sql.ExecuteScalar<int>("InvoiceItems_HasSubscription",
                 new Dictionary<string, object>()
                 {
                     {"subscriptionId", subscriptionId }
                 }
-            );
+            ) == 1;
         }
     }
 }

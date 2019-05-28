@@ -89,11 +89,12 @@ namespace GMaster.Services
                 {
                     p.planId,
                     p.name,
-                    minUsers = (p.minUsers > 1 && subscription.totalUsers >= p.minUsers ? subscription.totalUsers + 1 : p.minUsers),
+                    minUsers = (p.minUsers > 1 && subscription.totalUsers >= p.minUsers ? subscription.totalUsers : p.minUsers),
                     p.maxUsers,
                     p.price,
                     p.schedule
                 }).ToList();
+                var team = Query.Teams.GetByOwner(User.userId);
 
                 var json = Serializer.WriteObjectToString(new
                 {
@@ -114,6 +115,9 @@ namespace GMaster.Services
                             subscription.totalUsers,
                             subscription.pricePerUser
                         },
+                        members = Query.TeamMembers.GetList(team.teamId)
+                            .OrderBy(o => o.userId == User.userId ? -1 : o.userId.HasValue ? o.userId : 999999)
+                            .Select(tm => tm.email).ToArray(),
                         refund = Common.Subscriptions.CalculateRefund(subscription)
                     }
                 },
@@ -131,27 +135,29 @@ namespace GMaster.Services
             }
         }
 
-        public string Subscribe(int planId, int users, Query.Models.PaySchedule schedule, string zipcode, string stripeToken)
+        public string Subscribe(int planId, string emails, string zipcode, string stripeToken)
         {
             if (!HasPermissions()) { return ""; }
 
             //check if Stripe customer exists
             var user = Query.Users.GetInfo(User.userId);
             var customerId = user.stripeCustomerId ?? "";
+            var members = emails.Split(',');
+            var subscriptions = new List<Query.Models.SubscriptionInfo>();
 
             if(customerId != "")
             {
                 //check if user has a subscription
-                var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+                subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
                 if(subscriptions != null && subscriptions.Count > 0 && subscriptions.Where(s => s.userId == User.userId).Count() > 0)
                 {
                     //check if any invoices exist for this subscription
-                    if (!Query.InvoiceItems.HasSubscription(subscriptions.First().subscriptionId))
+                    if (!Query.InvoiceItems.HasSubscription(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId))
                     {
                         return Error("Your account is already subscribed to the Gmaster " + Common.Plans.NameFromId(subscriptions.First().planId) + 
                             " Plan, but no invoice was generated. Please report error to " + Settings.ContactInfo.CustomerService.email);
                     }
-                    return Error("Your account is already subscribed to the Gmaster " + Common.Plans.NameFromId(subscriptions.First().planId) + " Plan");
+                    //return Error("Your account is already subscribed to the Gmaster " + Common.Plans.NameFromId(subscriptions.First().planId) + " Plan");
                 }
             }
 
@@ -232,6 +238,7 @@ namespace GMaster.Services
 
             //create Stripe subscription
             var subscriptionId = 0;
+            var updateSubscription = false;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
 
             //set up subscription start date
@@ -254,12 +261,33 @@ namespace GMaster.Services
 
                 if(subscription != null)
                 {
-                    //customer already has a subscription, fix subscription in database
-                    planId = Common.Plans.IdFromStripePlanId(subscription.Plan.Id);
-                    plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
-                    if(plan.minUsers > users) { users = plan.minUsers; }
-                    if(plan.maxUsers < users) { users = plan.maxUsers; }
-                    Query.LogErrors.Create(User.userId, "Orphaned Stripe Subscription", context.Request.Path, "Customer (" + customerId + ") already has a subscription within Stripe for (" + planId + ")", "");
+                    //customer already has a subscription
+                    updateSubscription = true;
+
+                    //check if user is allowed to create a new subscription
+                    //if(subscription.Created.Value.AddDays(1) > DateTime.Now)
+                    //{
+                    //    Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, "Customer attempted to change subscription within 24 hours of previous subscription creation", "");
+                    //    return Error("Please wait at least 24 hours before changing your subscription again.");
+                    //}
+
+                    //change Stripe subscription
+                    var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                    {
+                        BillingCycleAnchorNow = true,
+                        Items = new List<SubscriptionItemUpdateOption>()
+                        {
+                            new SubscriptionItemUpdateOption()
+                            {
+                                Id = subscription.Items.First().Id,
+                                Quantity = members.Length,
+                                Deleted = false
+                            }
+                        }
+                    });
+
+                    //deactivate current subscription so that a new subscription can be created
+                    Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);
                 }
                 else
                 {
@@ -271,7 +299,7 @@ namespace GMaster.Services
                         Items = new List<SubscriptionItemOption>(){
                             new SubscriptionItemOption {
                                 PlanId = plan.stripePlanName,
-                                Quantity = users
+                                Quantity = members.Length
                             }
                         }
                     });
@@ -280,7 +308,7 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error purchasing subscription 413). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error purchasing subscription (10013). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
             //create subscription record
@@ -290,7 +318,7 @@ namespace GMaster.Services
                 {
                     userId = user.userId,
                     planId = planId,
-                    totalUsers = users,
+                    totalUsers = members.Length,
                     pricePerUser = plan.price,
                     paySchedule = Query.Models.PaySchedule.monthly,
                     billingDay = subscriptionStart.Day,
@@ -301,11 +329,27 @@ namespace GMaster.Services
             catch (Exception ex)
             {
                 Query.LogErrors.Create(User.userId, "Create Subscription Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating subscription 314). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
-            //finally, rely on Stripe to execute two Gmaster Stripe webhooks, one to finalize an invoice, the other to submit a payment success.
+            //add new team members
+            var teamId = Query.Teams.GetByOwner(User.userId).teamId;
+            var existingMembers = Query.TeamMembers.GetList(user.userId);
+            foreach(var member in members.Where(m => !existingMembers.Any(e => e.email == m)))
+            {
+                if(member == user.email) { continue; }
+                Query.TeamMembers.Create(teamId, Query.Models.RoleType.contributer, member);
+            }
 
+            //delete existing team members that are no longer part of the team
+            foreach(var member in existingMembers.Where(e => !members.Any(m => m == e.email)))
+            {
+                if (member.email == user.email) { continue; }
+                Query.TeamMembers.Delete(teamId, member.email);
+            }
+
+            //finally, rely on Stripe to execute two Gmaster Stripe webhooks, 
+            //one to finalize an invoice, the other to submit a payment success.
             return Success();
         }
     }

@@ -19,7 +19,7 @@ AS
 	VALUES (@teamId, @id, @name)
 
 	/* create new team member record for new user */
-	INSERT INTO TeamMembers (teamId, userId, email)
-	VALUES (@teamId, @id, @email)
+	INSERT INTO TeamMembers (teamId, userId, email, roleType)
+	VALUES (@teamId, @id, @email, 0)
 
 	SELECT @id

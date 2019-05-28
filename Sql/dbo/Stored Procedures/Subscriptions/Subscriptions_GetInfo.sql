@@ -7,6 +7,5 @@ AS
 	INNER JOIN Users u ON u.userId=s.userId
 	INNER JOIN Teams t ON t.ownerId = s.userId
 	INNER JOIN TeamMembers tm ON tm.teamId = t.teamId
-	WHERE s.userId = @userId
-	OR tm.userId = @userId
+	WHERE tm.userId = @userId
 	AND s.[status] = 1

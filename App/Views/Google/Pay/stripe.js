@@ -71,8 +71,7 @@ function paymentSuccess(token) {
             devkey: devkey,
             email: email,
             planId: planId,
-            users: users,
-            schedule: scheduleId,
+            emails: emails,
             zipcode: token.card.address_zip || '',
             stripeToken: token.id
         },

@@ -8,14 +8,6 @@ namespace Query.Models
         yearly = 1
     }
 
-    public enum RoleType
-    {
-        owner = 0,
-        moderator = 1,
-        contributer = 2,
-        viewer = 3
-    }
-
     public class Subscription
     {
         public int subscriptionId { get; set; }
