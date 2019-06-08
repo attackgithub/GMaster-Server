@@ -17,7 +17,7 @@ namespace GMaster.Common
             var amount = (decimal)daysLeft * pricePerDay;
             var refund = new Models.Subscriptions.Refund()
             {
-               Amount = amount - (amount * 0.029258M), //calculate Stripe credit card fee (pre-Stripe processing fee)
+               Amount = amount,// - (amount * 0.029258M), //calculate Stripe credit card fee (pre-Stripe processing fee)
                EndDate = nextCycle
             };
             return refund;

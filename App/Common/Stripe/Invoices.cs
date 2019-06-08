@@ -75,9 +75,11 @@ namespace GMaster.Common.Stripe
 
                 //calculate credit card fees
                 var fees = Math.Round((subtotal + refund) - (invoice.Total / 100.0M), 2);
+                if(fees < 0) { fees = 0; }
 
                 //calculate Stripe's processing fee (2.9% + 30 cents)
                 var apifee = Math.Round((((subtotal + refund) - fees) * 0.029M) + 0.3M, 2);
+                if(apifee < 0) { apifee = 0; }
 
                 //create invoice record
                 var invoiceId = Query.Invoices.Create(user.userId, subtotal + refund, refund, fees, apifee, DateTime.Now);
