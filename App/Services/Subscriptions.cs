@@ -47,7 +47,7 @@ namespace GMaster.Services
             }
         }
 
-        public string GetUpgradeInfo()
+        public string GetModifyInfo()
         {
             if (!HasPermissions()) { return ""; }
             try
@@ -66,30 +66,21 @@ namespace GMaster.Services
                     var display = false;
                     var planIndex = p.planId;
                     if(planIndex > 4) { planIndex -= 4; }
-                    if (subIndex <= planIndex || subIndex == 4)
+                    if(planIndex != 4 && subscription.planId != p.planId)
                     {
-                        //subscription plan is less than or equal to current plan
-                        if(
-                            (
-                                //subscription is not a team plan & is monthly while current plan is yearly
-                                (subIndex < 4 && subscription.paySchedule == 0 && p.schedule > 0) ||
-                                //subscription is team plan & current plan is also team plan
-                                (subIndex == 4 && planIndex == 4) || 
-                                //subscription index is less than current plan index
-                                (subIndex < planIndex)
-                            //make sure current plan schedule is same or more than subscription pay schedule
-                            ) && p.schedule >= subscription.paySchedule
-                        )
-                        {
-                            display = true;
-                        }
+                        //all plans but team plan (upgrade/downgrade to monthly or yearly only)
+                        display = true;
+                    }else if(planIndex == 4)
+                    {
+                        //team plan (monthly/yearly)
+                        display = true;
                     }
                     return display;
                 }).Select(p => new
                 {
                     p.planId,
                     p.name,
-                    minUsers = (p.minUsers > 1 && subscription.totalUsers >= p.minUsers ? subscription.totalUsers : p.minUsers),
+                    p.minUsers,
                     p.maxUsers,
                     p.price,
                     p.schedule
@@ -236,9 +227,8 @@ namespace GMaster.Services
                 }
             }
 
-            //create Stripe subscription
+            //prepare Stripe subscription
             var subscriptionId = 0;
-            var updateSubscription = false;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
 
             //set up subscription start date
@@ -262,20 +252,22 @@ namespace GMaster.Services
                 if(subscription != null)
                 {
                     //customer already has a subscription
-                    updateSubscription = true;
 
                     //check if user is allowed to create a new subscription
-                    //if(subscription.Created.Value.AddDays(1) > DateTime.Now)
-                    //{
-                    //    Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, "Customer attempted to change subscription within 24 hours of previous subscription creation", "");
-                    //    return Error("Please wait at least 24 hours before changing your subscription again.");
-                    //}
+                    if(subscription.Created.Value.AddDays(1) > DateTime.Now && Server.environment == Server.Environment.production)
+                    {
+                        Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, "Customer attempted to change subscription within 24 hours of previous subscription creation", "");
+                        return Error("Please wait at least 24 hours before changing your subscription again.");
+                    }
 
                     //change Stripe subscription
-                    var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                    if(Common.Plans.IdFromStripePlanId(subscription.Plan.ProductId) == planId)
                     {
-                        BillingCycleAnchorNow = true,
-                        Items = new List<SubscriptionItemUpdateOption>()
+                        //update subscription with same plan
+                        var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                        {
+                            BillingCycleAnchorNow = true,
+                            Items = new List<SubscriptionItemUpdateOption>()
                         {
                             new SubscriptionItemUpdateOption()
                             {
@@ -284,7 +276,29 @@ namespace GMaster.Services
                                 Deleted = false
                             }
                         }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        //update subscription with different plan
+                        var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                        {
+                            BillingCycleAnchorNow = true,
+                            Items = new List<SubscriptionItemUpdateOption>()
+                        {
+                            new SubscriptionItemUpdateOption()
+                            {
+                                Id = subscription.Items.First().Id,
+                                Deleted = true //delete existing plan product
+                            },
+                            new SubscriptionItemUpdateOption()
+                            {
+                                PlanId = plan.stripePlanName, //add new plan product
+                                Quantity = members.Length
+                            }
+                        }
+                        });
+                    }
 
                     //deactivate current subscription so that a new subscription can be created
                     Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);

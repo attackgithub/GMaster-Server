@@ -45,13 +45,14 @@ namespace Query
             );
         }
 
-        public static List<Models.SubscriptionInfo> GetSubscriptions(int userId)
+        public static List<Models.SubscriptionInfo> GetSubscriptions(int userId, bool status = true)
         {
             return Sql.Populate<Models.SubscriptionInfo>(
                 "Subscriptions_GetInfo",
                 new Dictionary<string, object>()
                 {
-                    {"userId", userId }
+                    {"userId", userId },
+                    {"status", status }
                 }
             );
         }

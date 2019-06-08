@@ -40,53 +40,46 @@
     {{/is-outstanding}}
 </section>
 
-{{can-upgrade}}
-<section class="upgrade">
-    <h3>Upgrade</h3>
+{{can-modify}}
+<section class="modify">
+    {{is-team}}
+    <h3>Modify Team</h3>
     <p>
-        {{is-team}}
-        Add more members to your team{{is-monthly}}, or upgrade your plan to a yearly subscription{{/is-monthly}}.
+        Add or remove members on your team.
         <div class="buttons">
-            <button class="add-members">Upgrade Team</button>
+            <button class="modify-team">Modify Team</button>
         </div>
-        {{/is-team}}
-        {{is-not-team}}
-        Upgrade your subscription and unlock more features. If you'd like to collaborate on campaigns, upgrade to the <b>Team</b> plan.
-        <div class="buttons">
-            <button class="upgrade-plan">Upgrade Subscription</button>
-        </div>
-        {{/is-not-team}}
     </p>
-</section>
-{{/can-upgrade}}
 
-{{can-downgrade}}
-<section class="downgrade">
-    <h3>Downgrade</h3>
+    <h3>Modify Subscription</h3>
     <p>
-        {{is-team}}
-        You can remove specific team members, or remove all team members and downgrade to another plan.
+        {{is-monthly}}Upgrade to a yearly <b>Team</b> subscription, {{/is-monthly}}
+        {{is-yearly}}Downgrade to a monthly <b>Team</b> subscription, {{/is-yearly}}
+        or downgrade to a more basic subscription that will remove collaborative features.
         <div class="buttons">
-            <button class="btn-warn downgrade-members">Remove Members</button>
-            <button class="btn-warn downgrade-plan">Downgrade</button>
+            <button class="btn-change">Modify Subscription</button>
         </div>
-        {{/is-team}}
-        {{is-not-team}}
-        If there are features you aren't interested in using, downgrade to another plan.
-        <div class="buttons">
-            <button class="btn-warn downgrade-plan">Downgrade Subscription</button>
-        </div>
-        {{/is-not-team}}
     </p>
+    {{/is-team}}
+    {{is-not-team}}
+    <h3>Modify Subscription</h3>
+    <p>
+        Upgrade your subscription and unlock more features, or downgrade to a more basic plan. 
+        If you'd like to collaborate on campaigns, upgrade to the <b>Team</b> plan.
+        <div class="buttons">
+            <button class="btn-change">Modify Subscription</button>
+        </div>
+    </p>
+    {{/is-not-team}}
 </section>
-{{/can-downgrade}}
+{{/can-modify}}
 
 {{can-cancel}}
 <section class="cancellation">
     <h3>Cancel Subscription</h3>
     <p>
         {{is-new}}
-        Because you subscribed within the past 48 hours, you can cancel your subscription and get a <b>full refund</b>.
+        Because you subscribed within the past 48 hours and haven't run any campaigns yet, you can cancel your subscription and get a <b>full refund</b>.
         {{/is-new}}
         {{is-old-month}}
         Once you cancel, you'll have access to all of your plan features until the end of the current billing cycle (<b>{{outstanding.duedate}}</b>).

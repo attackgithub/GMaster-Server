@@ -11,11 +11,13 @@ namespace GMaster.Common
             var nextCycle = GetNextBillingCycle(subscription.datestarted);
             var daysInCycle = ((TimeSpan)(nextCycle - prevCycle)).Days;
             var pricePerDay = PricePerPeriod / daysInCycle;
-            var daysLeft = ((TimeSpan)(nextCycle - DateTime.Now)).Days;
-
+            var dailyMinutes = 24 * 60;
+            var todayLeft = 1.0 / dailyMinutes * (dailyMinutes - (DateTime.Now - DateTime.Now.Date).Minutes);
+            var daysLeft = (nextCycle - DateTime.Now).Days + todayLeft;
+            var amount = (decimal)daysLeft * pricePerDay;
             var refund = new Models.Subscriptions.Refund()
             {
-               Amount = daysLeft * pricePerDay,
+               Amount = amount - (amount * 0.029258M), //calculate Stripe credit card fee (pre-Stripe processing fee)
                EndDate = nextCycle
             };
             return refund;

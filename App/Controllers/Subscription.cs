@@ -110,8 +110,8 @@ namespace GMaster.Controllers
 
                     if (subscription.planId > 1)
                     {
-                        //show downgrade option
-                        scaffold.Show("can-downgrade");
+                        //show modify option
+                        scaffold.Show("can-modify");
                         if(subscription.totalUsers > 1)
                         {
                             scaffold.Show("is-team");
@@ -124,13 +124,15 @@ namespace GMaster.Controllers
 
                     if ((subscription.planId != 4 && subscription.planId != 8) || subscription.totalUsers < 10000)
                     {
-                        //show downgrade option
-                        scaffold.Show("can-upgrade");
+                        //show modify option
+                        scaffold.Show("can-modify");
                     }
                     if(subscriptionAge < 48 * 60)
                     {
-                        //subscription is less than 2 days old, allow user to 
-                        //cancel subscription with a full refund
+                        //TODO: Check for existing campaigns that have been ran
+
+                        //subscription is less than 2 days old & no campaigns have been run, 
+                        //allow user to cancel subscription with a full refund
                         scaffold.Show("is-new");
                     }
                     else
@@ -158,8 +160,6 @@ namespace GMaster.Controllers
                             scaffold.Show("is-old-month");
                         }
                     }
-
-
                 }
                 return scaffold.Render();
             }
