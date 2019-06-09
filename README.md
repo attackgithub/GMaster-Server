@@ -78,14 +78,14 @@ Professional users will need the ability to set up followup campaigns that are t
 * Send unlimited emails (based on Gmail daily limits)
 * Removes Gmaster email signature
 * Setup Auto-Followup Campaigns
-* Send Q&A Polls
+* Send Surveys
 
 #### Team Plans ($15.95/user/month)
 Marketing teams will be able to achieve everything a professional user can do while collaborating on campaigns as a team.
 * Send unlimited emails (based on Gmail daily limits)
 * Removes Gmaster email signature
 * Setup Auto-Followup Campaigns
-* Send Q&A Polls
+* Send Surveys
 * Collaborate on Team Campaigns
 * Plan starts at **5 users** @ **$79.95/month**
 
@@ -154,11 +154,29 @@ Displays a set of statistics about a campaign.
 * total emails opened
 * total email responses
 * total emails sent to (specific) followup campaign 
-* total (specific answer) to Q/A Poll
+* total (specific answer) to Surveys
 
 #### Timeline Report
 Displays a set of time lapse charts that visualizes how a campaign was executed and how the users responded
 * emails sent / bounced / retries / opened / responses
 * followup campaign triggers
 * each followup campaign (emails sent / bounced / retries / opened / responses)
-* Q/A Poll questions answered
+* Survey questions answered
+
+#### Internal Reports
+I will need to be able to watch financial & customer reports throughout the year
+
+* Daily estimated yearly profit
+* Daily profit for the year
+* Daily team member count
+* Daily cancellations
+* Daily campaigns running
+* Daily emails sent
+* Daily emails bounced
+* Daily email responses
+* Daily email queue size
+* Daily survey questions answered
+* Daily Addressbook size
+* Daily users signed in
+* Daily users not signed in
+* Daily users not signed in over 30 days

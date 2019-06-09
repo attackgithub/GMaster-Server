@@ -25,11 +25,12 @@ FROM Invoices i
 WHERE YEAR(i.datedue) = @year
 GROUP BY YEAR(i.datedue)
 
-/* ----------------------------------------
-SELECT TOP 10 * FROM Payments
-SELECT TOP 10 * FROM InvoiceItems
-SELECT TOP 10 * FROM Invoices
-SELECT TOP 10 * FROM Subscriptions
+/* ----------------------------------------*/
+SELECT TOP 10 * FROM Payments ORDER BY datepaid DESC
+SELECT TOP 10 * FROM InvoiceItems ORDER BY invoiceId DESC, itemId ASC
+SELECT TOP 10 * FROM Invoices ORDER BY invoiceId DESC
+SELECT TOP 10 * FROM Subscriptions ORDER BY subscriptionId DESC
 SELECT TOP 10 * FROM LogErrors ORDER BY datecreated DESC
 SELECT TOP 10 * FROM LogStripeWebhooks ORDER BY datecreated DESC
-*/
+SELECT TOP 10 * FROM TeamMembers
+

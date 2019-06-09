@@ -348,15 +348,20 @@ namespace GMaster.Services
 
             //add new team members
             var teamId = Query.Teams.GetByOwner(User.userId).teamId;
-            var existingMembers = Query.TeamMembers.GetList(user.userId);
-            foreach(var member in members.Where(m => !existingMembers.Any(e => e.email == m)))
+            var existingMembers = Query.TeamMembers.GetList(teamId);
+
+            foreach (var member in members.Where(m => !existingMembers.Any(e => e.email == m)))
             {
+
                 if(member == user.email) { continue; }
                 Query.TeamMembers.Create(teamId, Query.Models.RoleType.contributer, member);
             }
 
+
+            existingMembers = Query.TeamMembers.GetList(teamId);
+
             //delete existing team members that are no longer part of the team
-            foreach(var member in existingMembers.Where(e => !members.Any(m => m == e.email)))
+            foreach (var member in existingMembers.Where(e => !members.Any(m => m == e.email)))
             {
                 if (member.email == user.email) { continue; }
                 Query.TeamMembers.Delete(teamId, member.email);

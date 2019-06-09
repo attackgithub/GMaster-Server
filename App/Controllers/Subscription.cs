@@ -108,7 +108,7 @@ namespace GMaster.Controllers
                         scaffold.Show("is-monthly");
                     }
 
-                    if (subscription.planId > 1)
+                    if (subscription.planId >= 1)
                     {
                         //show modify option
                         scaffold.Show("can-modify");
@@ -119,6 +119,10 @@ namespace GMaster.Controllers
                         else
                         {
                             scaffold.Show("is-not-team");
+                        }
+                        if (subscription.planId == 1)
+                        {
+                            scaffold.Show("no-downgrade");
                         }
                     }
 
