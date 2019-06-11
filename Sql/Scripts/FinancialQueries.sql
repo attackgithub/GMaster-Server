@@ -14,7 +14,7 @@ CROSS APPLY (
 GROUP BY g.userId, g.Payments
 
 /* calculate invoice totals for each member */
-SELECT i.userId, SUM(i.total) AS SubTotal, SUM(i.total - i.apifee) AS Profit
+SELECT i.userId, SUM(i.total) AS SubTotal, SUM(i.total - i.apifee) AS Profit, COUNT(*) AS Invoices, DATEDIFF(MONTH, MIN(i.datedue), GETDATE()) AS MonthsSubscribed
 FROM Invoices i
 GROUP BY userId
 

@@ -1,4 +1,15 @@
 ﻿.gmaster-page{
+    .col{display:inline-block;float:left;
+        &.two{width:16.41%}
+        &.three{width:25%}
+        &.four{width:33.333339%}
+        &.six{width:50%}
+        &.eight{width:66.66669%}
+    }
+    .row{width:100%;
+         &:after{clear:both;display:block;content:'';font-size:0;}
+    }
+
     button, .button{
         border:0; background-color:#1a73e8; color:#fff; font-size:.875rem; border-radius:4px;
         width:auto !important; height:30px !important; padding:0 16px; line-height:2.1; display:inline-block;
@@ -10,6 +21,14 @@
 
         &.btn-cancel{background-color:#ff0000;
             &:hover{background-color:#ff3e00;}
+        }
+    }
+
+    table{border:0; border-spacing:0;
+        th{text-align:left;}
+        th, td{padding:8px 15px;}
+        tbody{
+            tr:nth-child(odd){background-color:rgba(242,245,245,0.8);}
         }
     }
 }

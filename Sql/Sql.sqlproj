@@ -199,6 +199,7 @@
     <PostDeploy Include="PostDeployment.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </PostDeploy>
+    <Build Include="dbo\Stored Procedures\Payments\Payments_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

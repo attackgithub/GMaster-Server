@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 
 
@@ -83,7 +84,8 @@ namespace GMaster.Controllers
                         price = (subscription.pricePerUser * subscription.totalUsers).ToString("C"),
                         users = subscription.totalUsers,
                         schedule = subscription.paySchedule == 0 ? "month" : "year",
-                        plural = subscription.totalUsers > 1 ? "s" : ""
+                        plural = subscription.totalUsers > 1 ? "s" : "",
+                        owner = subscription.ownerName
                     }
                 });
                 if(subscription.userId == User.userId)
@@ -164,6 +166,55 @@ namespace GMaster.Controllers
                             scaffold.Show("is-old-month");
                         }
                     }
+
+                    //show payment history
+                    var paymentItem = new Scaffold("/Views/Subscription/settings/payment-item.html");
+                    var payments = Query.Payments.GetList(User.userId);
+                    var html = new StringBuilder();
+
+                    foreach(var payment in payments)
+                    {
+                        paymentItem.Bind(new
+                        {
+                            payment = new
+                            {
+                                datecreated = payment.datepaid.ToString("yyyy/MM/dd h:mm tt"),
+                                amount = payment.payment.ToString("C")
+                            }
+                        });
+                        html.Append(paymentItem.Render());
+                    }
+                    scaffold["payments"] = html.ToString();
+
+                    //show invoices
+                    var invoiceItem = new Scaffold("/Views/Subscription/settings/invoice-item.html");
+                    var invoices = Query.Invoices.GetList(User.userId);
+                    html = new StringBuilder();
+                    var duedate = outstanding.duedate;
+                    if (duedate.HasValue)
+                    {
+                        duedate = (new DateTime(duedate.Value.Year, duedate.Value.Month, duedate.Value.Day)).AddDays(-3);
+                    }
+
+                    foreach (var invoice in invoices)
+                    {
+                        var item = new
+                        {
+                            datecreated = invoice.datedue.ToString("yyyy/MM/dd"),
+                            amount = invoice.subtotal.ToString("C"),
+                            status = outstanding.unpaidInvoiceId.HasValue ?
+                                            (outstanding.unpaidInvoiceId.Value <= invoice.invoiceId ?
+                                                (duedate >= DateTime.Now ? "Overdue" : "Due") : "Paid"
+                                            ) : "Paid"
+                        };
+                        invoiceItem.Bind(new {invoice = item});
+                        if(item.status == "Due" || item.status == "Overdue")
+                        {
+                            invoiceItem.Show("important");
+                        }
+                        html.Append(invoiceItem.Render());
+                    }
+                    scaffold["invoices"] = html.ToString();
                 }
                 return scaffold.Render();
             }

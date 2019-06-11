@@ -1,3 +1,31 @@
+.gmaster-page .col {
+  display: inline-block;
+  float: left;
+}
+.gmaster-page .col.two {
+  width: 16.41%;
+}
+.gmaster-page .col.three {
+  width: 25%;
+}
+.gmaster-page .col.four {
+  width: 33.333339%;
+}
+.gmaster-page .col.six {
+  width: 50%;
+}
+.gmaster-page .col.eight {
+  width: 66.66669%;
+}
+.gmaster-page .row {
+  width: 100%;
+}
+.gmaster-page .row:after {
+  clear: both;
+  display: block;
+  content: '';
+  font-size: 0;
+}
 .gmaster-page button,
 .gmaster-page .button {
   border: 0;
@@ -32,4 +60,18 @@
 .gmaster-page button.btn-cancel:hover,
 .gmaster-page .button.btn-cancel:hover {
   background-color: #ff3e00;
+}
+.gmaster-page table {
+  border: 0;
+  border-spacing: 0;
+}
+.gmaster-page table th {
+  text-align: left;
+}
+.gmaster-page table th,
+.gmaster-page table td {
+  padding: 8px 15px;
+}
+.gmaster-page table tbody tr:nth-child(odd) {
+  background-color: rgba(242, 245, 245, 0.8);
 }

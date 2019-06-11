@@ -24,12 +24,20 @@
     .current-subscription a.button:hover{background-color:#297be6; box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);}
 
     .subscription-page .buttons{padding:0 0 15px 0;}
+
+    .subscription-page table tbody tr.Overdue{background-color:#ffb6b6; color:#840000;}
+    .subscription-page table tbody tr.Due{background-color:#c3e4fb; color:#002e66;}
+    .subscription-page table tbody tr.Paid{background-color:#d2f7d5; color:#063b00;}
+
+    .subscription-page table tbody tr.Overdue:nth-child(odd){background-color:#fca8a8; color:#840000;}
+    .subscription-page table tbody tr.Due:nth-child(odd){background-color:#b8daf1; color:#002e66;}
+    .subscription-page table tbody tr.Paid:nth-child(odd){background-color:#bdefc1; color:#063b00;}
 </style>
 <div class="head">
-    <div class="title"><h2>Settings for Gmaster</h2></div>
+    <div class="title"><h2>Subscription for Gmaster</h2></div>
 </div>
 
-<h3>Current Subscription</h3>
+<h3>Current Subscription for {{subscription.owner}}</h3>
 
 <section class="current-subscription">
     <span class="plan">{{subscription.name}} Plan</span>
@@ -94,3 +102,56 @@
     </p>
 </section>
 {{/can-cancel}}
+
+
+
+<div class="row">
+    <div class="col six">
+        <section class="invoices">
+            <h3>Invoices</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Due Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>{{invoices}}</tbody>
+            </table>
+        </section>
+    </div>
+    <div class="col six">
+        <section class="payments">
+            <h3>Payments</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>{{payments}}</tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col six">
+        <section class="payments">
+            <h3>Change History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Members</th>
+                    </tr>
+                </thead>
+                <tbody>{{history}}</tbody>
+            </table>
+        </section>
+    </div>
+</div>
+

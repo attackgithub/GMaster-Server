@@ -95,10 +95,13 @@ Even if a user signs up for an individual plan, a **Team** record is generated f
 ## Subscription System
 Users must be able to subscribe to Gmaster & manage their subscription from within Gmail. The following features must be available.
 * **Subscribe** to any plan
-* **Upgrade** current subscription (or adding team members)
-* **Downgrade** current subscription
-* **Unsubscribe** from Gmaster
-  * If the user unsubscribes from Gmaster within **5 business days** without launching any campaigns, they will receive a **full refund**.
+* **Modify** current subscription (or adding team members)
+* **Cancel** from Gmaster
+  * If the user cancels their subscription (monthly or yearly) within **5 business days** without launching any campaigns, they will receive a **full refund**.
+  * If the user cancels their **yearly** subscription, the subscription will end at the next **monthly** billing cycle and they will receive a refund for the remainder of the yearly billing cycle upon confirmation of cancellation.
+
+Some unexpected events may occur when the user is subscribed. Gmaster will handle the following events:
+* **Overdue** invoices will automatically retry payment 4 times within 2 weeks, and afterwards, the user's subscription will be canceled and the overdue amount will be removed along with the customer's account. In the meantime, all campaigns will be paused after the invoice due date has elapsed and the user will be prompted to pay their invoice when attempting to log into their account via Gmail. Also, the customer will be emailed about failed payment attempts, overdue invoices, as well as upcoming invoices.
 
 ## Billing System
 Because we'll be utilizing both Stripe & PayPal, we'll need to build an in-house billing system that can track a user's payment methods, invoices, payments, and any over-due payments or account credits. 
