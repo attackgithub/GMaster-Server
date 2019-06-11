@@ -1,4 +1,6 @@
-﻿namespace Query.Models
+﻿using System;
+
+namespace Query.Models
 {
     public enum RoleType : short
     {
@@ -14,6 +16,7 @@
         public int? userId { get; set; }
         public int teamId { get; set; }
         public RoleType roleType { get; set; }
+        public DateTime datecreated { get; set; } 
     }
 
     public class TeamMemberInfo: TeamMember

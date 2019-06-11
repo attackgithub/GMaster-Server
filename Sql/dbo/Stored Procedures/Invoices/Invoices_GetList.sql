@@ -6,6 +6,6 @@ AS
 	SELECT *
 	FROM Invoices
 	WHERE userId=@userId
-	ORDER BY datedue DESC
+	ORDER BY invoiceId DESC
 	OFFSET @length * (@page - 1) ROWS
     FETCH NEXT @length ROWS ONLY
