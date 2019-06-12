@@ -6,12 +6,13 @@
     [name] NVARCHAR(64) NOT NULL DEFAULT '', 
     [gender] BIT NULL, 
     [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE(),
-    [refreshToken] VARCHAR(64) NOT NULL DEFAULT '', 
     [locale] VARCHAR(8) NOT NULL DEFAULT '', 
-    [stripeCustomerId] VARCHAR(25) NOT NULL DEFAULT '', 
     [zipcode] VARCHAR(6) NOT NULL DEFAULT '', 
     [stateAbbr] VARCHAR(2) NOT NULL DEFAULT '', 
-    [country] VARCHAR(2) NOT NULL DEFAULT ''
+    [country] VARCHAR(2) NOT NULL DEFAULT '',
+    [refreshToken] VARCHAR(64) NOT NULL DEFAULT '',
+    [stripeCustomerId] VARCHAR(25) NOT NULL DEFAULT '', 
+    [stripePaymentMethodId] VARCHAR(32) NOT NULL DEFAULT '',
 )
 
 GO

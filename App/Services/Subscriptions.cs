@@ -244,9 +244,8 @@ namespace GMaster.Services
 
             try
             {
-                var subscriptionService = new SubscriptionService();
-
                 //check Stripe for existing subscription
+                var subscriptionService = new SubscriptionService();
                 Subscription subscription = subscriptionService.List(new SubscriptionListOptions()
                 {
                     CustomerId = customerId
@@ -274,10 +273,11 @@ namespace GMaster.Services
                     else
                     {
                         //change Stripe subscription
+                        Subscription updatedSubscription;
                         if (Common.Plans.IdFromStripePlanId(subscription.Plan.ProductId) == planId)
                         {
                             //update subscription with same plan
-                            var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                            updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
                             {
                                 BillingCycleAnchorNow = true,
                                 Items = new List<SubscriptionItemUpdateOption>()
@@ -294,7 +294,7 @@ namespace GMaster.Services
                         else
                         {
                             //update subscription with different plan
-                            var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                            updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
                             {
                                 BillingCycleAnchorNow = true,
                                 Items = new List<SubscriptionItemUpdateOption>()
@@ -313,7 +313,13 @@ namespace GMaster.Services
                             });
                         }
                         //deactivate current subscription so that a new subscription can be created
-                        Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);
+                        if(subscriptions.Where(s => s.userId == User.userId).Count() > 0)
+                        {
+                            Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);
+                        }
+                        
+                        //set subscription object
+                        subscription = updatedSubscription;
                     }
                 }
                 else
@@ -331,6 +337,9 @@ namespace GMaster.Services
                         }
                     });
                 }
+
+                //get default payment method from Stripe Subscription object
+                //Query.Users.UpdateStripePaymentMethodId(User.userId, subscription.DefaultPaymentMethodId);
             }
             catch (Exception ex)
             {
@@ -378,7 +387,7 @@ namespace GMaster.Services
 
             //finally, rely on Stripe to execute two Gmaster Stripe webhooks, 
             //one to finalize an invoice, the other to submit a payment success.
-            return Success();
+            return "[{\"success\":true}]";
         }
     }
 }

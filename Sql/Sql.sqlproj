@@ -202,6 +202,7 @@
     <Build Include="dbo\Stored Procedures\Payments\Payments_GetList.sql" />
     <Build Include="dbo\Stored Procedures\Subscriptions\Subscriptions_GetHistory.sql" />
     <Build Include="dbo\Stored Procedures\Subscriptions\Subscription_GetByOwner.sql" />
+    <Build Include="dbo\Stored Procedures\Users\User_UpdateStripePaymentMethod.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

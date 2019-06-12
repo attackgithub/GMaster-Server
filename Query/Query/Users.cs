@@ -166,6 +166,17 @@ namespace Query
             );
         }
 
+        public static void UpdateStripePaymentMethodId(int userId, string paymentMethodId)
+        {
+            Sql.ExecuteNonQuery("User_UpdateStripePaymentMethod",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"paymentMethodId", paymentMethodId }
+                }
+            );
+        }
+
         public static Models.UserLocation UpdateLocation(int userId, string zipcode, string country = "")
         {
             var list = Sql.Populate<Models.UserLocation>("User_UpdateLocation",
