@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Http;
@@ -167,7 +168,7 @@ namespace GMaster.Controllers
                         }
                     }
 
-                    //show payment history
+                    //load payment history
                     var paymentItem = new Scaffold("/Views/Subscription/settings/payment-item.html");
                     var payments = Query.Payments.GetList(User.userId);
                     var html = new StringBuilder();
@@ -186,7 +187,7 @@ namespace GMaster.Controllers
                     }
                     scaffold["payments"] = html.ToString();
 
-                    //show invoices
+                    //load invoices
                     var invoiceItem = new Scaffold("/Views/Subscription/settings/invoice-item.html");
                     var invoices = Query.Invoices.GetList(User.userId);
                     html = new StringBuilder();
@@ -215,6 +216,81 @@ namespace GMaster.Controllers
                         html.Append(invoiceItem.Render());
                     }
                     scaffold["invoices"] = html.ToString();
+
+                    //load subscription changes
+                    var historyItem = new Scaffold("/Views/Subscription/settings/history-item.html");
+                    var subscriptions = Query.Subscriptions.GetHistory(User.userId);
+                    var team = Query.Teams.GetByOwner(User.userId);
+                    var members = Query.TeamMembers.GetList(team.teamId).OrderByDescending(o => o.datecreated);
+                    html = new StringBuilder();
+                    var items = new List<HistoryItem>();
+                    var historyItems = new List<HistoryElement>();
+
+                    //add list of members to history
+                    foreach (var member in members)
+                    {
+                        items.Add(new HistoryItem()
+                        {
+                            member = member,
+                            dateCreated = new DateTime(member.datecreated.Year, member.datecreated.Month, member.datecreated.Day),
+                            type = 0
+                        });
+                    }
+
+                    //add list of subscriptions to history
+                    foreach (var sub in subscriptions)
+                    {
+                        items.Add(new HistoryItem()
+                        {
+                            subscription = sub,
+                            dateCreated = new DateTime(sub.datestarted.Year, sub.datestarted.Month, sub.datestarted.Day),
+                            type = 1
+                        });
+                    }
+
+                    //sort history items
+                    items = items.OrderByDescending(o => o.dateCreated).ThenBy(o => o.type).ToList();
+
+                    //generate subscription changes
+                    var currItem = new HistoryElement();
+                    foreach(var item in items)
+                    {
+                        var date = item.dateCreated.ToString("yyyy/MM/dd");
+                        if (currItem.datecreated != date || item.type != currItem.type || item.type == 1)
+                        {
+                            if (currItem.description != null)
+                            {
+                                historyItems.Add(currItem);
+                            }
+                            currItem = new HistoryElement()
+                            {
+                                datecreated = date,
+                                description = item.type == 0 ? "Added Member" : "Changed Subscription to " + Common.Plans.NameFromId(item.subscription.planId) + " plan",
+                                members = item.type == 0 ? "1" : "",
+                                type = item.type
+                            };
+                        }
+                        else
+                        {
+                            if(item.type == 0)
+                            {
+                                currItem.description = "Added Members";
+                                currItem.members = (int.Parse(currItem.members) + 1).ToString();
+                            }
+                        }
+                    }
+                    if (currItem.description != null)
+                    {
+                        historyItems.Add(currItem);
+                    }
+
+                    foreach(var item in historyItems)
+                    {
+                        historyItem.Bind(new { history = item });
+                        html.Append(historyItem.Render());
+                    }
+
+                    scaffold["history"] = html.ToString();
                 }
                 return scaffold.Render();
             }
@@ -222,6 +298,22 @@ namespace GMaster.Controllers
             {
                 return Error("Subscription does not exist");
             }
+        }
+
+        private class HistoryItem
+        {
+            public Query.Models.TeamMember member;
+            public Query.Models.Subscription subscription;
+            public int type = 0;
+            public DateTime dateCreated { get; set; }
+        }
+
+        private class HistoryElement
+        {
+            public string datecreated { get; set; }
+            public string description { get; set; }
+            public string members { get; set; }
+            public int type = -1;
         }
     }
 }

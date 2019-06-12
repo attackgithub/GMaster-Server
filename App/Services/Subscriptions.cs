@@ -230,6 +230,9 @@ namespace GMaster.Services
             //prepare Stripe subscription
             var subscriptionId = 0;
             var plan = Query.Plans.GetList().Where(p => p.planId == planId).First();
+            var teamId = Query.Teams.GetByOwner(User.userId).teamId;
+            var existingMembers = Query.TeamMembers.GetList(teamId);
+            var useSameSubscription = false;
 
             //set up subscription start date
             var subscriptionStart = DateTime.Now;
@@ -254,54 +257,64 @@ namespace GMaster.Services
                     //customer already has a subscription
 
                     //check if user is allowed to create a new subscription
-                    if(subscription.Created.Value.AddDays(1) > DateTime.Now && Server.environment == Server.Environment.production)
-                    {
-                        Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, "Customer attempted to change subscription within 24 hours of previous subscription creation", "");
-                        return Error("Please wait at least 24 hours before changing your subscription again.");
-                    }
+                    //if(subscription.Created.Value.AddDays(1) > DateTime.Now && Server.environment == Server.Environment.production)
+                    //{
+                    //    Query.LogErrors.Create(User.userId, "Create Stripe Subscription", context.Request.Path, "Customer attempted to change subscription within 24 hours of previous subscription creation", "");
+                    //    return Error("Please wait at least 24 hours before changing your subscription again.");
+                    //}
 
-                    //change Stripe subscription
-                    if(Common.Plans.IdFromStripePlanId(subscription.Plan.ProductId) == planId)
+                    var subscriptionInfo = Query.Subscriptions.GetByOwner(User.userId);
+
+                    
+                    if (members.Length == existingMembers.Count && planId == subscriptionInfo.planId)
                     {
-                        //update subscription with same plan
-                        var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
-                        {
-                            BillingCycleAnchorNow = true,
-                            Items = new List<SubscriptionItemUpdateOption>()
-                        {
-                            new SubscriptionItemUpdateOption()
-                            {
-                                Id = subscription.Items.First().Id,
-                                Quantity = members.Length,
-                                Deleted = false
-                            }
-                        }
-                        });
+                        //don't modify Stripe subscription plan if new member count is the same as old member count
+                        useSameSubscription = true;
                     }
                     else
                     {
-                        //update subscription with different plan
-                        var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                        //change Stripe subscription
+                        if (Common.Plans.IdFromStripePlanId(subscription.Plan.ProductId) == planId)
                         {
-                            BillingCycleAnchorNow = true,
-                            Items = new List<SubscriptionItemUpdateOption>()
-                        {
-                            new SubscriptionItemUpdateOption()
+                            //update subscription with same plan
+                            var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
                             {
-                                Id = subscription.Items.First().Id,
-                                Deleted = true //delete existing plan product
-                            },
-                            new SubscriptionItemUpdateOption()
-                            {
-                                PlanId = plan.stripePlanName, //add new plan product
-                                Quantity = members.Length
-                            }
+                                BillingCycleAnchorNow = true,
+                                Items = new List<SubscriptionItemUpdateOption>()
+                                {
+                                    new SubscriptionItemUpdateOption()
+                                    {
+                                        Id = subscription.Items.First().Id,
+                                        Quantity = members.Length,
+                                        Deleted = false
+                                    }
+                                }
+                            });
                         }
-                        });
+                        else
+                        {
+                            //update subscription with different plan
+                            var updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
+                            {
+                                BillingCycleAnchorNow = true,
+                                Items = new List<SubscriptionItemUpdateOption>()
+                                {
+                                    new SubscriptionItemUpdateOption()
+                                    {
+                                        Id = subscription.Items.First().Id,
+                                        Deleted = true //delete existing plan product
+                                    },
+                                    new SubscriptionItemUpdateOption()
+                                    {
+                                        PlanId = plan.stripePlanName, //add new plan product
+                                        Quantity = members.Length
+                                    }
+                                }
+                            });
+                        }
+                        //deactivate current subscription so that a new subscription can be created
+                        Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);
                     }
-
-                    //deactivate current subscription so that a new subscription can be created
-                    Query.Subscriptions.Cancel(subscriptions.Where(s => s.userId == User.userId).First().subscriptionId, User.userId);
                 }
                 else
                 {
@@ -325,40 +338,36 @@ namespace GMaster.Services
                 return Error("Error purchasing subscription (10013). Please report error to " + Settings.ContactInfo.CustomerService.email);
             }
 
-            //create subscription record
-            try
+            if(useSameSubscription == false)
             {
-                subscriptionId = Query.Subscriptions.Create(new Query.Models.Subscription()
+                //create subscription record
+                try
                 {
-                    userId = user.userId,
-                    planId = planId,
-                    totalUsers = members.Length,
-                    pricePerUser = plan.price,
-                    paySchedule = Query.Models.PaySchedule.monthly,
-                    billingDay = subscriptionStart.Day,
-                    datestarted = subscriptionStart,
-                    status = false
-                });
-            }
-            catch (Exception ex)
-            {
-                Query.LogErrors.Create(User.userId, "Create Subscription Record", context.Request.Path, ex.Message, ex.StackTrace);
-                return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                    subscriptionId = Query.Subscriptions.Create(new Query.Models.Subscription()
+                    {
+                        userId = user.userId,
+                        planId = planId,
+                        totalUsers = members.Length,
+                        pricePerUser = plan.price,
+                        paySchedule = Query.Models.PaySchedule.monthly,
+                        billingDay = subscriptionStart.Day,
+                        datestarted = subscriptionStart,
+                        status = false
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Query.LogErrors.Create(User.userId, "Create Subscription Record", context.Request.Path, ex.Message, ex.StackTrace);
+                    return Error("Error creating subscription (10014). Please report error to " + Settings.ContactInfo.CustomerService.email);
+                }
             }
 
             //add new team members
-            var teamId = Query.Teams.GetByOwner(User.userId).teamId;
-            var existingMembers = Query.TeamMembers.GetList(teamId);
-
             foreach (var member in members.Where(m => !existingMembers.Any(e => e.email == m)))
             {
-
                 if(member == user.email) { continue; }
                 Query.TeamMembers.Create(teamId, Query.Models.RoleType.contributer, member);
             }
-
-
-            existingMembers = Query.TeamMembers.GetList(teamId);
 
             //delete existing team members that are no longer part of the team
             foreach (var member in existingMembers.Where(e => !members.Any(m => m == e.email)))

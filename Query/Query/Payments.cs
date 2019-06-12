@@ -20,7 +20,7 @@ namespace Query
             );
         }
 
-        public static List<Models.Payment> GetList(int userId, int page = 1, int length = 10)
+        public static List<Models.Payment> GetList(int userId, int page = 1, int length = 12)
         {
             return Sql.Populate<Models.Payment>(
                 "Payments_GetList",

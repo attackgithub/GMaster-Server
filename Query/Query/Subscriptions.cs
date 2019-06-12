@@ -57,6 +57,17 @@ namespace Query
             );
         }
 
+        public static List<Models.Subscription> GetHistory(int userId)
+        {
+            return Sql.Populate<Models.Subscription>(
+                "Subscriptions_GetHistory",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId }
+                }
+            );
+        }
+
         public static Models.SubscriptionInfo GetInfo(int subscriptionId)
         {
             var list = Sql.Populate<Models.SubscriptionInfo>(
@@ -67,6 +78,19 @@ namespace Query
                 }
             );
             if(list.Count > 0) { return list[0]; }
+            return null;
+        }
+
+        public static Models.Subscription GetByOwner(int userId)
+        {
+            var list = Sql.Populate<Models.Subscription>(
+                "Subscription_GetByOwner",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId }
+                }
+            );
+            if (list.Count > 0) { return list[0]; }
             return null;
         }
 
