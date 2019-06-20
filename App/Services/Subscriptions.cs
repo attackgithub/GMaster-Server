@@ -25,9 +25,9 @@ namespace GMaster.Services
                             outstanding = new
                             {
                                 outstanding.totalOwed,
-                                outstanding.duedate,
+                                duedate = outstanding.duedate.Value.AddMonths(-2),
                                 outstanding.schedule,
-                                outstanding.status,
+                                status = 0, //outstanding.status,
                                 outstanding.subscriptionId
                             },
                             subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)

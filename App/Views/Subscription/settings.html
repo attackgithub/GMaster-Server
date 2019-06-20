@@ -48,6 +48,19 @@
     {{/is-outstanding}}
 </section>
 
+{{is-outstanding}}
+<section class="outstanding">
+    <h3>Overdue Invoices</h3>
+    <p>
+        You have one or more overdue invoice. To continue using Gmaster services,
+        please make a payment of {{outstanding.price}} as soon as possible.
+        <div class="buttons">
+            <button class="make-payment">Make A Payment</button>
+        </div>
+    </p>
+</section>
+{{/is-outstanding}}
+
 {{can-modify}}
 <section class="modify">
     {{is-team}}
