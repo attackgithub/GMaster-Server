@@ -25,9 +25,9 @@ namespace GMaster.Services
                             outstanding = new
                             {
                                 outstanding.totalOwed,
-                                duedate = outstanding.duedate.Value.AddMonths(-2),
+                                outstanding.duedate,
                                 outstanding.schedule,
-                                status = 0, //outstanding.status,
+                                outstanding.status,
                                 outstanding.subscriptionId
                             },
                             subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
@@ -387,6 +387,79 @@ namespace GMaster.Services
 
             //finally, rely on Stripe to execute two Gmaster Stripe webhooks, 
             //one to finalize an invoice, the other to submit a payment success.
+            return "[{\"success\":true}]";
+        }
+
+        public string Payment(int price, string stripeToken)
+        {
+            if (!HasPermissions()) { return ""; }
+            var user = Query.Users.GetInfo(User.userId);
+            var customerId = user.stripeCustomerId ?? "";
+
+            if (customerId != "")
+            {
+                //check if user has a subscription
+                var subscription = Query.Subscriptions.GetByOwner(User.userId);
+                if(subscription != null)
+                {
+                    var sourceId = "";
+                    try
+                    {
+                        //create source for customer
+                        var serviceSource = new SourceService();
+                        var source = serviceSource.Create(new SourceCreateOptions()
+                        {
+                            Currency = "usd",
+                            Type = SourceType.Card,
+                            Token = stripeToken,
+                            Owner = new SourceOwnerOptions()
+                            {
+                                Email = user.email
+                            }
+                        });
+                        sourceId = source.Id;
+
+                        //attach new credit card source to customer
+                        serviceSource.Attach(customerId, new SourceAttachOptions()
+                        {
+                             Source = sourceId
+                        });
+
+                        //update default payment method for customer
+                        var service = new CustomerService();
+                        var customer = service.Update(customerId, new CustomerUpdateOptions()
+                        {
+                            DefaultSource = sourceId
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Error("Error updating default payment method");
+                    }
+
+                    try
+                    {
+
+                        //get latest unpaid invoice from Stripe
+                        var service = new InvoiceService();
+                        var invoices = service.List(new InvoiceListOptions
+                        {
+                            Limit = 1,
+                        });
+
+                        //pay invoice
+                        var invoice = service.Pay(invoices.First().Id, new InvoicePayOptions
+                        {
+                            SourceId = sourceId
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Error("Error paying invoice");
+                    }
+                }
+            }
+
             return "[{\"success\":true}]";
         }
     }

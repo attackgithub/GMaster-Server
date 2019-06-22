@@ -1,0 +1,51 @@
+﻿<style>
+    body{padding:20px;}
+    .logo{padding-top:30px; width:100%; text-align:center;}
+    .logo img{width:200px;}
+    .pay-msg{padding:0 20px 20px 20px; font-size:17px; text-align:center; width:100%; box-sizing:border-box;}
+    .pay-msg.error{color:#cc0000;}
+    .retry{width:100%; text-align:center; padding-top:50px;}
+    .summary{width:100%; text-align:center; font-size:15px; opacity:0.5;}
+    .retry a{border-radius:4px; text-decoration:none; font-size:16px; font-weight:400; padding:8px 20px;}
+    .retry a:link{color:#fff; background-color:#1b408d;}
+    .retry a:hover{color:#fff; background-color:#005ce2;}
+    .pay-price{font-size:24px; width:100%; text-align:center; padding-bottom:10px;}
+    .pay-price span{font-size:17px;}
+
+    /* Stripe Payment Form */
+    .StripeElement {
+        box-sizing: border-box; height: 40px; padding: 10px 12px;
+        border: 1px solid transparent; border-radius: 4px; background-color: white;
+        box-shadow: 0 1px 3px 0 #e6ebf1; transition: box-shadow 150ms ease;
+    }
+    .StripeElement--focus {box-shadow: 0 1px 3px 0 #cfd7df;}
+    .StripeElement--invalid {border-color: #fa755a;}
+    .StripeElement--webkit-autofill {background-color: #fefde5 !important;}
+    .submit-payment{padding-top:20px; text-align:center}
+    form button.pay{color: #fff; font-weight: bold; background-color:#1A73E8; border-radius: 4px; padding: 7px 15px;}
+    form button.pay:hover{background-color:#2080ff; cursor:pointer;}
+
+</style>
+<div class="logo">
+    <img src="/images/logo-xs.png" />
+</div>
+<div class="pay-price">{{price}}</div>
+<div class="pay-msg">Secure Pay with Stripe</div>
+<form action="/charge" method="post" id="payment-form">
+    <div class="form-row">
+        <label for="card-element">
+            Credit or debit card
+        </label>
+        <div id="stripe-card-element"></div>
+        <div id="card-errors" role="alert"></div>
+    </div>
+    <div class="submit-payment">
+        <button class="pay">Submit Payment</button>
+    </div>
+</form>
+<script type="text/javascript">
+    var extensionId = '{{extensionId}}';
+    var devkey = '{{devkey}}';
+    var email = '{{email}}';
+    var stripeKey = '{{stripe-key}}';
+</script>

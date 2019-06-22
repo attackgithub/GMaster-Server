@@ -61,18 +61,15 @@ $(document).ready(() => {
 
 function paymentSuccess(token) {
     message('Processing Payment...');
-    S.ajax.post('Subscriptions/Subscribe',
+    S.ajax.post('Subscriptions/Payment',
         { 
             devkey: devkey,
             email: email,
-            planId: planId,
-            emails: emails,
-            zipcode: token.card.address_zip || '',
             stripeToken: token.id
         },
         function () {
             message('Payment success! please wait...');
-            chrome.runtime.sendMessage(extensionId, { path: 'subscribe', method:'stripe' },
+            chrome.runtime.sendMessage(extensionId, { path: 'payment', method:'stripe' },
                 function (response) {
                     if (response == 'success') {
                         window.close();
