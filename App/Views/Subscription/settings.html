@@ -100,14 +100,13 @@
     <h3>Cancel Subscription</h3>
     <p>
         {{is-new}}
-        Because you subscribed within the past 48 hours and haven't run any campaigns yet, you can cancel your subscription and get a <b>full refund</b>.
+        Because you subscribed within the past 5 days and haven't run any campaigns yet, you can cancel your subscription and get a <b>full refund</b>.
         {{/is-new}}
         {{is-old-month}}
-        Once you cancel, you'll have access to all of your plan features until the end of the current billing cycle (<b>{{outstanding.duedate}}</b>).
+        Once you cancel, any running campaigns will immediately stop and you'll be given a <b>partial refund</b> for the rest of the unused billing cycle.
         {{/is-old-month}}
         {{is-old-year}}
-        Once you cancel, you'll have access to all of your plan features until <b>{{cancellation.enddate}}</b>, 
-        and you'll receive a partial refund based on the amount of time that has passed since your subscription has started.
+        Once you cancel, any running campaigns will immediately stop and you'll be given a <b>partial refund</b> for the rest of the unused billing cycle.
         {{/is-old-year}}
         <div class="buttons">
             <button class="btn-cancel">Cancel Subscription</button>

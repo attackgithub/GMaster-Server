@@ -273,4 +273,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="schedule" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="2b325cc7-0aca-4f9b-9ee6-0f8ffcaa7632" ChangeDateTime="06/24/2019 00:16:24">
+    <Property Name="ElementName" Value="[dbo].[Users].[stripeSourceFingerprint`]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="stripeSourceFingerprint" />
+  </Operation>
 </Operations>

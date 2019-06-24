@@ -399,38 +399,45 @@ namespace GMaster.Services
             if (customerId != "")
             {
                 //check if user has a subscription
-                var subscription = Query.Subscriptions.GetByOwner(User.userId);
-                if(subscription != null)
+                var subscriptionInfo = Query.Subscriptions.GetByOwner(User.userId);
+                if(subscriptionInfo != null)
                 {
                     var sourceId = "";
                     try
                     {
-                        //create source for customer
+                        //create source for credit card
                         var serviceSource = new SourceService();
                         var source = serviceSource.Create(new SourceCreateOptions()
                         {
                             Currency = "usd",
                             Type = SourceType.Card,
-                            Token = stripeToken,
-                            Owner = new SourceOwnerOptions()
-                            {
-                                Email = user.email
-                            }
+                            Token = stripeToken
                         });
                         sourceId = source.Id;
 
-                        //attach new credit card source to customer
-                        serviceSource.Attach(customerId, new SourceAttachOptions()
+                        //check for duplicate source for customer
+                        var serviceCustomer = new CustomerService();
+                        var customer = serviceCustomer.Get(customerId);
+                        var customerSource = serviceSource.Get(customer.DefaultSourceId);
+                        if(source.Card.Fingerprint != customerSource.Card.Fingerprint)
                         {
-                             Source = sourceId
-                        });
+                            //attach new credit card source to customer
+                            serviceSource.Attach(customerId, new SourceAttachOptions()
+                            {
+                                Source = sourceId
+                            });
 
-                        //update default payment method for customer
-                        var service = new CustomerService();
-                        var customer = service.Update(customerId, new CustomerUpdateOptions()
+                            //update default payment method for customer
+                            serviceCustomer.Update(customerId, new CustomerUpdateOptions()
+                            {
+                                DefaultSource = sourceId
+                            });
+                        }
+                        else
                         {
-                            DefaultSource = sourceId
-                        });
+                            //use existing customer source since provided source is a duplicate
+                            sourceId = customerSource.Id;
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -439,23 +446,99 @@ namespace GMaster.Services
 
                     try
                     {
+                        //get customer subscription
+                        var subscriptionService = new SubscriptionService();
+                        Subscription subscription = subscriptionService.List(new SubscriptionListOptions()
+                        {
+                            CustomerId = customerId
+                        }).FirstOrDefault();
 
-                        //get latest unpaid invoice from Stripe
+
+                        //get latest unpaid invoices from Stripe
                         var service = new InvoiceService();
                         var invoices = service.List(new InvoiceListOptions
                         {
-                            Limit = 1,
+                            CustomerId = customerId,
+                            Paid = false,
+                            SubscriptionId = subscription.Id
                         });
 
-                        //pay invoice
-                        var invoice = service.Pay(invoices.First().Id, new InvoicePayOptions
+                        if(invoices.Count() == 0)
                         {
-                            SourceId = sourceId
-                        });
+                            return Error("No unpaid invoices could be found");
+                        }
+
+                        //pay all unpaid invoices
+                        foreach(var invoice in invoices)
+                        {
+                            service.Pay(invoice.Id, new InvoicePayOptions
+                            {
+                                SourceId = sourceId
+                            });
+                        }
                     }
                     catch (Exception ex)
                     {
-                        return Error("Error paying invoice");
+                        return Error("Error paying invoice(s)");
+                    }
+                }
+            }
+
+            return "[{\"success\":true}]";
+        }
+
+        public string Cancel()
+        {
+            if (!HasPermissions()) { return ""; }
+            var user = Query.Users.GetInfo(User.userId);
+            var customerId = user.stripeCustomerId ?? "";
+
+            if (customerId != "")
+            {
+                //check if user has a subscription
+                var subscriptionInfo = Query.Subscriptions.GetByOwner(User.userId);
+                if (subscriptionInfo != null)
+                {
+                    try
+                    {
+                        //get customer subscription
+                        var service = new SubscriptionService();
+                        Subscription subscription = service.List(new SubscriptionListOptions()
+                        {
+                            CustomerId = customerId
+                        }).FirstOrDefault();
+
+                        if((DateTime.Now - subscriptionInfo.datestarted).TotalDays < 5)
+                        {
+                            //subscription is less than 5 days old, check if user started a campaign
+                            var startedCampaign = false;
+
+                            if (startedCampaign == false)
+                            {
+                                //cancel subscription with full refund 
+                                service.Cancel(subscription.Id, new SubscriptionCancelOptions()
+                                {
+                                    Prorate = false
+                                });
+                            }
+                            else
+                            {
+                                //cancel subscription with partial refund
+                                service.Cancel(subscription.Id, new SubscriptionCancelOptions(){});
+                            }
+                        }
+                        else
+                        {
+                            //cancel subscription with partial refund
+                            service.Cancel(subscription.Id, new SubscriptionCancelOptions() { });
+                        }
+
+                        //update database
+                        Query.Subscriptions.Cancel(subscriptionInfo.subscriptionId, User.userId);
+                    }
+                    catch (Exception)
+                    {
+                        return Error("Error canceling subscription");
                     }
                 }
             }

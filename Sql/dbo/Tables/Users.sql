@@ -12,7 +12,7 @@
     [country] VARCHAR(2) NOT NULL DEFAULT '',
     [refreshToken] VARCHAR(64) NOT NULL DEFAULT '',
     [stripeCustomerId] VARCHAR(25) NOT NULL DEFAULT '', 
-    [stripePaymentMethodId] VARCHAR(32) NOT NULL DEFAULT '',
+    [stripePaymentMethodId] VARCHAR(32) NOT NULL DEFAULT '' 
 )
 
 GO

@@ -134,11 +134,11 @@ namespace GMaster.Controllers
                         //show modify option
                         scaffold.Show("can-modify");
                     }
-                    if(subscriptionAge < 48 * 60)
+                    if(subscriptionAge < (5 * 24) * 60)
                     {
                         //TODO: Check for existing campaigns that have been ran
 
-                        //subscription is less than 2 days old & no campaigns have been run, 
+                        //subscription is less than 5 days old & no campaigns have been run, 
                         //allow user to cancel subscription with a full refund
                         scaffold.Show("is-new");
                     }
