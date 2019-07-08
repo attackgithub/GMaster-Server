@@ -512,6 +512,7 @@ namespace GMaster.Services
                         {
                             //subscription is less than 5 days old, check if user started a campaign
                             var startedCampaign = false;
+                            //TODO: Check if user started campaign
 
                             if (startedCampaign == false)
                             {
@@ -520,6 +521,9 @@ namespace GMaster.Services
                                 {
                                     Prorate = false
                                 });
+
+                                //TODO: Get payment info from Stripe
+                                //TODO: Apply refund to payment in Stripe
                             }
                             else
                             {

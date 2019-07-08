@@ -17,7 +17,7 @@ namespace GMaster.Services
             try
             {
                 //build Stripe Event object from request body and verify Stripe signing secret
-                var ev = EventUtility.ConstructEvent(requestBody, context.Request.Headers["Stripe-Signature"], Settings.Stripe.Webhook.SigningSecret);
+                var ev = EventUtility.ConstructEvent(requestBody, context.Request.Headers["Stripe-Signature"], Settings.Stripe.Webhook.SigningSecret);//, 9999999);
 
                 //log Stripe Event
                 logId = Query.LogStripeWebhooks.Create(ev.Type, Serializer.WriteObjectToString(ev));

@@ -48,7 +48,7 @@
     {{/is-outstanding}}
 </section>
 
-{{is-outstanding}}
+{{is-overdue}}
 <section class="outstanding">
     <h3>Overdue Invoices</h3>
     <p>
@@ -59,7 +59,7 @@
         </div>
     </p>
 </section>
-{{/is-outstanding}}
+{{/is-overdue}}
 
 {{can-modify}}
 <section class="modify">
@@ -118,7 +118,7 @@
 
 
 <div class="row">
-    <div class="col six">
+    <div class="col pad-edge-lg">
         <section class="invoices">
             <h3>Invoices</h3>
             <table>
@@ -133,7 +133,7 @@
             </table>
         </section>
     </div>
-    <div class="col six">
+    <div class="col pad-edge-lg">
         <section class="payments">
             <h3>Payments</h3>
             <table>
@@ -147,21 +147,20 @@
             </table>
         </section>
     </div>
-</div>
-
-<div class="row">
-    <section class="payments">
-        <h3>Subscription History</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Members</th>
-                </tr>
-            </thead>
-            <tbody>{{history}}</tbody>
-        </table>
-    </section>
+    <div class="col pad-edge-lg">
+        <section class="payments">
+            <h3>Subscription History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Members</th>
+                    </tr>
+                </thead>
+                <tbody>{{history}}</tbody>
+            </table>
+        </section>
+    </div>
 </div>
 

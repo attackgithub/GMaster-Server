@@ -75,3 +75,15 @@
 .gmaster-page table tbody tr:nth-child(odd) {
   background-color: rgba(242, 245, 245, 0.8);
 }
+.gmaster-page .pad {
+  padding: 15px;
+}
+.gmaster-page .pad-right {
+  padding-right: 15px;
+}
+.gmaster-page .pad-edge {
+  padding: 0 15px 15px 0;
+}
+.gmaster-page .pad-edge-lg {
+  padding: 0 30px 30px 0;
+}

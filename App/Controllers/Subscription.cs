@@ -106,6 +106,11 @@ namespace GMaster.Controllers
                     scaffold.Show("is-outstanding");
                     scaffold.Show("can-cancel");
 
+                    if(outstanding.duedate.Value < DateTime.Now)
+                    {
+                        scaffold.Show("is-overdue");
+                    }
+
                     if(subscription.paySchedule == Query.Models.PaySchedule.monthly)
                     {
                         scaffold.Show("is-monthly");
@@ -253,19 +258,36 @@ namespace GMaster.Controllers
 
                     //generate subscription changes
                     var currItem = new HistoryElement();
+                    var currPlanId = -99;
+                    var count = 0;
+                    var actionType = "";
                     foreach(var item in items)
                     {
+                        count += 1;
                         var date = item.dateCreated.ToString("yyyy/MM/dd");
                         if (currItem.datecreated != date || item.type != currItem.type || item.type == 1)
                         {
+                            if (item.type != 0 && item.subscription.planId == currPlanId) { continue; }
+                            if(item.type != 0)
+                            {
+                                currPlanId = item.subscription.planId;
+                            }
                             if (currItem.description != null)
                             {
                                 historyItems.Add(currItem);
                             }
+                            if (count == items.Count)
+                            {
+                                actionType = "Started Subscription with ";
+                            }
+                            else
+                            {
+                                actionType = "Changed Subscription to ";
+                            }
                             currItem = new HistoryElement()
                             {
                                 datecreated = date,
-                                description = item.type == 0 ? "Added Member" : "Changed Subscription to " + Common.Plans.NameFromId(item.subscription.planId) + " plan",
+                                description = item.type == 0 ? "Added Member" : actionType + Common.Plans.NameFromId(item.subscription.planId) + " plan",
                                 members = item.type == 0 ? "1" : "",
                                 type = item.type
                             };

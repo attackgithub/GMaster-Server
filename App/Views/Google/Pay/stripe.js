@@ -61,31 +61,15 @@ $(document).ready(() => {
 
 function paymentSuccess(token) {
     message('Processing Payment...');
-    S.ajax.post('Subscriptions/Subscribe',
-        { 
-            devkey: devkey,
-            email: email,
-            planId: planId,
-            emails: emails,
-            zipcode: token.card.address_zip || '',
-            stripeToken: token.id
-        },
-        function () {
-            message('Payment success! please wait...');
-            chrome.runtime.sendMessage(extensionId, { path: 'subscribe', method:'stripe' },
-                function (response) {
-                    if (response == 'success') {
-                        window.close();
-                    } else {
-                        error('Payment Error. Please try again.');
-                        $('.submit-payment').show();
-                    }
-                }
-            );
-        },
-        function (err) {
-            error('Payment error. Please try again.<div class="summary">' + err.responseText + '</div>');
-            $('.submit-payment').show();
+    chrome.runtime.sendMessage(extensionId,
+        { path: 'subscribe', method: 'stripe', zipcode: token.card.address_zip || '', token: token.id },
+        function (response) {
+            if (response == 'success') {
+                window.close();
+            } else {
+                error('Payment Error. Please try again.');
+                $('.submit-payment').show();
+            }
         }
     );
 }
