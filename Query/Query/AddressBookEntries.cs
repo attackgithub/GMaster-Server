@@ -10,8 +10,7 @@ namespace Query
                 "AddressBook_CreateEntry",
                 new Dictionary<string, object>()
                 {
-                    {"addressId", model.addressId },
-                    {"userId", model.userId },
+                    {"teamId", model.teamId },
                     {"email", model.email },
                     {"firstname", model.firstname },
                     {"lastname", model.lastname }
@@ -29,13 +28,13 @@ namespace Query
             lastnameDesc = 5
         }
 
-        public static List<Models.AddressBookEntry> GetList (int userId, int page = 1, int length = 50, SortList sort = 0, string search = "")
+        public static List<Models.AddressBookEntry> GetList (int teamId, int page = 1, int length = 50, SortList sort = 0, string search = "")
         {
             return Sql.Populate<Models.AddressBookEntry>(
                 "AddressBook_GetList",
                 new Dictionary<string, object>()
                 {
-                    {"userId", userId },
+                    {"teamId", teamId },
                     {"page", page },
                     {"length", length },
                     {"sort", (int)sort },

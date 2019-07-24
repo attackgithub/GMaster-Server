@@ -17,28 +17,26 @@ namespace GMaster.Services
             try
             {
                 var outstanding = Query.Subscriptions.GetOutstandingBalance(User.userId);
-                var json = Serializer.WriteObjectToString(new
+                var content = new
+                {
+                    response = new
                     {
-                        response = new
+                        //display any outstanding invoice data to lock out account or warn user
+                        outstanding = new
                         {
-                            //display any outstanding invoice data to lock out account or warn user
-                            outstanding = new
-                            {
-                                outstanding.totalOwed,
-                                outstanding.duedate,
-                                outstanding.schedule,
-                                outstanding.status,
-                                outstanding.subscriptionId
-                            },
-                            subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
-                        }
-                    },
-                    Newtonsoft.Json.Formatting.Indented
-                );
+                            outstanding.totalOwed,
+                            outstanding.duedate,
+                            outstanding.schedule,
+                            outstanding.status,
+                            outstanding.subscriptionId
+                        },
+                        subscriptions = Query.Subscriptions.GetSubscriptions(User.userId)
+                    }
+                };
 
                 //log API request
                 Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetInfo, User.userId);
-                return "[" + json + "]";
+                return JsonResponse(content);
             }
             catch (Exception ex)
             {
@@ -87,7 +85,7 @@ namespace GMaster.Services
                 }).ToList();
                 var team = Query.Teams.GetByOwner(User.userId);
 
-                var json = Serializer.WriteObjectToString(new
+                var content = new
                 {
                     response = new
                     {
@@ -100,7 +98,8 @@ namespace GMaster.Services
                             outstanding.status,
                             outstanding.subscriptionId
                         },
-                        subscription = new {
+                        subscription = new
+                        {
                             subscription.planId,
                             subscription.paySchedule,
                             subscription.totalUsers,
@@ -111,13 +110,11 @@ namespace GMaster.Services
                             .Select(tm => tm.email).ToArray(),
                         refund = Common.Subscriptions.CalculateRefund(subscription)
                     }
-                },
-                    Newtonsoft.Json.Formatting.Indented
-                );
+                };
 
                 //log API request
                 Common.Log.Api(context, Query.Models.LogApi.Names.SubscriptionsGetUpgradeInfo, User.userId);
-                return "[" + json + "]";
+                return JsonResponse(content);
             }
             catch (Exception ex)
             {

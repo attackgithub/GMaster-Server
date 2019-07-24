@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[AddressBook_GetList]
-	@userId int,
+	@teamId int,
 	@page int = 1,
 	@length int = 50,
 	@sort int = 0,
@@ -9,7 +9,7 @@ AS
 		/* no search specified */
 		SELECT * 
 		FROM AddressBook
-		WHERE userId=@userId
+		WHERE teamId=@teamId
 		AND [status] = 1
 		ORDER BY
 			CASE WHEN @sort = 0 THEN email END ASC,
@@ -29,11 +29,11 @@ AS
 
 		INSERT INTO @fields (fieldId) 
 		SELECT fieldId FROM AddressFields
-		WHERE userId=@userId
+		WHERE teamId=@teamId
 
 		SELECT * 
 		FROM AddressBook ab
-		WHERE userId=@userId
+		WHERE teamId=@teamId
 		AND [status] = 1
 		AND (
 			email LIKE @searchlike

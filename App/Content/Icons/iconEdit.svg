@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="none" width="64" height="64">
+	<defs>
+		<path fill="#FFF" d="M2.05 61.95L16.9 58.4 5.55 47.05l-3.5 14.9m51.6-40.3L42.3 10.3 7.65 44.95 19 56.3l34.65-34.65m2.15-2.15l7.05-7.05L51.5 1.1l-7.05 7.05L55.8 19.5z" id="iconEdit" />
+	</defs>
+  <symbol id="icon-edit" viewBox="0 0 64 64">
+    <g>
+      <use xlink:href="#iconEdit" />
+    </g>
+  </symbol>
+</svg>

@@ -23,6 +23,7 @@ namespace Query.Models
 
     public class SubscriptionInfo : Subscription
     {
+        public int teamId { get; set; }
         public string teamName { get; set; }
         public string ownerName { get; set; }
         public string ownerEmail { get; set; }

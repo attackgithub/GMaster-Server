@@ -5,7 +5,7 @@ namespace Query.Models
     public class AddressField
     {
         public int fieldId { get; set; }
-        public int userId { get; set; }
+        public int teamId { get; set; }
         public string label { get; set; }
         public byte datatype { get; set; }
         public short sort { get; set; }

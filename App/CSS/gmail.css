@@ -87,3 +87,18 @@
 .gmaster-page .pad-edge-lg {
   padding: 0 30px 30px 0;
 }
+.gmaster-page .right {
+  float: right;
+}
+.gmaster-page .text-right {
+  text-align: right;
+}
+.gmaster-page .text-center {
+  text-align: center;
+}
+.gmaster-page .svg-icons {
+  display: none;
+}
+.gmaster-page a.icon use {
+  width: 16px;
+}

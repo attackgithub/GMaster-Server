@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Utility.Serialization;
 
 namespace GMaster
 {
@@ -72,6 +73,13 @@ namespace GMaster
                 return false;
             }
             return true;
+        }
+
+        public string JsonResponse(dynamic content)
+        {
+            return "[" + Serializer.WriteObjectToString(content,
+                    Newtonsoft.Json.Formatting.Indented
+                ) + "]";
         }
     }
 }

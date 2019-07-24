@@ -11,7 +11,7 @@ namespace Query
                 "AddressField_Create",
                 new Dictionary<string, object>()
                 {
-                    {"userId", model.userId },
+                    {"teamId", model.teamId },
                     {"label", model.label },
                     {"datatype", model.datatype },
                     {"sort", model.sort }

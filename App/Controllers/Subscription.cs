@@ -24,19 +24,32 @@ namespace GMaster.Controllers
             var html = "";
             switch (path[2].ToLower())
             {
-                case "campaigns":
+                case "campaigns": /////////////////////////////////////////////////
                     break;
-                case "addressbook":
+
+                case "addressbook": ///////////////////////////////////////////////
+                    var start = 1;
+                    var length = 50;
+                    var sort = 0;
+                    var search = "";
+                    if(path.Length > 3){ start = int.Parse(path[3]); }
+                    if (path.Length > 4) { length = int.Parse(path[4]); }
+                    if (path.Length > 5) { sort = int.Parse(path[5]); }
+                    if (path.Length > 6) { search = path[6]; }
+                    html = GetAddressBook(subscriptionId, start, length, (Query.AddressBookEntries.SortList)sort, search);
                     break;
-                case "reports":
+
+                case "reports": //////////////////////////////////////////////////
                     break;
-                case "team":
+
+                case "team": /////////////////////////////////////////////////////
                     break;
-                case "settings":
+
+                case "settings": /////////////////////////////////////////////////
                     html = GetSettings(subscriptionId);
                     break;
 
-                default:
+                default: /////////////////////////////////////////////////////////
                     context.Response.StatusCode = 500;
                     return "Invalid subscription URL path \"" + path[2].ToLower() + "\"";
 
@@ -53,9 +66,46 @@ namespace GMaster.Controllers
             return "Campaigns!";
         }
 
-        private string GetAddressBook(int subscriptionId)
+        private string GetAddressBook(int subscriptionId, int start = 1, int length = 50, Query.AddressBookEntries.SortList sort = Query.AddressBookEntries.SortList.email, string search = "")
         {
-            return "Address Book!";
+            var subscription = Query.Subscriptions.GetInfo(subscriptionId);
+            if(subscription != null)
+            {
+                var addresses = Query.AddressBookEntries.GetList(subscription.teamId, start, length, sort, search);
+                var scaffold = new Scaffold("/Views/Subscription/addressbook.html");
+                scaffold["gmail-styles"] = RenderGmailStyles();
+                scaffold["team-name"] = subscription.teamName;
+                //load svg icons
+                scaffold["svg"] = Server.LoadFileFromCache("/Content/Icons/iconEdit.svg");
+                if (addresses != null)
+                {
+                    var entryItem = new Scaffold("/Views/Subscription/addressbook/entry-item.html");
+                    var html = new StringBuilder();
+
+                    if(addresses.Count > 0)
+                    {
+                        foreach (var entry in addresses)
+                        {
+                            entryItem.Bind(new { entry });
+                            html.Append(entryItem.Render());
+                        }
+                        scaffold["entries"] = html.ToString();
+                    }
+                    else
+                    {
+                        scaffold["entries"] = Server.LoadFileFromCache("/Views/Subscription/addressbook/no-entries.html");
+                    }
+                }
+                else
+                {
+                    scaffold["entries"] = Server.LoadFileFromCache("/Views/Subscription/addressbook/no-entries.html");
+                }
+                return scaffold.Render();
+            }
+            else
+            {
+                return Error("Subscription does not exist");
+            }
         }
 
         private string GetReports(int subscriptionId)
@@ -71,10 +121,10 @@ namespace GMaster.Controllers
         private string GetSettings(int subscriptionId)
         {
             var subscription = Query.Subscriptions.GetInfo(subscriptionId);
-            var plans = Query.Plans.GetList();
-            var plan = plans.Where(p => p.planId == subscription.planId).First();
             if(subscription != null)
             {
+                var plans = Query.Plans.GetList();
+                var plan = plans.Where(p => p.planId == subscription.planId).First();
                 var scaffold = new Scaffold("/Views/Subscription/settings.html");
                 scaffold["gmail-styles"] = RenderGmailStyles();
                 scaffold.Bind(new

@@ -280,4 +280,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="stripeSourceFingerprint" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="867ab872-6ba5-424e-a24b-66a1ec58de1b" ChangeDateTime="07/24/2019 00:26:23">
+    <Property Name="ElementName" Value="[dbo].[AddressBook].[userId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressBook]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="teamId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b00dcc91-608d-4e1e-9840-7168755d682e" ChangeDateTime="07/24/2019 00:27:14">
+    <Property Name="ElementName" Value="[dbo].[AddressFields].[userId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[AddressFields]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="teamId" />
+  </Operation>
 </Operations>
