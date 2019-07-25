@@ -43,6 +43,7 @@ namespace GMaster.Controllers
                     break;
 
                 case "team": /////////////////////////////////////////////////////
+                    html = GetTeams(subscriptionId);
                     break;
 
                 case "settings": /////////////////////////////////////////////////
@@ -115,7 +116,49 @@ namespace GMaster.Controllers
 
         private string GetTeams(int subscriptionId)
         {
-            return "Teams!";
+            var subscription = Query.Subscriptions.GetInfo(subscriptionId);
+            if (subscription != null)
+            {
+                var scaffold = new Scaffold("/Views/Subscription/team.html");
+                scaffold["gmail-styles"] = RenderGmailStyles();
+                scaffold["team-name"] = subscription.teamName;
+                if (subscription.roleType <= Query.Models.RoleType.moderator)
+                {
+
+                    var members = Query.TeamMembers.GetList(subscription.teamId).OrderBy(a => a.roleType).ThenBy(a => a.email).ToList();
+                    if (members != null)
+                    {
+                        var memberItem = new Scaffold("/Views/Subscription/team/member-item.html");
+                        var html = new StringBuilder();
+
+                        if (members.Count > 0)
+                        {
+                            scaffold["total-members"] = members.Count.ToString();
+                            foreach (var member in members)
+                            {
+                                memberItem.Bind(new {
+                                    member = new {
+                                        member.email,
+                                        roletype = member.roleType.ToString(),
+                                        member.name
+                                    }
+                                });
+                                html.Append(memberItem.Render());
+                            }
+                            scaffold["members"] = html.ToString();
+                        }
+                    }
+                }
+                if(scaffold["members"] == null)
+                {
+                    scaffold["members"] = Server.LoadFileFromCache("/Views/Subscription/team/no-members.html");
+                }
+                return scaffold.Render();
+            }
+            else
+            {
+                return Error("Subscription does not exist");
+            }
         }
 
         private string GetSettings(int subscriptionId)

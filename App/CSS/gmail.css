@@ -81,6 +81,12 @@
 .gmaster-page .pad-right {
   padding-right: 15px;
 }
+.gmaster-page .pad-top {
+  padding-top: 15px;
+}
+.gmaster-page .pad-top-sm {
+  padding-top: 5px;
+}
 .gmaster-page .pad-edge {
   padding: 0 15px 15px 0;
 }

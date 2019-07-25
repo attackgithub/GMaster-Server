@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Utility.Serialization;
 using Stripe;
 
 namespace GMaster.Services
@@ -384,7 +383,7 @@ namespace GMaster.Services
 
             //finally, rely on Stripe to execute two Gmaster Stripe webhooks, 
             //one to finalize an invoice, the other to submit a payment success.
-            return "[{\"success\":true}]";
+            return Success();
         }
 
         public string Payment(int price, string stripeToken)
@@ -481,7 +480,7 @@ namespace GMaster.Services
                 }
             }
 
-            return "[{\"success\":true}]";
+            return Success();
         }
 
         public string Cancel()
@@ -544,7 +543,7 @@ namespace GMaster.Services
                 }
             }
 
-            return "[{\"success\":true}]";
+            return Success();
         }
     }
 }

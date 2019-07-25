@@ -81,5 +81,10 @@ namespace GMaster
                     Newtonsoft.Json.Formatting.Indented
                 ) + "]";
         }
+
+        public new string Success()
+        {
+            return JsonResponse(new { success = "true" });
+        }
     }
 }

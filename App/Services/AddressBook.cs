@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Utility.Serialization;
 
 namespace GMaster.Services
 {
@@ -14,13 +13,16 @@ namespace GMaster.Services
             if (!HasPermissions()) { return Error(); }
             try
             {
-                var list = Query.AddressBookEntries.GetList(User.userId, page, length, (Query.AddressBookEntries.SortList)sort, search);
-                return JsonResponse(list);
+                var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+                var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
+                if (subscription != null)
+                {
+                    var entries = Query.AddressBookEntries.GetList(User.userId, page, length, (Query.AddressBookEntries.SortList)sort, search);
+                    return JsonResponse(entries);
+                }
             }
-            catch (Exception)
-            {
-                return Empty();
-            }
+            catch (Exception) { }
+            return Empty();
         }
 
         public string Create(int subscriptionId, string entryemail, string firstname, string lastname)
