@@ -6,10 +6,14 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     cleancss = require('gulp-clean-css'),
     less = require('gulp-less'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    replace = require('gulp-replace'),
+    fs = require('fs'),
+    modify = require('gulp-modify-file');
 
 //determine environment
 var prod = false;
+var debug = true;
 
 //paths
 var paths = {
@@ -18,6 +22,10 @@ var paths = {
     app: 'App/',
     webroot: 'App/wwwroot/',
 };
+paths.gmail = paths.scripts + 'gmail/';
+
+//get gmail version
+var gmail_version = require('./' + paths.gmail + 'version.json');
 
 //working paths
 paths.working = {
@@ -40,6 +48,41 @@ paths.working = {
             //paths.scripts + "platform/util.text.js",
             paths.scripts + "platform/validate.js",
             paths.scripts + "platform/window.js"
+        ],
+        gmail: [
+            paths.webroot + 'js/selector.js',
+            // Services ////////////////////////////////
+            paths.gmail + 'Services/authenticate.js',
+            paths.gmail + 'Services/plans.js', 
+            paths.gmail + 'Services/subscription.js', 
+            paths.gmail + 'Services/addressbook.js', 
+            paths.gmail + 'Services/support.js', 
+            // UI //////////////////////////////////////
+            paths.gmail + 'UI/nav-menu.js', // nav menu
+            paths.gmail + 'UI/modal.js', 
+            paths.gmail + 'UI/message.js',
+            paths.gmail + 'UI/app-toolbar.js',
+            paths.gmail + 'UI/compose-view.js',
+            // Pages ///////////////////////////////////
+            paths.gmail + 'Pages/Subscription/addressbook.js', 
+            paths.gmail + 'Pages/Subscription/campaigns.js', 
+            paths.gmail + 'Pages/Subscription/reports.js', 
+            paths.gmail + 'Pages/Subscription/settings.js', 
+            paths.gmail + 'Pages/Subscription/team.js', 
+            paths.gmail + 'Pages/Support/faqs.js', 
+            paths.gmail + 'Pages/Support/getting-started.js', 
+            paths.gmail + 'Pages/Support/subscriptions.js', 
+            paths.gmail + 'Pages/Support/billing.js', 
+            paths.gmail + 'Pages/Support/address-book.js', 
+            paths.gmail + 'Pages/Support/import-data.js', 
+            paths.gmail + 'Pages/Support/campaigns.js', 
+            paths.gmail + 'Pages/Support/surveys.js', 
+            paths.gmail + 'Pages/Support/reporting.js', 
+            paths.gmail + 'Pages/Support/teams.js', 
+            // Utility /////////////////////////////////
+            paths.gmail + 'Utility/web.js',
+            paths.gmail + 'Utility/email.js',
+            paths.gmail + 'Utility/numbers.js',
         ],
         app: paths.app + '**/*.js',
         utility: [
@@ -83,6 +126,8 @@ paths.working = {
 //compiled paths
 paths.compiled = {
     platform: paths.webroot + 'js/platform.js',
+    gmail: paths.webroot + 'js/gmail.js',
+    gmail_version: paths.webroot + 'js/gmail_version.js',
     js: paths.webroot + 'js/',
     css: paths.webroot + 'css/',
     app: paths.webroot + 'css/',
@@ -132,11 +177,63 @@ gulp.task('js:utility', function () {
     return p.pipe(gulp.dest(paths.compiled.js + 'utility', { overwrite: true }));
 });
 
+gulp.task('version:gmail', function () {
+    //increment version
+    var watching = false; 
+    var version_old = gmail_version.major + '.' + gmail_version.minor + '.' + gmail_version.dist;
+    if (watching == false) {
+        gmail_version.dist += 1;
+    }
+    var version_new = gmail_version.major + '.' + gmail_version.minor + '.' + gmail_version.dist;
+
+    //copy config file(s)
+    fs.writeFile(paths.scripts + 'gmail/version.txt', version_new, () => { });
+
+    //update version.json
+    if (watching == false) {
+        fs.writeFile(paths.gmail + 'version.json', JSON.stringify(gmail_version), function (err) {
+            if (err) { return console.log(err); }
+            console.log('updated gmail version: ' + version_old + ' > ' + version_new);
+        });
+    }
+    return gulp.src(paths.gmail + 'version.json');
+});
+
+gulp.task('js:gmail', gulp.series(
+    () => {
+        var p = gulp.src(paths.working.js.gmail, { base: '.' })
+            .pipe(concat(paths.compiled.gmail));
+        if (debug == false) {
+            //remove debug info from files
+            p = p.pipe(modify((content, path, file) => {
+                const start = '//<debug>'
+                const end = '//</debug>'
+                var modified = content.toString();
+                while (modified.length > 0) {
+                    let next = modified.indexOf(start);
+                    if (next >= 0) {
+                        let last = modified.indexOf(end, next + 1);
+                        if (last > 0) {
+                            //found match, remove debug block from code
+                            modified = modified.substr(0, next - 1) + modified.substr(last + end.length);
+                        } else { break; }
+                    } else { break; }
+                }
+                return modified;
+            }));
+        }
+        if (prod == true) { p = p.pipe(uglify()); }
+        return p.pipe(gulp.dest('.', { overwrite: true }));
+    },
+    'version:gmail')
+);
+
 gulp.task('js', gulp.series(
     'js:app',
     'js:selector',
     'js:platform',
-    'js:utility'
+    'js:utility',
+    'js:gmail'
 ));
 
 //tasks for compiling LESS & CSS /////////////////////////////////////////////////////////////////////
@@ -212,7 +309,8 @@ gulp.task('less', gulp.series(
     'less:platform',
     'less:app',
     'less:themes',
-    'less:utility'
+    'less:utility',
+    'less:gmail'
 ));
 
 gulp.task('css', gulp.series(
@@ -234,6 +332,9 @@ gulp.task('watch', function () {
     //watch app JS
     var pathjs = [paths.working.js.app, ...paths.working.exclude.app.map(a => a + '*.js')];
     gulp.watch(pathjs, gulp.series('js:app'));
+
+    //watch gmail JS
+    gulp.watch(paths.working.js.gmail, gulp.series('js:gmail'));
     
     //watch app LESS
     var pathless = [...paths.working.less.app, ...paths.working.exclude.app.map(a => a + '*.less')];

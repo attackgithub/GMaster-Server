@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Query.Models
 {
@@ -11,5 +12,10 @@ namespace Query.Models
         public string lastname { get; set; }
         public int status { get; set; }
         public DateTime datecreated { get; set; }
+    }
+
+    public class AddressBookEntryInfo :AddressBookEntry
+    {
+        public List<AddressFieldValues> fields { get; set; } = new List<AddressFieldValues>();
     }
 }

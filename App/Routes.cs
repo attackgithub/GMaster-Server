@@ -22,6 +22,10 @@ public class Routes: Datasilk.Web.Routes
                 return new GMaster.Controllers.Pay(context, parameters);
             case "subscription":
                 return new GMaster.Controllers.Subscription(context, parameters);
+            case "gmail_version":
+                return new GMaster.Controllers.GmailVersion(context, parameters);
+            case "gmailjs":
+                return new GMaster.Controllers.GmailJs(context, parameters);
         }
         return base.FromControllerRoutes(context, parameters, name);
     }

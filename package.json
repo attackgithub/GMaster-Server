@@ -9,9 +9,12 @@
     "gulp-less": "^4.0.1",
     "gulp-rename": "1.2.2",
     "gulp-uglify": "2.0.0",
-    "merge-stream": "1.0.0"
+    "merge-stream": "1.0.0",
+    "gulp-replace": "^1.0.0"
   },
   "dependencies": {
+    "fs": "0.0.1-security",
+    "gulp-modify-file": "^1.0.1",
     "into-stream": "^3.1.0"
   }
 }

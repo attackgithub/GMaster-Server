@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Query
 {
@@ -41,6 +42,28 @@ namespace Query
                     {"search", search != "" ? search : null }
                 }
             );
+        }
+
+        public static Models.AddressBookEntryInfo GetEntry(int addressId)
+        {
+            var entry = Sql.Populate<Models.AddressBookEntry>(
+                "AddressBook_GetEntry",
+                new Dictionary<string, object>()
+                {
+                    {"addressId", addressId }
+                }
+            ).FirstOrDefault();
+            if(entry != null)
+            {
+                var result = (Models.AddressBookEntryInfo)entry;
+                var fields = AddressFields.GetValues(addressId);
+                if(fields != null)
+                {
+                    result.fields = fields;
+                }
+                return result;
+            }
+            return null;
         }
 
         public static void UpdateStatus(int addressId, bool status)

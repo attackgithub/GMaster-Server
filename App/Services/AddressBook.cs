@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.Http;
 
 namespace GMaster.Services
@@ -11,17 +12,34 @@ namespace GMaster.Services
         public string Index(int page = 1, int length = 50, int sort = 0, string search = "")
         {
             if (!HasPermissions()) { return Error(); }
-            try
+            var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+            var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
+            if (subscription != null)
             {
-                var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
-                var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
-                if (subscription != null)
+                var entries = Query.AddressBookEntries.GetList(User.userId, page, length, (Query.AddressBookEntries.SortList)sort, search);
+                var entryItem = new Scaffold("/Views/Subscription/addressbook/entry-item.html");
+                var html = new StringBuilder();
+                foreach (var entry in entries)
                 {
-                    var entries = Query.AddressBookEntries.GetList(User.userId, page, length, (Query.AddressBookEntries.SortList)sort, search);
-                    return JsonResponse(entries);
+                    entryItem.Bind(new
+                    {
+                        entry = new
+                        {
+                            entry.addressId,
+                            entry.email,
+                            entry.firstname,
+                            entry.lastname
+                        }
+                    });
+                    html.Append(entryItem.Render());
                 }
+
+                return JsonResponse(new
+                {
+                    total = entries.Count.ToString(),
+                    html = html.ToString()
+                });
             }
-            catch (Exception) { }
             return Empty();
         }
 
@@ -61,6 +79,19 @@ namespace GMaster.Services
             }
 
             return JsonResponse(new { html = "" });
+        }
+
+        public string Entry(int subscriptionId, int addressId)
+        {
+            if (!HasPermissions()) { return Error(); }
+            var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+            var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
+            if (subscription != null)
+            {
+                var entry = Query.AddressBookEntries.GetEntry(addressId);
+                return JsonResponse(entry);
+            }
+            return Empty();
         }
     }
 }
