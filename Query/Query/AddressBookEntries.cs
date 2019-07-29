@@ -46,7 +46,7 @@ namespace Query
 
         public static Models.AddressBookEntryInfo GetEntry(int addressId)
         {
-            var entry = Sql.Populate<Models.AddressBookEntry>(
+            var entry = Sql.Populate<Models.AddressBookEntryInfo>(
                 "AddressBook_GetEntry",
                 new Dictionary<string, object>()
                 {
@@ -55,13 +55,12 @@ namespace Query
             ).FirstOrDefault();
             if(entry != null)
             {
-                var result = (Models.AddressBookEntryInfo)entry;
                 var fields = AddressFields.GetValues(addressId);
                 if(fields != null)
                 {
-                    result.fields = fields;
+                    entry.fields = fields;
                 }
-                return result;
+                return entry;
             }
             return null;
         }

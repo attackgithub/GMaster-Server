@@ -1,6 +1,6 @@
 function webApi(path, data, onComplete, onError){
     var form = {};
-    if(typeof data == 'object'){ 
+    if(data != null && typeof data == 'object'){ 
         form = JSON.parse(JSON.stringify(data));
     }
     form.devkey = db.devkey;

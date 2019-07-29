@@ -1,5 +1,4 @@
-﻿{{gmail-styles}}
-<style>
+﻿<style>
     .subscription-page > .title{padding:0 0 10px 5px; font-size:20px;}
     .subscription-page .head{padding:15px 5px;}
     .subscription-page .head .title{display:inline-block; padding-right:20px; vertical-align:bottom;}
@@ -8,9 +7,7 @@
     .subscription-page .head button{margin-left:10px;}
 
     .subscription-page table{width:100%;}
-    .subscription-page table tbody tr.Overdue:nth-child(odd){background-color:#fca8a8; color:#840000;}
-    .subscription-page table tbody tr.Due:nth-child(odd){background-color:#b8daf1; color:#002e66;}
-    .subscription-page table tbody tr.Paid:nth-child(odd){background-color:#bdefc1; color:#063b00;}
+    .subscription-page table tbody tr{cursor:pointer;}
 </style>
 <div class="head">
     <div class="title"><h2>Address Book for {{team-name}}</h2></div>
@@ -20,7 +17,7 @@
     </div>
 </div>
 <div class="addressbook-list">
-    <table>
+    <table class="hover">
         <tbody>
             {{entries}}
         </tbody>

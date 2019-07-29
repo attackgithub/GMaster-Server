@@ -1,4 +1,4 @@
-﻿.gmaster-page{
+﻿.gmaster-page, .gmaster-content{
     .col{display:inline-block;float:left;
         &.two{width:16.41%}
         &.three{width:25%}
@@ -12,7 +12,7 @@
 
     button, .button{
         border:0; background-color:#1a73e8; color:#fff; font-size:.875rem; border-radius:4px;
-        width:auto !important; height:30px !important; padding:0 16px; line-height:2.1; display:inline-block;
+        width:auto !important; height:30px !important; padding:0 16px !important; line-height:2.1; display:inline-block;
         &:hover{text-decoration:none; background-color:#0053ff; cursor:pointer;}
 
         &.btn-warn{background-color:#ff6a00;
@@ -29,6 +29,10 @@
         th, td{padding:8px 15px;}
         tbody{
             tr:nth-child(odd){background-color:rgba(242,245,245,0.8);}
+        }
+        &.hover{
+            tr:hover{background-color:rgba(0, 83, 255, 0.15);}
+            tr:nth-child(odd):hover{background-color:rgba(0, 83, 255, 0.20);}
         }
     }
     .pad{padding:15px;}

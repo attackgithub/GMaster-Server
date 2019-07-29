@@ -38,7 +38,8 @@ function showMessage(title, msg, type, callback){
     var response = true;
     switch(type){
         case '': case 'warning': case 'confirm': case 'error':
-            modal.find('.btn-okay').on('click', function(){
+            modal.find('.btn-okay').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback(true);}
                 if(response !== false){hideModal();}
             });
@@ -46,37 +47,44 @@ function showMessage(title, msg, type, callback){
             break;
 
         case 'question': // Question *Yes, No) /////////////////////////////////////
-            modal.find('.btn-yes').on('click', function(){
+            modal.find('.btn-yes').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback(true);}
                 if(response !== false){hideModal();}
             });
-            modal.find('.btn-no').on('click', function(){
+            modal.find('.btn-no').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback(false);}
                 if(response !== false){hideModal();}
             });
             break;
 
         case 'terms': // Terms (Accept, Decline) /////////////////////////////////////
-            modal.find('.btn-accept').on('click', function(){
+            modal.find('.btn-accept').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback(true);}
                 if(response !== false){hideModal();}
             });
-            modal.find('.btn-decline').on('click', function(){
+            modal.find('.btn-decline').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback(false);}
                 if(response !== false){hideModal();}
             });
             break;
         
         case 'pay': // Pay (Credit Card, PayPal) /////////////////////////////////////
-            modal.find('.btn-credit').on('click', function(){
+            modal.find('.btn-credit').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback('credit');}
                 if(response !== false){hideModal();}
             });
-            modal.find('.btn-saved').on('click', function(){
+            modal.find('.btn-saved').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback('saved');}
                 if(response !== false){hideModal();}
             });
-            modal.find('.btn-paypal').on('click', function(){
+            modal.find('.btn-paypal').on('click', function () {
+                hideModalMessage();
                 if(typeof callback == 'function'){response = callback('paypal');}
                 if(response !== false){hideModal();}
             });

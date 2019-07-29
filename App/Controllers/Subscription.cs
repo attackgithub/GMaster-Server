@@ -74,7 +74,6 @@ namespace GMaster.Controllers
             {
                 var addresses = Query.AddressBookEntries.GetList(subscription.teamId, start, length, sort, search);
                 var scaffold = new Scaffold("/Views/Subscription/addressbook.html");
-                scaffold["gmail-styles"] = RenderGmailStyles();
                 scaffold["team-name"] = subscription.teamName;
                 //load svg icons
                 scaffold["svg"] = Server.LoadFileFromCache("/Content/Icons/iconEdit.svg");
@@ -120,7 +119,6 @@ namespace GMaster.Controllers
             if (subscription != null)
             {
                 var scaffold = new Scaffold("/Views/Subscription/team.html");
-                scaffold["gmail-styles"] = RenderGmailStyles();
                 scaffold["team-name"] = subscription.teamName;
                 if (subscription.roleType <= Query.Models.RoleType.moderator)
                 {
@@ -169,7 +167,6 @@ namespace GMaster.Controllers
                 var plans = Query.Plans.GetList();
                 var plan = plans.Where(p => p.planId == subscription.planId).First();
                 var scaffold = new Scaffold("/Views/Subscription/settings.html");
-                scaffold["gmail-styles"] = RenderGmailStyles();
                 scaffold.Bind(new
                 {
                     subscription = new
