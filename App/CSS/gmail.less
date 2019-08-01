@@ -51,9 +51,11 @@
             input{width:100%; box-sizing:border-box; text-align:right;}
         }
     }
-    .row{width:100%; box-sizing:border-box; 
+    .row{width:100%; box-sizing:border-box; position:relative;
          &:after{clear:both;display:block;content:'';font-size:0;}
          &.hover:hover{background-color:rgba(0, 83, 255, 0.15);}
+         .hover-only{visibility:hidden;}
+         &:hover .hover-only{visibility:visible;}
          &.long .field{width:120px;}
          &.longer .field{width:150px;}
          &.expand{
@@ -95,9 +97,22 @@
         }
 
         &.faded{opacity:0.5;
-            &:hover{opacity:1}
+            &:hover{opacity:1;}
+        }
+
+        &.outline{
+            background-color:transparent; border-width:2px; border-style:solid; border-color:#1a73e8; color:#1a73e8;
+            &:hover{border-color:#0053ff; color:#0053ff; cursor:pointer;}
+            &.font-icon{padding:10px 7px 0 7px !important; font-size:24px; height:13px !important; line-height:0;}
+            &.fill{background-color:#fff;}
+            &.btn-delete{border-color:#eb5d0b; color:#eb5d0b;
+                &:hover{border-color:#ff3e00; color:#ff3e00;}
+                &.fill:hover{background-color:#ffd4d4;}
+            }
         }
     }
+
+    .delete-button{position:absolute; left:5px; top:6px; z-index:9999;}
 
     ul{margin-block-start:0; margin-block-end:0; padding-inline-start:0; }
 
@@ -239,6 +254,12 @@
         span{display:inline-block; padding-top:5px;}
         &.year:first-child{margin-top:15px;}
     }
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* Addressbook Entry Details Modal */
+.entry-details{
+    .row.inner{width:~"calc(100% - 20px)";}
 }
 
 /* //////////////////////////////////////////////////////////////////////// */

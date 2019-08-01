@@ -61,25 +61,37 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
     webApi('Addressbook/Entry', data,
         function (response) {
             var entry = response[0];
+
+            function createDeleteButton(id) {
+                return '<div class="delete-button hover-only">' +
+                    '<div class="button outline btn-delete fill font-icon" data-id="' + id + '" title="delete custom field"><b>-</b></div></div>';
+            }
+
             var html = '<div class="msg"></div>' +
-                '<div class="max-height">' + 
+                '<div class="max-height dentry-details">' + 
                 //basic fields
                 '<div class="row hover longer expand">' +
+                    '<div class="row inner">' +
                     '<div class="col field">Email</div>' +
                     '<div class="col input">' +
                         '<input type="text" id="entry_email" value="' + entry.email + '" placeholder="person@gmail.com"/>' +
                     '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="row hover longer expand">' +
+                    '<div class="row inner">' +
                     '<div class="col field">First Name</div>' +
                     '<div class="col input">' +
                         '<input type="text" id="entry_firstname" value="' + entry.firstname + '" placeholder="John"/>' +
                     '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="row hover longer expand">' +
+                    '<div class="row inner">' +
                     '<div class="col field">Last Name</div>' +
                     '<div class="col input">' +
                         '<input type="text" id="entry_lastname" value="' + entry.lastname + '" placeholder="Doe"/>' +
+                    '</div>' +
                     '</div>' +
                 '</div>' + 
                 '<div class="custom-fields">' +
@@ -88,14 +100,17 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                 entry.fields.map((field) => {
                     return '' +
                         '<div class="row hover longer expand">' +
+                        createDeleteButton(field.fieldId) +
+                        '<div class="row inner">' +
                             '<div class="col field">' + field.label + '</div>' +
                             '<div class="col input text-left">' +
-                            (
+                                (
                                 field.datatype == 0 ? '<input type="text" class="entry-field" data-id="' + field.fieldId + '" value="' + (field.value || '') + '"/>' :
                                 field.datatype == 1 ? '<input type="number" class="entry-field" data-id="' + field.fieldId + '" value="' + (field.value || '') + '"/>' :
                                 field.datatype == 2 ? '<input type="date" class="entry-field" data-id="' + field.fieldId + '" value="' + (field.value || '') + '"/>' :
                                 field.datatype == 3 ? '<input type="checkbox" class="entry-field" data-id="' + field.fieldId + '" value="1" ' + (field.value == 'true' ? 'checked="checked"' : '') + '/>' : ''
-                            ) +
+                                ) +
+                            '</div>' +
                             '</div>' +
                         '</div>';
                 }).join('')
@@ -240,6 +255,8 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                 //generate a new field within the addressbook entry
                 $('.gmaster-content .modal .custom-fields').append('' + 
                     '<div class="row hover longer expand new-field">' +
+                        createDeleteButton('new') +
+                        '<div class="row inner">' +
                         '<div class="col field input">' +
                             '<input type="text" class="new-field-name" placeholder="New Field Name" />' +
                         '</div> ' +
@@ -256,6 +273,7 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                                         '<option value="3">Yes/No</option>' +
                                 '</div></div>' +
                             '</div>' +
+                        '</div>' +
                         '</div>' +
                     '</div>'
                 );

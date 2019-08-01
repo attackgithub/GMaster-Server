@@ -155,6 +155,7 @@
 .gmaster-content .row {
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 .gmaster-page .row:after,
 .gmaster-content .row:after {
@@ -166,6 +167,14 @@
 .gmaster-page .row.hover:hover,
 .gmaster-content .row.hover:hover {
   background-color: rgba(0, 83, 255, 0.15);
+}
+.gmaster-page .row .hover-only,
+.gmaster-content .row .hover-only {
+  visibility: hidden;
+}
+.gmaster-page .row:hover .hover-only,
+.gmaster-content .row:hover .hover-only {
+  visibility: visible;
 }
 .gmaster-page .row.long .field,
 .gmaster-content .row.long .field {
@@ -297,6 +306,66 @@
 .gmaster-page .button.faded:hover,
 .gmaster-content .button.faded:hover {
   opacity: 1;
+}
+.gmaster-page button.outline,
+.gmaster-content button.outline,
+.gmaster-page .button.outline,
+.gmaster-content .button.outline {
+  background-color: transparent;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #1a73e8;
+  color: #1a73e8;
+}
+.gmaster-page button.outline:hover,
+.gmaster-content button.outline:hover,
+.gmaster-page .button.outline:hover,
+.gmaster-content .button.outline:hover {
+  border-color: #0053ff;
+  color: #0053ff;
+  cursor: pointer;
+}
+.gmaster-page button.outline.font-icon,
+.gmaster-content button.outline.font-icon,
+.gmaster-page .button.outline.font-icon,
+.gmaster-content .button.outline.font-icon {
+  padding: 10px 7px 0 7px !important;
+  font-size: 24px;
+  height: 13px !important;
+  line-height: 0;
+}
+.gmaster-page button.outline.fill,
+.gmaster-content button.outline.fill,
+.gmaster-page .button.outline.fill,
+.gmaster-content .button.outline.fill {
+  background-color: #fff;
+}
+.gmaster-page button.outline.btn-delete,
+.gmaster-content button.outline.btn-delete,
+.gmaster-page .button.outline.btn-delete,
+.gmaster-content .button.outline.btn-delete {
+  border-color: #eb5d0b;
+  color: #eb5d0b;
+}
+.gmaster-page button.outline.btn-delete:hover,
+.gmaster-content button.outline.btn-delete:hover,
+.gmaster-page .button.outline.btn-delete:hover,
+.gmaster-content .button.outline.btn-delete:hover {
+  border-color: #ff3e00;
+  color: #ff3e00;
+}
+.gmaster-page button.outline.btn-delete.fill:hover,
+.gmaster-content button.outline.btn-delete.fill:hover,
+.gmaster-page .button.outline.btn-delete.fill:hover,
+.gmaster-content .button.outline.btn-delete.fill:hover {
+  background-color: #ffd4d4;
+}
+.gmaster-page .delete-button,
+.gmaster-content .delete-button {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  z-index: 9999;
 }
 .gmaster-page ul,
 .gmaster-content ul {
@@ -703,6 +772,11 @@
 }
 .change-plans li.year:first-child {
   margin-top: 15px;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* Addressbook Entry Details Modal */
+.entry-details .row.inner {
+  width: calc(100% - 20px);
 }
 /* //////////////////////////////////////////////////////////////////////// */
 /* Compose View */
