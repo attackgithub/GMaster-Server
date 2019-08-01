@@ -10,14 +10,6 @@ function handleAddressBookPage(view, menu, sub){
              });
         });
 
-        $('.addressbook-list tr').on('click', (e) => {
-            var id = $(e.target).attr('data-id');
-            if (e.target.tagName != 'TR') {
-                id = $(e.target).parents('tr').first().attr('data-id');
-            }
-            
-            console.log('id = ' + id);
-            editAddressbookEntry(subscriptionId, id, () => { });
-        });
+        $('.addressbook-list tr').on('click', (e) => {handleAddressbookEntry(subscriptionId, e);});
     }
 }

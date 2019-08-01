@@ -74,6 +74,7 @@ namespace GMaster.Controllers
             {
                 var addresses = Query.AddressBookEntries.GetList(subscription.teamId, start, length, sort, search);
                 var scaffold = new Scaffold("/Views/Subscription/addressbook.html");
+                
                 scaffold["team-name"] = subscription.teamName;
                 //load svg icons
                 scaffold["svg"] = Server.LoadFileFromCache("/Content/Icons/iconEdit.svg");

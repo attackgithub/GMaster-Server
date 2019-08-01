@@ -18,6 +18,19 @@ namespace Query
                 }
             );
         }
+        public static void Update(Models.AddressBookEntry model)
+        {
+            Sql.ExecuteNonQuery(
+                "AddressBook_UpdateEntry",
+                new Dictionary<string, object>()
+                {
+                    {"addressId", model.addressId },
+                    {"email", model.email },
+                    {"firstname", model.firstname },
+                    {"lastname", model.lastname }
+                }
+            );
+        }
 
         public enum SortList
         {
@@ -63,6 +76,45 @@ namespace Query
                 return entry;
             }
             return null;
+        }
+
+        public static Models.AddressBookEntryInfo GetEntry(int teamId, string email)
+        {
+            var entry = Sql.Populate<Models.AddressBookEntryInfo>(
+                "AddressBook_GetEntryByEmail",
+                new Dictionary<string, object>()
+                {
+                    {"teamId", teamId },
+                    {"email", email }
+                }
+            ).FirstOrDefault();
+            if (entry != null)
+            {
+                var fields = AddressFields.GetValues(entry.addressId);
+                if (fields != null)
+                {
+                    entry.fields = fields;
+                }
+                return entry;
+            }
+            return null;
+        }
+
+        public static bool Exists(int teamId, string email)
+        {
+            var entry = Sql.Populate<Models.AddressBookEntryInfo>(
+                "AddressBook_EntryExists",
+                new Dictionary<string, object>()
+                {
+                    {"teamId", teamId },
+                    {"email", email }
+                }
+            ).FirstOrDefault();
+            if (entry != null)
+            {
+                if(entry.email == email) { return true; }
+            }
+            return false;
         }
 
         public static void UpdateStatus(int addressId, bool status)

@@ -1,35 +1,39 @@
-function showMessage(title, msg, type, callback){
+function showMessage(title, msg, type, callback, buttons, buttonInjectType){
     showModal(
         '<div class="message ' + type + '">' + 
             '<h4>' + title + '</h4>' +  msg +
             '<div class="buttons">' + 
-                (
-                    type == '' || type == 'warning' || 
-                    type == 'error' ? 
-                    '<a class="button btn-okay">Okay</a>' :
-                    type == 'confirm' ?
-                    '<a class="button btn-okay">Okay</a>' +
-                    '<a class="button btn-cancel">Cancel</a>' :
-                    type == 'question' ? 
-                    '<a class="button btn-yes">Yes</a>' +
-                    '<a class="button btn-no">No</a>' :
-                    type == 'terms' ?
-                    '<a class="button btn-accept">Accept</a>' +
-                    '<a class="button btn-decline">Decline</a>' : 
-                    type == 'pay' ? 
+            (buttons != null && (buttonInjectType == 'prepend') ? buttons : '') +
+            (
+                type == '' || type == 'warning' || 
+                type == 'error' ? 
+                '<a class="button btn-okay">Okay</a>' :
+                type == 'confirm' ?
+                '<a class="button btn-okay">Okay</a>' +
+                '<a class="button btn-cancel">Cancel</a>' :
+                type == 'save' ?
+                '<a class="button btn-okay">Save</a>' +
+                '<a class="button btn-cancel">Cancel</a>' :
+                type == 'question' ? 
+                '<a class="button btn-yes">Yes</a>' +
+                '<a class="button btn-no">No</a>' :
+                type == 'terms' ?
+                '<a class="button btn-accept">Accept</a>' +
+                '<a class="button btn-decline">Decline</a>' : 
+                type == 'pay' ? 
+                    (
+                        hasSubscription() == true && 
                         (
-                            hasSubscription() == true && 
-                            (
-                                (outstanding_info != null && outstanding_info.status == 1) || 
-                                outstanding_info == null
-                            ) ? 
-                            '<span class="foot-note">Select payment method</span>' +
-                            '<a class="button btn-saved">Saved Credit Card</a>' +
-                            '<a class="button btn-credit">New Credit Card</a>' :
-                            '<a class="button btn-credit">Pay with Credit Card</a>'
-                        ) :
-                    ''
-                ) +
+                            (outstanding_info != null && outstanding_info.status == 1) || 
+                            outstanding_info == null
+                        ) ? 
+                        '<span class="foot-note">Select payment method</span>' +
+                        '<a class="button btn-saved">Saved Credit Card</a>' +
+                        '<a class="button btn-credit">New Credit Card</a>' :
+                        '<a class="button btn-credit">Pay with Credit Card</a>'
+                    ) : ''
+            ) +
+            (buttons != null && (buttonInjectType == 'append' || buttonInjectType == null) ? buttons : '') +
             '</div>' +
         '</div>'
     );
@@ -37,7 +41,7 @@ function showMessage(title, msg, type, callback){
     var modal = $('.gmaster-content .message');
     var response = true;
     switch(type){
-        case '': case 'warning': case 'confirm': case 'error':
+        case '': case 'warning': case 'confirm': case 'error': case 'save':
             modal.find('.btn-okay').on('click', function () {
                 hideModalMessage();
                 if(typeof callback == 'function'){response = callback(true);}

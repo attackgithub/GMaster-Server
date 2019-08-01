@@ -1,19 +1,82 @@
-﻿.gmaster-page, .gmaster-content{
-    .col{display:inline-block;float:left;
+﻿/* //////////////////////////////////////////////////////////////////////// */
+/* Gmaster-Content */
+.gmaster-content{width:100%;
+
+    /* Modal */
+    .modal{position:fixed; z-index:9999; top:20%; padding:20px; margin:0 auto; max-width:440px; left:10%; right:10%;
+        background:#fff;border-radius:4px; box-shadow:4px 0px 20px 0px rgba(0,0,0,0.5);
+
+        .max-height{overflow-y:auto; overflow-x:hidden; max-height:600px;}
+    
+        /* form error message */
+        .msg{display:none; margin:0 0 10px 0; font-size:16px; padding:5px 10px;}
+        .msg.show{display:block;}
+        .msg.error{background-color:#f0c1c1; color:#880000;}
+
+    }
+    .modal-bg{position:fixed; top:0; right:0; bottom:0; left:0; z-index:9998; background:rgba(0,0,0,0.25);}
+    .auth-frame{width:100%; height:100%; border:none; overflow:hidden;}
+
+    /* Message (Modal) */
+    .message{text-align:center;
+        .buttons{padding:15px 0; width:100%;
+            &.disabled{opacity:0.2;}
+        }
+        .foot-note{display:block; font-size:15px; font-weight:400; width:100%; text-align:center; padding:0 0 25px 0;}
+        .button:nth-child(n+2){margin-left:10px;}
+    }
+}
+
+.gmaster-page, .gmaster-content{
+    .col{display:inline-block;float:left; position:relative; box-sizing:border-box;
         &.two{width:16.41%}
         &.three{width:25%}
         &.four{width:33.333339%}
         &.six{width:50%}
         &.eight{width:66.66669%}
+
+        &.field{font-weight:400; padding:10px 10px 0 0; width:80px; text-align:right; cursor:default;
+            &.long{width:120px;}
+            &.longer{width:150px;}
+        }
+        &.input{padding:5px 15px 5px 0;
+            &.expand{
+                input{width:100%; box-sizing:border-box;}
+                input[type="checkbox"]{width:18px;}
+            }
+            .input{padding:0;}
+            input[type="checkbox"]{margin-top:5px;}
+        }
+        &.field.input{padding:5px 10px 5px 0;
+            input{width:100%; box-sizing:border-box; text-align:right;}
+        }
     }
-    .row{width:100%;
+    .row{width:100%; box-sizing:border-box; 
          &:after{clear:both;display:block;content:'';font-size:0;}
+         &.hover:hover{background-color:rgba(0, 83, 255, 0.15);}
+         &.long .field{width:120px;}
+         &.longer .field{width:150px;}
+         &.expand{
+            .input:not(.field){width:~"calc(100% - 80px)";
+                input{width:100%; box-sizing:border-box;}
+                input[type="checkbox"]{width:18px;}
+            }
+            &.long .input:not(.field){width:~"calc(100% - 120px)"}
+            &.longer .input:not(.field){width:~"calc(100% - 150px)"}
+            .input:not(.field) .input{width:100%;}
+        }
     }
 
+    /* Buttons */
     button, .button{
-        border:0; background-color:#1a73e8; color:#fff; font-size:.875rem; border-radius:4px;
-        width:auto !important; height:30px !important; padding:0 16px !important; line-height:2.1; display:inline-block;
+        background-color:#1a73e8; color:#fff; font-size:.875rem; border-radius:4px;
+        text-decoration:none; border:0; outline:0; font-weight:400; line-height:2.1;
+        width:auto !important; height:30px !important; padding:0 16px !important; display:inline-block;
         &:hover{text-decoration:none; background-color:#0053ff; cursor:pointer;}
+
+        &.apply{background:#00a128;
+            &:hover{background:#00b351;}
+        }
 
         &.btn-warn{background-color:#ff6a00;
             &:hover{background-color:#ff4e00;}
@@ -22,7 +85,27 @@
         &.btn-cancel{background-color:#666;
             &:hover{background-color:#ff3e00;}
         }
+
+        &.btn-special{background-color:#3da954;
+            &:hover{background-color:#44c05e;}
+        }
+
+        &.btn-delete{background-color:#eb5d0b;
+            &:hover{background-color:#ff3e00;}
+        }
+
+        &.faded{opacity:0.5;
+            &:hover{opacity:1}
+        }
     }
+
+    ul{margin-block-start:0; margin-block-end:0; padding-inline-start:0; }
+
+    h1, h2, h3, h4, h5, h6{ margin-block-start:0; margin-block-end:10px; }
+    label{padding:0 10px 0 0;}
+    input, select{padding:4px 8px; border:1px solid #999; outline:none;}
+    input[type="checkbox"]{width:18px; height:18px;}
+    span{display:inline-block;}
 
     table{border:0; border-spacing:0;
         th{text-align:left;}
@@ -43,10 +126,145 @@
     .pad-edge-lg{padding:0 30px 30px 0;}
 
     .right{float:right;}
+    .text-left{text-align:left;}
     .text-right{text-align:right;}
     .text-center{text-align:center;}
 
     .svg-icons{display:none;}
 
     a.icon use{width:16px;}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* App Toolbar */
+.gmaster-button{
+    background-color:#555; color:#fff; font-size:.875rem; border-radius:4px;
+    width:auto !important; height:30px !important; padding:0 16px; line-height:2.1; display:inline-block;
+    &:hover{text-decoration:none; background-color:#333;}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* Plans (Custom View) */
+.gmaster-plans{padding-top:20px; width:100%; text-align:center; white-space:nowrap;
+    .header{width:100%; text-align:center;
+        .logo{padding-bottom:10px;
+            img{width:200px;}
+        }
+        span{font-size:32px; font-weight:400; display:inline-block; padding-bottom:30px;}
+    }
+    .plan-schedule{padding-bottom:30px;}
+    .schedule-switch{border:2px solid #bbb; border-radius:20px; max-width:150px; margin:0 auto; overflow:hidden;
+        & > div{float:left;padding:7px 15px; border-radius:18px; color:#222; font-size:14px; cursor:pointer;}
+        & > .yearly{float:right;}
+        div.selected{background-color:#e81a1a; color:#fff;}
+        &:after{content:'';clear:both;display:block;}
+    }
+    .features{display:inline-block;
+        ul{padding-left:0; padding-top:142px; list-style: none; opacity:0.7;}
+        li{white-space:nowrap; text-align:right; padding:10px 15px;}
+    }
+    .plans{display:inline-block; vertical-align:top; box-sizing:border-box; border-radius:4px; box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.2);}
+    .schedule{display:inline-block; vertical-align:top; text-align:left; white-space:normal;
+        &:after{content:'';display:block;clear:both;}
+    }
+    .plan{
+        float:left; width:200px;
+        &:nth-child(n+2){border-left:1px solid rgba(0,0,0,0.1);}
+        ul{padding:0; list-style:none;}
+        li{text-align:center; padding:10px 15px;
+            &:nth-child(2n+1){background:rgba(0,0,0,0.025);}
+            img{width:16px;}
+        }
+        &:nth-child(3){position:relative; outline:1px solid #1a73e8;
+            &:after{
+                position:absolute; background:#1a73e8; color:#fff; text-align:center;
+                content:'Recommended Plan'; font-size:14px !important; width:~"calc(100% + 3px)"; padding:7px; box-sizing:border-box; left:-2px;
+                border-bottom-right-radius:4px; border-bottom-left-radius:4px;
+            }
+        }
+    }
+    .plan-features{height:400px;}
+    .head{text-align:center; padding:15px;
+        h3{width:100%; }
+        .price{font-size:30px;
+            span{font-size:22px; color:#666; display:inline-block; padding:4px 4px 0 0; vertical-align:top;}
+        }
+        p{vertical-align:bottom;}
+    }
+    .extra-info{padding:10px; text-align:center;}
+    .buttons{text-align:center; padding:0 0 30px 0;}
+    a.button{background:#e81a1a;}
+    a.button:hover{background:#ff4800;}
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* Subscribe Modal */
+.total-users-form{
+    .summary{padding-bottom:15px;}
+    .sub-total{padding:15px 0 0 0; 
+        span.price{font-size:24px; font-weight:400;}
+        span.schedule{font-size:15px;}
+        span.error{font-size:15px;color:#cc0000; font-weight:bold;}
+    }
+    .member-count{padding:7px 0 0 0; font-size:15px;}
+    .owed-today{ font-size:15px; border-radius:4px; background-color:#cae9ff; padding:10px; margin-top:20px;
+        .price{font-size:20px; font-weight:400;padding-bottom:10px;}
+        .charged{padding-bottom:10px;}
+    }
+}
+
+.modal{
+    .members-list{margin-top:10px; padding:5px; max-height:180px; overflow-y:auto;} 
+    .new-member{padding:6px 8px; text-align:left; background-color:#eee; border-radius:4px; margin:5px;
+        span{float:left; display:inline-block;}
+        &:after{content:'';clear:both;display:block;}
+    }
+    .remove-member{font-size:17px; color:rgba(0,0,0,0.2); float:right; cursor:pointer;
+        &:hover{color:#cc0000;}
+        &:active{color:#ff0000;}
+    }
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* Change Subscription Plan Modal */
+.change-plans{
+    ul{list-style:none;}
+    li{padding:4px 7px; margin-bottom:5px;
+        &:hover{box-shadow:inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);}
+        &:after{content:'';clear:both;display:block;}
+        & > div{float:left;}
+        div.name{font-weight:bold;}
+        div.price{float:right; padding-right:20px;}
+        div.select{float:right;}
+        span{display:inline-block; padding-top:5px;}
+        &.year:first-child{margin-top:15px;}
+    }
+}
+
+/* //////////////////////////////////////////////////////////////////////// */
+/* Compose View */
+.compose-button{
+    cursor:pointer;
+    &.inboxsdk__composeButton, &.inboxsdk__button_icon{opacity:1 !important;}
+}
+.compose-send-button{
+    &:after{content:"Mass Mail" !important;}
+    &:hover{
+        background-color:#297be6;
+        box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);
+    }
+    background-color:#1a73e8;
+    color:#fff;
+    font-size:.875rem;
+    border-radius:4px;
+    width:auto !important;
+    height:36px !important;
+    padding:0 16px;
+    line-height:2.5;
+}
+
+/* /////////////////////////////////////////////////////////////////////// */
+/* InboxSDK overrides */
+.inboxsdk__composeButton{
+    width:auto !important;
 }

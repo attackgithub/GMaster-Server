@@ -19,18 +19,34 @@ namespace Query
             );
         }
 
-        public static void UpdateValue(int addressId, int fieldId, bool? bit = null, DateTime? date = null, int? number = null, string text = null)
+        public static void SetValue(int addressId, string label, bool? bit = null, DateTime? date = null, int? number = null, string text = null)
         {
             Sql.ExecuteNonQuery(
-                "AddressFieldValue_Update",
+                "AddressField_SetValue",
+                new Dictionary<string, object>()
+                {
+                    {"addressId", addressId },
+                    {"label", label },
+                    {"bitvalue", bit },
+                    {"datevalue", date },
+                    {"numbervalue", number },
+                    {"textvalue", string.IsNullOrEmpty(text) ? null : text }
+                }
+            );
+        }
+
+        public static void SetValue(int addressId, int fieldId, bool? bit = null, DateTime? date = null, int? number = null, string text = null)
+        {
+            Sql.ExecuteNonQuery(
+                "AddressField_SetValueById",
                 new Dictionary<string, object>()
                 {
                     {"addressId", addressId },
                     {"fieldId", fieldId },
-                    {"bit", bit },
-                    {"date", date },
-                    {"number", number },
-                    {"text", string.IsNullOrEmpty(text) ? null : text }
+                    {"bitvalue", bit },
+                    {"datevalue", date },
+                    {"numbervalue", number },
+                    {"textvalue", string.IsNullOrEmpty(text) ? "" : text }
                 }
             );
         }
@@ -79,6 +95,20 @@ namespace Query
                     {"sort", sort }
                 }
             );
+        }
+
+        public static bool Exists(int teamId, string label)
+        {
+            if(Sql.ExecuteScalar<int>("AddressField_Exists",
+                new Dictionary<string, object>()
+                {
+                    {"teamId", teamId },
+                    {"label", label }
+                }) > 0)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

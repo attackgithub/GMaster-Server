@@ -1,7 +1,88 @@
+/* //////////////////////////////////////////////////////////////////////// */
+/* Gmaster-Content */
+.gmaster-content {
+  width: 100%;
+  /* Modal */
+  /* Message (Modal) */
+}
+.gmaster-content .modal {
+  position: fixed;
+  z-index: 9999;
+  top: 20%;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 440px;
+  left: 10%;
+  right: 10%;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 4px 0px 20px 0px rgba(0, 0, 0, 0.5);
+  /* form error message */
+}
+.gmaster-content .modal .max-height {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 600px;
+}
+.gmaster-content .modal .msg {
+  display: none;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  padding: 5px 10px;
+}
+.gmaster-content .modal .msg.show {
+  display: block;
+}
+.gmaster-content .modal .msg.error {
+  background-color: #f0c1c1;
+  color: #880000;
+}
+.gmaster-content .modal-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.25);
+}
+.gmaster-content .auth-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
+}
+.gmaster-content .message {
+  text-align: center;
+}
+.gmaster-content .message .buttons {
+  padding: 15px 0;
+  width: 100%;
+}
+.gmaster-content .message .buttons.disabled {
+  opacity: 0.2;
+}
+.gmaster-content .message .foot-note {
+  display: block;
+  font-size: 15px;
+  font-weight: 400;
+  width: 100%;
+  text-align: center;
+  padding: 0 0 25px 0;
+}
+.gmaster-content .message .button:nth-child(n+2) {
+  margin-left: 10px;
+}
+.gmaster-page,
+.gmaster-content {
+  /* Buttons */
+}
 .gmaster-page .col,
 .gmaster-content .col {
   display: inline-block;
   float: left;
+  position: relative;
+  box-sizing: border-box;
 }
 .gmaster-page .col.two,
 .gmaster-content .col.two {
@@ -23,9 +104,57 @@
 .gmaster-content .col.eight {
   width: 66.66669%;
 }
+.gmaster-page .col.field,
+.gmaster-content .col.field {
+  font-weight: 400;
+  padding: 10px 10px 0 0;
+  width: 80px;
+  text-align: right;
+  cursor: default;
+}
+.gmaster-page .col.field.long,
+.gmaster-content .col.field.long {
+  width: 120px;
+}
+.gmaster-page .col.field.longer,
+.gmaster-content .col.field.longer {
+  width: 150px;
+}
+.gmaster-page .col.input,
+.gmaster-content .col.input {
+  padding: 5px 15px 5px 0;
+}
+.gmaster-page .col.input.expand input,
+.gmaster-content .col.input.expand input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.gmaster-page .col.input.expand input[type="checkbox"],
+.gmaster-content .col.input.expand input[type="checkbox"] {
+  width: 18px;
+}
+.gmaster-page .col.input .input,
+.gmaster-content .col.input .input {
+  padding: 0;
+}
+.gmaster-page .col.input input[type="checkbox"],
+.gmaster-content .col.input input[type="checkbox"] {
+  margin-top: 5px;
+}
+.gmaster-page .col.field.input,
+.gmaster-content .col.field.input {
+  padding: 5px 10px 5px 0;
+}
+.gmaster-page .col.field.input input,
+.gmaster-content .col.field.input input {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: right;
+}
 .gmaster-page .row,
 .gmaster-content .row {
   width: 100%;
+  box-sizing: border-box;
 }
 .gmaster-page .row:after,
 .gmaster-content .row:after {
@@ -34,19 +163,59 @@
   content: '';
   font-size: 0;
 }
+.gmaster-page .row.hover:hover,
+.gmaster-content .row.hover:hover {
+  background-color: rgba(0, 83, 255, 0.15);
+}
+.gmaster-page .row.long .field,
+.gmaster-content .row.long .field {
+  width: 120px;
+}
+.gmaster-page .row.longer .field,
+.gmaster-content .row.longer .field {
+  width: 150px;
+}
+.gmaster-page .row.expand .input:not(.field),
+.gmaster-content .row.expand .input:not(.field) {
+  width: calc(100% - 80px);
+}
+.gmaster-page .row.expand .input:not(.field) input,
+.gmaster-content .row.expand .input:not(.field) input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.gmaster-page .row.expand .input:not(.field) input[type="checkbox"],
+.gmaster-content .row.expand .input:not(.field) input[type="checkbox"] {
+  width: 18px;
+}
+.gmaster-page .row.expand.long .input:not(.field),
+.gmaster-content .row.expand.long .input:not(.field) {
+  width: calc(100% - 120px);
+}
+.gmaster-page .row.expand.longer .input:not(.field),
+.gmaster-content .row.expand.longer .input:not(.field) {
+  width: calc(100% - 150px);
+}
+.gmaster-page .row.expand .input:not(.field) .input,
+.gmaster-content .row.expand .input:not(.field) .input {
+  width: 100%;
+}
 .gmaster-page button,
 .gmaster-content button,
 .gmaster-page .button,
 .gmaster-content .button {
-  border: 0;
   background-color: #1a73e8;
   color: #fff;
   font-size: 0.875rem;
   border-radius: 4px;
+  text-decoration: none;
+  border: 0;
+  outline: 0;
+  font-weight: 400;
+  line-height: 2.1;
   width: auto !important;
   height: 30px !important;
   padding: 0 16px !important;
-  line-height: 2.1;
   display: inline-block;
 }
 .gmaster-page button:hover,
@@ -56,6 +225,18 @@
   text-decoration: none;
   background-color: #0053ff;
   cursor: pointer;
+}
+.gmaster-page button.apply,
+.gmaster-content button.apply,
+.gmaster-page .button.apply,
+.gmaster-content .button.apply {
+  background: #00a128;
+}
+.gmaster-page button.apply:hover,
+.gmaster-content button.apply:hover,
+.gmaster-page .button.apply:hover,
+.gmaster-content .button.apply:hover {
+  background: #00b351;
 }
 .gmaster-page button.btn-warn,
 .gmaster-content button.btn-warn,
@@ -80,6 +261,84 @@
 .gmaster-page .button.btn-cancel:hover,
 .gmaster-content .button.btn-cancel:hover {
   background-color: #ff3e00;
+}
+.gmaster-page button.btn-special,
+.gmaster-content button.btn-special,
+.gmaster-page .button.btn-special,
+.gmaster-content .button.btn-special {
+  background-color: #3da954;
+}
+.gmaster-page button.btn-special:hover,
+.gmaster-content button.btn-special:hover,
+.gmaster-page .button.btn-special:hover,
+.gmaster-content .button.btn-special:hover {
+  background-color: #44c05e;
+}
+.gmaster-page button.btn-delete,
+.gmaster-content button.btn-delete,
+.gmaster-page .button.btn-delete,
+.gmaster-content .button.btn-delete {
+  background-color: #eb5d0b;
+}
+.gmaster-page button.btn-delete:hover,
+.gmaster-content button.btn-delete:hover,
+.gmaster-page .button.btn-delete:hover,
+.gmaster-content .button.btn-delete:hover {
+  background-color: #ff3e00;
+}
+.gmaster-page button.faded,
+.gmaster-content button.faded,
+.gmaster-page .button.faded,
+.gmaster-content .button.faded {
+  opacity: 0.5;
+}
+.gmaster-page button.faded:hover,
+.gmaster-content button.faded:hover,
+.gmaster-page .button.faded:hover,
+.gmaster-content .button.faded:hover {
+  opacity: 1;
+}
+.gmaster-page ul,
+.gmaster-content ul {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+}
+.gmaster-page h1,
+.gmaster-content h1,
+.gmaster-page h2,
+.gmaster-content h2,
+.gmaster-page h3,
+.gmaster-content h3,
+.gmaster-page h4,
+.gmaster-content h4,
+.gmaster-page h5,
+.gmaster-content h5,
+.gmaster-page h6,
+.gmaster-content h6 {
+  margin-block-start: 0;
+  margin-block-end: 10px;
+}
+.gmaster-page label,
+.gmaster-content label {
+  padding: 0 10px 0 0;
+}
+.gmaster-page input,
+.gmaster-content input,
+.gmaster-page select,
+.gmaster-content select {
+  padding: 4px 8px;
+  border: 1px solid #999;
+  outline: none;
+}
+.gmaster-page input[type="checkbox"],
+.gmaster-content input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+.gmaster-page span,
+.gmaster-content span {
+  display: inline-block;
 }
 .gmaster-page table,
 .gmaster-content table {
@@ -136,6 +395,10 @@
 .gmaster-content .right {
   float: right;
 }
+.gmaster-page .text-left,
+.gmaster-content .text-left {
+  text-align: left;
+}
 .gmaster-page .text-right,
 .gmaster-content .text-right {
   text-align: right;
@@ -151,4 +414,324 @@
 .gmaster-page a.icon use,
 .gmaster-content a.icon use {
   width: 16px;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* App Toolbar */
+.gmaster-button {
+  background-color: #555;
+  color: #fff;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  width: auto !important;
+  height: 30px !important;
+  padding: 0 16px;
+  line-height: 2.1;
+  display: inline-block;
+}
+.gmaster-button:hover {
+  text-decoration: none;
+  background-color: #333;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* Plans (Custom View) */
+.gmaster-plans {
+  padding-top: 20px;
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+.gmaster-plans .header {
+  width: 100%;
+  text-align: center;
+}
+.gmaster-plans .header .logo {
+  padding-bottom: 10px;
+}
+.gmaster-plans .header .logo img {
+  width: 200px;
+}
+.gmaster-plans .header span {
+  font-size: 32px;
+  font-weight: 400;
+  display: inline-block;
+  padding-bottom: 30px;
+}
+.gmaster-plans .plan-schedule {
+  padding-bottom: 30px;
+}
+.gmaster-plans .schedule-switch {
+  border: 2px solid #bbb;
+  border-radius: 20px;
+  max-width: 150px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.gmaster-plans .schedule-switch > div {
+  float: left;
+  padding: 7px 15px;
+  border-radius: 18px;
+  color: #222;
+  font-size: 14px;
+  cursor: pointer;
+}
+.gmaster-plans .schedule-switch > .yearly {
+  float: right;
+}
+.gmaster-plans .schedule-switch div.selected {
+  background-color: #e81a1a;
+  color: #fff;
+}
+.gmaster-plans .schedule-switch:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.gmaster-plans .features {
+  display: inline-block;
+}
+.gmaster-plans .features ul {
+  padding-left: 0;
+  padding-top: 142px;
+  list-style: none;
+  opacity: 0.7;
+}
+.gmaster-plans .features li {
+  white-space: nowrap;
+  text-align: right;
+  padding: 10px 15px;
+}
+.gmaster-plans .plans {
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+}
+.gmaster-plans .schedule {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  white-space: normal;
+}
+.gmaster-plans .schedule:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.gmaster-plans .plan {
+  float: left;
+  width: 200px;
+}
+.gmaster-plans .plan:nth-child(n+2) {
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+.gmaster-plans .plan ul {
+  padding: 0;
+  list-style: none;
+}
+.gmaster-plans .plan li {
+  text-align: center;
+  padding: 10px 15px;
+}
+.gmaster-plans .plan li:nth-child(2n+1) {
+  background: rgba(0, 0, 0, 0.025);
+}
+.gmaster-plans .plan li img {
+  width: 16px;
+}
+.gmaster-plans .plan:nth-child(3) {
+  position: relative;
+  outline: 1px solid #1a73e8;
+}
+.gmaster-plans .plan:nth-child(3):after {
+  position: absolute;
+  background: #1a73e8;
+  color: #fff;
+  text-align: center;
+  content: 'Recommended Plan';
+  font-size: 14px !important;
+  width: calc(100% + 3px);
+  padding: 7px;
+  box-sizing: border-box;
+  left: -2px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.gmaster-plans .plan-features {
+  height: 400px;
+}
+.gmaster-plans .head {
+  text-align: center;
+  padding: 15px;
+}
+.gmaster-plans .head h3 {
+  width: 100%;
+}
+.gmaster-plans .head .price {
+  font-size: 30px;
+}
+.gmaster-plans .head .price span {
+  font-size: 22px;
+  color: #666;
+  display: inline-block;
+  padding: 4px 4px 0 0;
+  vertical-align: top;
+}
+.gmaster-plans .head p {
+  vertical-align: bottom;
+}
+.gmaster-plans .extra-info {
+  padding: 10px;
+  text-align: center;
+}
+.gmaster-plans .buttons {
+  text-align: center;
+  padding: 0 0 30px 0;
+}
+.gmaster-plans a.button {
+  background: #e81a1a;
+}
+.gmaster-plans a.button:hover {
+  background: #ff4800;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* Subscribe Modal */
+.total-users-form .summary {
+  padding-bottom: 15px;
+}
+.total-users-form .sub-total {
+  padding: 15px 0 0 0;
+}
+.total-users-form .sub-total span.price {
+  font-size: 24px;
+  font-weight: 400;
+}
+.total-users-form .sub-total span.schedule {
+  font-size: 15px;
+}
+.total-users-form .sub-total span.error {
+  font-size: 15px;
+  color: #cc0000;
+  font-weight: bold;
+}
+.total-users-form .member-count {
+  padding: 7px 0 0 0;
+  font-size: 15px;
+}
+.total-users-form .owed-today {
+  font-size: 15px;
+  border-radius: 4px;
+  background-color: #cae9ff;
+  padding: 10px;
+  margin-top: 20px;
+}
+.total-users-form .owed-today .price {
+  font-size: 20px;
+  font-weight: 400;
+  padding-bottom: 10px;
+}
+.total-users-form .owed-today .charged {
+  padding-bottom: 10px;
+}
+.modal .members-list {
+  margin-top: 10px;
+  padding: 5px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.modal .new-member {
+  padding: 6px 8px;
+  text-align: left;
+  background-color: #eee;
+  border-radius: 4px;
+  margin: 5px;
+}
+.modal .new-member span {
+  float: left;
+  display: inline-block;
+}
+.modal .new-member:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.modal .remove-member {
+  font-size: 17px;
+  color: rgba(0, 0, 0, 0.2);
+  float: right;
+  cursor: pointer;
+}
+.modal .remove-member:hover {
+  color: #cc0000;
+}
+.modal .remove-member:active {
+  color: #ff0000;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* Change Subscription Plan Modal */
+.change-plans ul {
+  list-style: none;
+}
+.change-plans li {
+  padding: 4px 7px;
+  margin-bottom: 5px;
+}
+.change-plans li:hover {
+  box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+.change-plans li:after {
+  content: '';
+  clear: both;
+  display: block;
+}
+.change-plans li > div {
+  float: left;
+}
+.change-plans li div.name {
+  font-weight: bold;
+}
+.change-plans li div.price {
+  float: right;
+  padding-right: 20px;
+}
+.change-plans li div.select {
+  float: right;
+}
+.change-plans li span {
+  display: inline-block;
+  padding-top: 5px;
+}
+.change-plans li.year:first-child {
+  margin-top: 15px;
+}
+/* //////////////////////////////////////////////////////////////////////// */
+/* Compose View */
+.compose-button {
+  cursor: pointer;
+}
+.compose-button.inboxsdk__composeButton,
+.compose-button.inboxsdk__button_icon {
+  opacity: 1 !important;
+}
+.compose-send-button {
+  background-color: #1a73e8;
+  color: #fff;
+  font-size: 0.875rem;
+  border-radius: 4px;
+  width: auto !important;
+  height: 36px !important;
+  padding: 0 16px;
+  line-height: 2.5;
+}
+.compose-send-button:after {
+  content: "Mass Mail" !important;
+}
+.compose-send-button:hover {
+  background-color: #297be6;
+  box-shadow: 0 1px 2px 0 rgba(26, 115, 232, 0.451), 0 1px 3px 1px rgba(26, 115, 232, 0.302);
+}
+/* /////////////////////////////////////////////////////////////////////// */
+/* InboxSDK overrides */
+.inboxsdk__composeButton {
+  width: auto !important;
 }
