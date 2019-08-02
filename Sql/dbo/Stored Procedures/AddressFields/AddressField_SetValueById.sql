@@ -32,9 +32,16 @@ AS
 	IF @type = 2 BEGIN -- DateTime Field
 		IF(SELECT COUNT(*) FROM AddressFields_DateTimes WHERE addressId=@addressId AND fieldId=@fieldId) > 0 BEGIN
 			-- exists
-			UPDATE AddressFields_DateTimes SET [date]=@datevalue WHERE addressId=@addressId AND fieldId=@fieldId
+			IF @datevalue IS NULL BEGIN
+				DELETE FROM AddressFields_DateTimes WHERE addressId=@addressId AND fieldId=@fieldId
+			END ELSE BEGIN
+				UPDATE AddressFields_DateTimes SET [date]=@datevalue WHERE addressId=@addressId AND fieldId=@fieldId
+			END
+			
 		END ELSE BEGIN
-			INSERT INTO AddressFields_DateTimes (addressId, fieldId, [date]) VALUES (@addressId, @fieldId, @datevalue)
+			IF @datevalue IS NOT NULL BEGIN
+				INSERT INTO AddressFields_DateTimes (addressId, fieldId, [date]) VALUES (@addressId, @fieldId, @datevalue)
+			END
 		END
 	END
 

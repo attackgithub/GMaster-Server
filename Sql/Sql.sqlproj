@@ -209,6 +209,7 @@
     <Build Include="dbo\Stored Procedures\AddressFields\AddressField_Exists.sql" />
     <Build Include="dbo\Stored Procedures\AddressFields\AddressField_SetValue.sql" />
     <Build Include="dbo\Stored Procedures\AddressFields\AddressField_SetValueById.sql" />
+    <Build Include="dbo\Stored Procedures\AddressBook\AddressBook_DeleteEntry.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

@@ -150,5 +150,16 @@ namespace Query
                 }
             );
         }
+
+        public static void Delete(int teamId, int addressId)
+        {
+            Sql.ExecuteNonQuery("AddressBook_DeleteEntry",
+                new Dictionary<string, object>()
+                {
+                    {"teamId", teamId },
+                    {"addressId", addressId }
+                }
+            );
+        }
     }
 }

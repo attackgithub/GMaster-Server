@@ -5,7 +5,7 @@ function showMessage(title, msg, type, callback, buttons, buttonInjectType){
             '<div class="buttons">' + 
             (buttons != null && (buttonInjectType == 'prepend') ? buttons : '') +
             (
-                type == '' || type == 'warning' || 
+                type == '' || type == 'message' || type == 'warning' || 
                 type == 'error' ? 
                 '<a class="button btn-okay">Okay</a>' :
                 type == 'confirm' ?
@@ -41,7 +41,7 @@ function showMessage(title, msg, type, callback, buttons, buttonInjectType){
     var modal = $('.gmaster-content .message');
     var response = true;
     switch(type){
-        case '': case 'warning': case 'confirm': case 'error': case 'save':
+        case '': case 'warning': case 'message': case 'confirm': case 'error': case 'save':
             modal.find('.btn-okay').on('click', function () {
                 hideModalMessage();
                 if(typeof callback == 'function'){response = callback(true);}

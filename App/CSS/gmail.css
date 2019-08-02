@@ -367,6 +367,10 @@
   top: 6px;
   z-index: 9999;
 }
+.gmaster-page .new-field .delete-button,
+.gmaster-content .new-field .delete-button {
+  top: 40px;
+}
 .gmaster-page ul,
 .gmaster-content ul {
   margin-block-start: 0;

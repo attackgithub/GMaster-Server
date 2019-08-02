@@ -1,4 +1,4 @@
-function showNewAddressbookEntryModal(subscriptionId, callback){
+function showNewAddressbookEntryModal(subscriptionId, view, callback){
     var html = '<div class="msg"></div>' +
         '<div class="row">' +
             '<div class="col field">Email</div>' +
@@ -37,9 +37,8 @@ function showNewAddressbookEntryModal(subscriptionId, callback){
                 //add new entry to the top of the list
                 console.log(response);
                 data.html = response[0].html;
-                if (typeof callback == 'function') { callback(data); }   
-                $('.subscription-page tr.is-new')
-                $('.subscription-page tr.is-new').on('click', (e) => { handleAddressbookEntry(subscriptionId, e); });
+                if (typeof callback == 'function') { callback(data); }
+                $('.subscription-page tr.is-new').on('click', (e) => { handleAddressbookEntry(subscriptionId, view, e); });
                 setTimeout(() => { $('.subscription-page tr.is-new').removeClass('is-new'); }, 5000);
             },
             function(err){
@@ -53,7 +52,7 @@ function showNewAddressbookEntryModal(subscriptionId, callback){
     });
 }
 
-function editAddressbookEntry(subscriptionId, addressId, callback) {
+function editAddressbookEntry(subscriptionId, addressId, view, callback) {
     var data = {
         subscriptionId: subscriptionId,
         addressId: addressId
@@ -62,9 +61,9 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
         function (response) {
             var entry = response[0];
 
-            function createDeleteButton(id) {
+            function createDeleteButton(id, label) {
                 return '<div class="delete-button hover-only">' +
-                    '<div class="button outline btn-delete fill font-icon" data-id="' + id + '" title="delete custom field"><b>-</b></div></div>';
+                    '<div class="button outline btn-delete fill font-icon" data-id="' + id + '" data-name="' + label + '" title="delete custom field"><b>-</b></div></div>';
             }
 
             var html = '<div class="msg"></div>' +
@@ -100,7 +99,7 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                 entry.fields.map((field) => {
                     return '' +
                         '<div class="row hover longer expand">' +
-                        createDeleteButton(field.fieldId) +
+                        createDeleteButton(field.fieldId, field.label) +
                         '<div class="row inner">' +
                             '<div class="col field">' + field.label + '</div>' +
                             '<div class="col input text-left">' +
@@ -232,8 +231,8 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                         }
 
                         webApi('Addressbook/Update', data,
-                            function (response) {
-                                editAddressbookEntry(subscriptionId, addressId, () => {
+                            function () {
+                                editAddressbookEntry(subscriptionId, addressId, view, () => {
                                     showModalMessage('Address Book Contact successfully updated');
                                 });
                             },
@@ -278,6 +277,8 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                     '</div>'
                 );
 
+                $('.gmaster-content .modal .custom-fields .delete-button .btn-delete').off('click', deleteField).on('click', deleteField);
+
                 $('.gmaster-content .modal .custom-fields .select-data-type').last().on('change', (e) => {
                     //change new field's data type
                     var datatype = parseInt($(e.target).val());
@@ -314,8 +315,61 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
                 });
             });
 
+            $('.gmaster-content .modal .custom-fields .delete-button .btn-delete').on('click', deleteField);
+
+            function deleteField(e) {
+                var target = $(e.target);
+                if (!target.hasClass('button')) {
+                    target = target.parents('.button').first();
+                }
+                if (target.attr('data-id') == 'new') {
+                    target.parents('.new-field').remove();
+                    return;
+                }
+
+                if (confirm('Do you really want to delete the custom field "' + target.attr('data-name') + '"? ' +
+                    'This will remove the field for all contacts within your address book and cannot be undone.') == false) {
+                    return;
+                }
+                var data = {
+                    subscriptionId: subscriptionId,
+                    fieldId: parseInt(target.attr('data-id'))
+                };
+                webApi('Addressbook/DeleteField', data,
+                    function () {
+                        editAddressbookEntry(subscriptionId, addressId, view, () => {
+                            showModalMessage('Address Book Contact successfully updated');
+                        });
+                    },
+
+                    function (err) {
+                        showModalMessage(err.responseText, 'error');
+                    }
+                );
+            }
+
             $('.gmaster-content .modal .btn-delete-entry').on('click', () => {
                 //delete addressbook entry
+                if (confirm('Do you really want to delete this address book contact? This cannot be undone.') == false) {
+                    return;
+                }
+                var data = {
+                    subscriptionId: subscriptionId,
+                    addressId: addressId
+                };
+                webApi('Addressbook/Delete', data,
+                    function () {
+                        showMessage('Address Book Contact successfully deleted', '', '', () => {
+                            loadSubscriptionPage(subscriptionId, 'addressbook', view, () => {
+                                addressBookPageCallback(subscriptionId, view);
+                            });
+                        });
+                    },
+
+                    function (err) {
+                        showModalMessage(err.responseText, 'error');
+                    }
+                );
             });
 
             //finally, execute callback
@@ -335,10 +389,10 @@ function editAddressbookEntry(subscriptionId, addressId, callback) {
     
 }
 
-function handleAddressbookEntry(subscriptionId, e) {
+function handleAddressbookEntry(subscriptionId, view, e) {
     var id = $(e.target).attr('data-id');
     if (e.target.tagName != 'TR') {
         id = $(e.target).parents('tr').first().attr('data-id');
     }
-    editAddressbookEntry(subscriptionId, id, () => { });
+    editAddressbookEntry(subscriptionId, id, view, () => { });
 }

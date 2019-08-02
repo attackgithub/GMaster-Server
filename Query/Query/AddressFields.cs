@@ -62,12 +62,13 @@ namespace Query
             );
         }
 
-        public static void Delete(int fieldId)
+        public static void Delete(int teamId, int fieldId)
         {
             Sql.ExecuteNonQuery(
                 "AddressField_Delete",
                 new Dictionary<string, object>()
                 {
+                    {"teamId", teamId },
                     {"fieldId", fieldId }
                 }
             );

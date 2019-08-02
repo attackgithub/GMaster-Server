@@ -12,6 +12,7 @@ namespace GMaster.Services
         public string Index(int page = 1, int length = 50, int sort = 0, string search = "")
         {
             if (!HasPermissions()) { return Error(); }
+            //get accessable subscriptions for user
             var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
             var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
             if (subscription != null)
@@ -40,7 +41,7 @@ namespace GMaster.Services
                     html = html.ToString()
                 });
             }
-            return Empty();
+            return Error("You do not have permission to view address book entries");
         }
 
         public string Create(int subscriptionId, string entryemail, string firstname, string lastname)
@@ -84,12 +85,13 @@ namespace GMaster.Services
                 }
             }
 
-            return JsonResponse(new { html = "" });
+            return Error("You do not have permission to create new address book entries");
         }
 
         public string Entry(int subscriptionId, int addressId)
         {
             if (!HasPermissions()) { return Error(); }
+            //get accessable subscriptions for user
             var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
             var subscription = subscriptions.Where(a => a.userId == User.userId).FirstOrDefault();
             if (subscription != null)
@@ -122,7 +124,7 @@ namespace GMaster.Services
 
                 return JsonResponse(response);
             }
-            return Empty();
+            return Error("You do not have permission to view this address book entry");
         }
 
         public string Update(int subscriptionId, int addressId, string entryemail, string firstname, string lastname, string customids = "", string customvalues = "", string customtypes = "", string newfields = "", string newvalues = "", string newtypes = "")
@@ -133,7 +135,7 @@ namespace GMaster.Services
             var subscription = subscriptions.Where(a => a.subscriptionId == subscriptionId).FirstOrDefault();
             if (subscription != null)
             {
-                //check if user has permission to create new addressbook entries
+                //check if user has permission to update addressbook entries
                 if (subscription.roleType <= Query.Models.RoleType.contributer)
                 {
                     //check if address already exists in team's address book
@@ -187,7 +189,14 @@ namespace GMaster.Services
                                     Query.AddressFields.SetValue(addressId, field, null, null, int.Parse(val));
                                     break;
                                 case 2:
-                                    Query.AddressFields.SetValue(addressId, field, null, DateTime.Parse(val));
+                                    if(val == "" || val == null)
+                                    {
+                                        Query.AddressFields.SetValue(addressId, field, null, null);
+                                    }
+                                    else
+                                    {
+                                        Query.AddressFields.SetValue(addressId, field, null, DateTime.Parse(val));
+                                    }
                                     break;
                                 case 3:
                                     Query.AddressFields.SetValue(addressId, field, val == "1");
@@ -242,7 +251,43 @@ namespace GMaster.Services
                     return Success();
                 }
             }
-            return Error();
+            return Error("You do not have permission to update address book entries");
+        }
+
+        public string Delete(int subscriptionId, int addressId)
+        {
+            if (!HasPermissions()) { return Error(); }
+            //get accessable subscriptions for user
+            var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+            var subscription = subscriptions.Where(a => a.subscriptionId == subscriptionId).FirstOrDefault();
+            if (subscription != null)
+            {
+                //check if user has permission to delete addressbook entries
+                if (subscription.roleType <= Query.Models.RoleType.contributer)
+                {
+                    Query.AddressBookEntries.Delete(subscription.teamId, addressId);
+                    return Success();
+                }
+            }
+            return Error("You do not have permission to delete address book entries");
+        }
+
+        public string DeleteField(int subscriptionId, int fieldId)
+        {
+            if (!HasPermissions()) { return Error(); }
+            //get accessable subscriptions for user
+            var subscriptions = Query.Subscriptions.GetSubscriptions(User.userId);
+            var subscription = subscriptions.Where(a => a.subscriptionId == subscriptionId).FirstOrDefault();
+            if (subscription != null)
+            {
+                //check if user has permission to delete addressbook entries
+                if (subscription.roleType <= Query.Models.RoleType.contributer)
+                {
+                    Query.AddressFields.Delete(subscription.teamId, fieldId);
+                    return Success();
+                }
+            }
+            return Error("You do not have permission to delete address book fields");
         }
     }
 }
