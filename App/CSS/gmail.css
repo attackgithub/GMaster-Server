@@ -74,38 +74,46 @@
   margin-left: 10px;
 }
 .gmaster-page,
-.gmaster-content {
+.gmaster-content,
+.gmaster {
   /* Buttons */
 }
 .gmaster-page .col,
-.gmaster-content .col {
+.gmaster-content .col,
+.gmaster .col {
   display: inline-block;
   float: left;
   position: relative;
   box-sizing: border-box;
 }
 .gmaster-page .col.two,
-.gmaster-content .col.two {
+.gmaster-content .col.two,
+.gmaster .col.two {
   width: 16.41%;
 }
 .gmaster-page .col.three,
-.gmaster-content .col.three {
+.gmaster-content .col.three,
+.gmaster .col.three {
   width: 25%;
 }
 .gmaster-page .col.four,
-.gmaster-content .col.four {
+.gmaster-content .col.four,
+.gmaster .col.four {
   width: 33.333339%;
 }
 .gmaster-page .col.six,
-.gmaster-content .col.six {
+.gmaster-content .col.six,
+.gmaster .col.six {
   width: 50%;
 }
 .gmaster-page .col.eight,
-.gmaster-content .col.eight {
+.gmaster-content .col.eight,
+.gmaster .col.eight {
   width: 66.66669%;
 }
 .gmaster-page .col.field,
-.gmaster-content .col.field {
+.gmaster-content .col.field,
+.gmaster .col.field {
   font-weight: 400;
   padding: 10px 10px 0 0;
   width: 80px;
@@ -113,106 +121,130 @@
   cursor: default;
 }
 .gmaster-page .col.field.long,
-.gmaster-content .col.field.long {
+.gmaster-content .col.field.long,
+.gmaster .col.field.long {
   width: 120px;
 }
 .gmaster-page .col.field.longer,
-.gmaster-content .col.field.longer {
+.gmaster-content .col.field.longer,
+.gmaster .col.field.longer {
   width: 150px;
 }
 .gmaster-page .col.input,
-.gmaster-content .col.input {
+.gmaster-content .col.input,
+.gmaster .col.input {
   padding: 5px 15px 5px 0;
 }
 .gmaster-page .col.input.expand input,
-.gmaster-content .col.input.expand input {
+.gmaster-content .col.input.expand input,
+.gmaster .col.input.expand input {
   width: 100%;
   box-sizing: border-box;
 }
 .gmaster-page .col.input.expand input[type="checkbox"],
-.gmaster-content .col.input.expand input[type="checkbox"] {
+.gmaster-content .col.input.expand input[type="checkbox"],
+.gmaster .col.input.expand input[type="checkbox"] {
   width: 18px;
 }
 .gmaster-page .col.input .input,
-.gmaster-content .col.input .input {
+.gmaster-content .col.input .input,
+.gmaster .col.input .input {
   padding: 0;
 }
 .gmaster-page .col.input input[type="checkbox"],
-.gmaster-content .col.input input[type="checkbox"] {
+.gmaster-content .col.input input[type="checkbox"],
+.gmaster .col.input input[type="checkbox"] {
   margin-top: 5px;
 }
 .gmaster-page .col.field.input,
-.gmaster-content .col.field.input {
+.gmaster-content .col.field.input,
+.gmaster .col.field.input {
   padding: 5px 10px 5px 0;
 }
 .gmaster-page .col.field.input input,
-.gmaster-content .col.field.input input {
+.gmaster-content .col.field.input input,
+.gmaster .col.field.input input {
   width: 100%;
   box-sizing: border-box;
   text-align: right;
 }
 .gmaster-page .row,
-.gmaster-content .row {
+.gmaster-content .row,
+.gmaster .row {
   width: 100%;
   box-sizing: border-box;
   position: relative;
 }
 .gmaster-page .row:after,
-.gmaster-content .row:after {
+.gmaster-content .row:after,
+.gmaster .row:after {
   clear: both;
   display: block;
   content: '';
   font-size: 0;
 }
 .gmaster-page .row.hover:hover,
-.gmaster-content .row.hover:hover {
+.gmaster-content .row.hover:hover,
+.gmaster .row.hover:hover {
   background-color: rgba(0, 83, 255, 0.15);
 }
 .gmaster-page .row .hover-only,
-.gmaster-content .row .hover-only {
+.gmaster-content .row .hover-only,
+.gmaster .row .hover-only {
   visibility: hidden;
 }
 .gmaster-page .row:hover .hover-only,
-.gmaster-content .row:hover .hover-only {
+.gmaster-content .row:hover .hover-only,
+.gmaster .row:hover .hover-only {
   visibility: visible;
 }
 .gmaster-page .row.long .field,
-.gmaster-content .row.long .field {
+.gmaster-content .row.long .field,
+.gmaster .row.long .field {
   width: 120px;
 }
 .gmaster-page .row.longer .field,
-.gmaster-content .row.longer .field {
+.gmaster-content .row.longer .field,
+.gmaster .row.longer .field {
   width: 150px;
 }
 .gmaster-page .row.expand .input:not(.field),
-.gmaster-content .row.expand .input:not(.field) {
+.gmaster-content .row.expand .input:not(.field),
+.gmaster .row.expand .input:not(.field) {
   width: calc(100% - 80px);
 }
 .gmaster-page .row.expand .input:not(.field) input,
-.gmaster-content .row.expand .input:not(.field) input {
+.gmaster-content .row.expand .input:not(.field) input,
+.gmaster .row.expand .input:not(.field) input {
   width: 100%;
   box-sizing: border-box;
 }
 .gmaster-page .row.expand .input:not(.field) input[type="checkbox"],
-.gmaster-content .row.expand .input:not(.field) input[type="checkbox"] {
+.gmaster-content .row.expand .input:not(.field) input[type="checkbox"],
+.gmaster .row.expand .input:not(.field) input[type="checkbox"] {
   width: 18px;
 }
 .gmaster-page .row.expand.long .input:not(.field),
-.gmaster-content .row.expand.long .input:not(.field) {
+.gmaster-content .row.expand.long .input:not(.field),
+.gmaster .row.expand.long .input:not(.field) {
   width: calc(100% - 120px);
 }
 .gmaster-page .row.expand.longer .input:not(.field),
-.gmaster-content .row.expand.longer .input:not(.field) {
+.gmaster-content .row.expand.longer .input:not(.field),
+.gmaster .row.expand.longer .input:not(.field) {
   width: calc(100% - 150px);
 }
 .gmaster-page .row.expand .input:not(.field) .input,
-.gmaster-content .row.expand .input:not(.field) .input {
+.gmaster-content .row.expand .input:not(.field) .input,
+.gmaster .row.expand .input:not(.field) .input {
   width: 100%;
 }
 .gmaster-page button,
 .gmaster-content button,
+.gmaster button,
 .gmaster-page .button,
-.gmaster-content .button {
+.gmaster-content .button,
+.gmaster .button {
   background-color: #1a73e8;
   color: #fff;
   font-size: 0.875rem;
@@ -229,88 +261,116 @@
 }
 .gmaster-page button:hover,
 .gmaster-content button:hover,
+.gmaster button:hover,
 .gmaster-page .button:hover,
-.gmaster-content .button:hover {
+.gmaster-content .button:hover,
+.gmaster .button:hover {
   text-decoration: none;
   background-color: #0053ff;
   cursor: pointer;
 }
 .gmaster-page button.apply,
 .gmaster-content button.apply,
+.gmaster button.apply,
 .gmaster-page .button.apply,
-.gmaster-content .button.apply {
+.gmaster-content .button.apply,
+.gmaster .button.apply {
   background: #00a128;
 }
 .gmaster-page button.apply:hover,
 .gmaster-content button.apply:hover,
+.gmaster button.apply:hover,
 .gmaster-page .button.apply:hover,
-.gmaster-content .button.apply:hover {
+.gmaster-content .button.apply:hover,
+.gmaster .button.apply:hover {
   background: #00b351;
 }
 .gmaster-page button.btn-warn,
 .gmaster-content button.btn-warn,
+.gmaster button.btn-warn,
 .gmaster-page .button.btn-warn,
-.gmaster-content .button.btn-warn {
+.gmaster-content .button.btn-warn,
+.gmaster .button.btn-warn {
   background-color: #ff6a00;
 }
 .gmaster-page button.btn-warn:hover,
 .gmaster-content button.btn-warn:hover,
+.gmaster button.btn-warn:hover,
 .gmaster-page .button.btn-warn:hover,
-.gmaster-content .button.btn-warn:hover {
+.gmaster-content .button.btn-warn:hover,
+.gmaster .button.btn-warn:hover {
   background-color: #ff4e00;
 }
 .gmaster-page button.btn-cancel,
 .gmaster-content button.btn-cancel,
+.gmaster button.btn-cancel,
 .gmaster-page .button.btn-cancel,
-.gmaster-content .button.btn-cancel {
+.gmaster-content .button.btn-cancel,
+.gmaster .button.btn-cancel {
   background-color: #666;
 }
 .gmaster-page button.btn-cancel:hover,
 .gmaster-content button.btn-cancel:hover,
+.gmaster button.btn-cancel:hover,
 .gmaster-page .button.btn-cancel:hover,
-.gmaster-content .button.btn-cancel:hover {
+.gmaster-content .button.btn-cancel:hover,
+.gmaster .button.btn-cancel:hover {
   background-color: #ff3e00;
 }
 .gmaster-page button.btn-special,
 .gmaster-content button.btn-special,
+.gmaster button.btn-special,
 .gmaster-page .button.btn-special,
-.gmaster-content .button.btn-special {
+.gmaster-content .button.btn-special,
+.gmaster .button.btn-special {
   background-color: #3da954;
 }
 .gmaster-page button.btn-special:hover,
 .gmaster-content button.btn-special:hover,
+.gmaster button.btn-special:hover,
 .gmaster-page .button.btn-special:hover,
-.gmaster-content .button.btn-special:hover {
+.gmaster-content .button.btn-special:hover,
+.gmaster .button.btn-special:hover {
   background-color: #44c05e;
 }
 .gmaster-page button.btn-delete,
 .gmaster-content button.btn-delete,
+.gmaster button.btn-delete,
 .gmaster-page .button.btn-delete,
-.gmaster-content .button.btn-delete {
+.gmaster-content .button.btn-delete,
+.gmaster .button.btn-delete {
   background-color: #eb5d0b;
 }
 .gmaster-page button.btn-delete:hover,
 .gmaster-content button.btn-delete:hover,
+.gmaster button.btn-delete:hover,
 .gmaster-page .button.btn-delete:hover,
-.gmaster-content .button.btn-delete:hover {
+.gmaster-content .button.btn-delete:hover,
+.gmaster .button.btn-delete:hover {
   background-color: #ff3e00;
 }
 .gmaster-page button.faded,
 .gmaster-content button.faded,
+.gmaster button.faded,
 .gmaster-page .button.faded,
-.gmaster-content .button.faded {
+.gmaster-content .button.faded,
+.gmaster .button.faded {
   opacity: 0.5;
 }
 .gmaster-page button.faded:hover,
 .gmaster-content button.faded:hover,
+.gmaster button.faded:hover,
 .gmaster-page .button.faded:hover,
-.gmaster-content .button.faded:hover {
+.gmaster-content .button.faded:hover,
+.gmaster .button.faded:hover {
   opacity: 1;
 }
 .gmaster-page button.outline,
 .gmaster-content button.outline,
+.gmaster button.outline,
 .gmaster-page .button.outline,
-.gmaster-content .button.outline {
+.gmaster-content .button.outline,
+.gmaster .button.outline {
   background-color: transparent;
   border-width: 2px;
   border-style: solid;
@@ -319,16 +379,20 @@
 }
 .gmaster-page button.outline:hover,
 .gmaster-content button.outline:hover,
+.gmaster button.outline:hover,
 .gmaster-page .button.outline:hover,
-.gmaster-content .button.outline:hover {
+.gmaster-content .button.outline:hover,
+.gmaster .button.outline:hover {
   border-color: #0053ff;
   color: #0053ff;
   cursor: pointer;
 }
 .gmaster-page button.outline.font-icon,
 .gmaster-content button.outline.font-icon,
+.gmaster button.outline.font-icon,
 .gmaster-page .button.outline.font-icon,
-.gmaster-content .button.outline.font-icon {
+.gmaster-content .button.outline.font-icon,
+.gmaster .button.outline.font-icon {
   padding: 10px 7px 0 7px !important;
   font-size: 24px;
   height: 13px !important;
@@ -336,156 +400,202 @@
 }
 .gmaster-page button.outline.fill,
 .gmaster-content button.outline.fill,
+.gmaster button.outline.fill,
 .gmaster-page .button.outline.fill,
-.gmaster-content .button.outline.fill {
+.gmaster-content .button.outline.fill,
+.gmaster .button.outline.fill {
   background-color: #fff;
 }
 .gmaster-page button.outline.btn-delete,
 .gmaster-content button.outline.btn-delete,
+.gmaster button.outline.btn-delete,
 .gmaster-page .button.outline.btn-delete,
-.gmaster-content .button.outline.btn-delete {
+.gmaster-content .button.outline.btn-delete,
+.gmaster .button.outline.btn-delete {
   border-color: #eb5d0b;
   color: #eb5d0b;
 }
 .gmaster-page button.outline.btn-delete:hover,
 .gmaster-content button.outline.btn-delete:hover,
+.gmaster button.outline.btn-delete:hover,
 .gmaster-page .button.outline.btn-delete:hover,
-.gmaster-content .button.outline.btn-delete:hover {
+.gmaster-content .button.outline.btn-delete:hover,
+.gmaster .button.outline.btn-delete:hover {
   border-color: #ff3e00;
   color: #ff3e00;
 }
 .gmaster-page button.outline.btn-delete.fill:hover,
 .gmaster-content button.outline.btn-delete.fill:hover,
+.gmaster button.outline.btn-delete.fill:hover,
 .gmaster-page .button.outline.btn-delete.fill:hover,
-.gmaster-content .button.outline.btn-delete.fill:hover {
+.gmaster-content .button.outline.btn-delete.fill:hover,
+.gmaster .button.outline.btn-delete.fill:hover {
   background-color: #ffd4d4;
 }
 .gmaster-page .delete-button,
-.gmaster-content .delete-button {
+.gmaster-content .delete-button,
+.gmaster .delete-button {
   position: absolute;
   left: 5px;
   top: 6px;
   z-index: 9999;
 }
 .gmaster-page .new-field .delete-button,
-.gmaster-content .new-field .delete-button {
+.gmaster-content .new-field .delete-button,
+.gmaster .new-field .delete-button {
   top: 40px;
 }
 .gmaster-page ul,
-.gmaster-content ul {
+.gmaster-content ul,
+.gmaster ul {
   margin-block-start: 0;
   margin-block-end: 0;
   padding-inline-start: 0;
 }
 .gmaster-page h1,
 .gmaster-content h1,
+.gmaster h1,
 .gmaster-page h2,
 .gmaster-content h2,
+.gmaster h2,
 .gmaster-page h3,
 .gmaster-content h3,
+.gmaster h3,
 .gmaster-page h4,
 .gmaster-content h4,
+.gmaster h4,
 .gmaster-page h5,
 .gmaster-content h5,
+.gmaster h5,
 .gmaster-page h6,
-.gmaster-content h6 {
+.gmaster-content h6,
+.gmaster h6 {
   margin-block-start: 0;
   margin-block-end: 10px;
 }
 .gmaster-page label,
-.gmaster-content label {
+.gmaster-content label,
+.gmaster label {
   padding: 0 10px 0 0;
 }
 .gmaster-page input,
 .gmaster-content input,
+.gmaster input,
 .gmaster-page select,
-.gmaster-content select {
+.gmaster-content select,
+.gmaster select {
   padding: 4px 8px;
   border: 1px solid #999;
   outline: none;
 }
 .gmaster-page input[type="checkbox"],
-.gmaster-content input[type="checkbox"] {
+.gmaster-content input[type="checkbox"],
+.gmaster input[type="checkbox"] {
   width: 18px;
   height: 18px;
 }
 .gmaster-page span,
-.gmaster-content span {
+.gmaster-content span,
+.gmaster span {
   display: inline-block;
 }
 .gmaster-page table,
-.gmaster-content table {
+.gmaster-content table,
+.gmaster table {
   border: 0;
   border-spacing: 0;
 }
 .gmaster-page table th,
-.gmaster-content table th {
+.gmaster-content table th,
+.gmaster table th {
   text-align: left;
 }
 .gmaster-page table th,
 .gmaster-content table th,
+.gmaster table th,
 .gmaster-page table td,
-.gmaster-content table td {
+.gmaster-content table td,
+.gmaster table td {
   padding: 8px 15px;
 }
 .gmaster-page table tbody tr:nth-child(odd),
-.gmaster-content table tbody tr:nth-child(odd) {
+.gmaster-content table tbody tr:nth-child(odd),
+.gmaster table tbody tr:nth-child(odd) {
   background-color: rgba(242, 245, 245, 0.8);
 }
 .gmaster-page table.hover tr:hover,
-.gmaster-content table.hover tr:hover {
+.gmaster-content table.hover tr:hover,
+.gmaster table.hover tr:hover {
   background-color: rgba(0, 83, 255, 0.15);
 }
 .gmaster-page table.hover tr:nth-child(odd):hover,
-.gmaster-content table.hover tr:nth-child(odd):hover {
+.gmaster-content table.hover tr:nth-child(odd):hover,
+.gmaster table.hover tr:nth-child(odd):hover {
   background-color: rgba(0, 83, 255, 0.2);
 }
 .gmaster-page .pad,
-.gmaster-content .pad {
+.gmaster-content .pad,
+.gmaster .pad {
   padding: 15px;
 }
+.gmaster-page .pad-left,
+.gmaster-content .pad-left,
+.gmaster .pad-left {
+  padding-right: 15px;
+}
 .gmaster-page .pad-right,
-.gmaster-content .pad-right {
+.gmaster-content .pad-right,
+.gmaster .pad-right {
   padding-right: 15px;
 }
 .gmaster-page .pad-top,
-.gmaster-content .pad-top {
+.gmaster-content .pad-top,
+.gmaster .pad-top {
   padding-top: 15px;
 }
 .gmaster-page .pad-top-sm,
-.gmaster-content .pad-top-sm {
+.gmaster-content .pad-top-sm,
+.gmaster .pad-top-sm {
   padding-top: 5px;
 }
 .gmaster-page .pad-edge,
-.gmaster-content .pad-edge {
+.gmaster-content .pad-edge,
+.gmaster .pad-edge {
   padding: 0 15px 15px 0;
 }
 .gmaster-page .pad-edge-lg,
-.gmaster-content .pad-edge-lg {
+.gmaster-content .pad-edge-lg,
+.gmaster .pad-edge-lg {
   padding: 0 30px 30px 0;
 }
 .gmaster-page .right,
-.gmaster-content .right {
+.gmaster-content .right,
+.gmaster .right {
   float: right;
 }
 .gmaster-page .text-left,
-.gmaster-content .text-left {
+.gmaster-content .text-left,
+.gmaster .text-left {
   text-align: left;
 }
 .gmaster-page .text-right,
-.gmaster-content .text-right {
+.gmaster-content .text-right,
+.gmaster .text-right {
   text-align: right;
 }
 .gmaster-page .text-center,
-.gmaster-content .text-center {
+.gmaster-content .text-center,
+.gmaster .text-center {
   text-align: center;
 }
 .gmaster-page .svg-icons,
-.gmaster-content .svg-icons {
+.gmaster-content .svg-icons,
+.gmaster .svg-icons {
   display: none;
 }
 .gmaster-page a.icon use,
-.gmaster-content a.icon use {
+.gmaster-content a.icon use,
+.gmaster a.icon use {
   width: 16px;
 }
 /* //////////////////////////////////////////////////////////////////////// */
@@ -784,6 +894,49 @@
 }
 /* //////////////////////////////////////////////////////////////////////// */
 /* Compose View */
+.button-switch {
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  height: 20px;
+  width: 40px;
+  cursor: pointer;
+}
+.button-switch .knob {
+  background-color: #585858;
+  position: relative;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+  animation: switch-knob-off 0.2s ease-in 1;
+}
+.button-switch.selected {
+  background-color: rgba(79, 180, 66, 0.3);
+}
+.button-switch.selected .knob {
+  left: 20px;
+  background-color: #4fb442;
+  animation: switch-knob-on 0.2s ease-in 1;
+}
+.switch-label {
+  padding: 2px 0 0 10px;
+}
+@keyframes switch-knob-off {
+  0% {
+    left: 20px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+@keyframes switch-knob-on {
+  0% {
+    left: 0px;
+  }
+  100% {
+    left: 20px;
+  }
+}
 .compose-button {
   cursor: pointer;
 }
@@ -791,7 +944,7 @@
 .compose-button.inboxsdk__button_icon {
   opacity: 1 !important;
 }
-.compose-send-button {
+.compose-save-button {
   background-color: #1a73e8;
   color: #fff;
   font-size: 0.875rem;
@@ -801,10 +954,11 @@
   padding: 0 16px;
   line-height: 2.5;
 }
-.compose-send-button:after {
-  content: "Mass Mail" !important;
+.compose-save-button:after {
+  content: "Save Campaign" !important;
+  position: relative;
 }
-.compose-send-button:hover {
+.compose-save-button:hover {
   background-color: #297be6;
   box-shadow: 0 1px 2px 0 rgba(26, 115, 232, 0.451), 0 1px 3px 1px rgba(26, 115, 232, 0.302);
 }

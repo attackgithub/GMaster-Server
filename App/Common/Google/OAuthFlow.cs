@@ -14,7 +14,11 @@ namespace GMaster.Common.Google
                     ClientId = Settings.Google.OAuth2.clientId,
                     ClientSecret = Settings.Google.OAuth2.secret
                 },
-                Scopes = new string[]{ "https://www.googleapis.com/auth/plus.me" },
+                Scopes = new string[]{ //authorization scopes for Google API access
+                    "https://www.googleapis.com/auth/plus.me",
+                    "https://www.googleapis.com/auth/gmail.send",
+                    "https://www.googleapis.com/auth/gmail.labels"
+                },
                 DataStore = new FileDataStore("Content/Drive.Api.Auth.Store")
             }
         );

@@ -53,6 +53,7 @@ paths.working = {
             paths.webroot + 'js/selector.js',
             // Services ////////////////////////////////
             paths.gmail + 'Services/authenticate.js',
+            paths.gmail + 'Services/campaigns.js', 
             paths.gmail + 'Services/plans.js', 
             paths.gmail + 'Services/subscription.js', 
             paths.gmail + 'Services/addressbook.js', 

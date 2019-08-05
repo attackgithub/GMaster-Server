@@ -27,7 +27,7 @@
     }
 }
 
-.gmaster-page, .gmaster-content{
+.gmaster-page, .gmaster-content, .gmaster{
     .col{display:inline-block;float:left; position:relative; box-sizing:border-box;
         &.two{width:16.41%}
         &.three{width:25%}
@@ -135,6 +135,7 @@
         }
     }
     .pad{padding:15px;}
+    .pad-left{padding-right:15px;}
     .pad-right{padding-right:15px;}
     .pad-top{padding-top:15px;}
     .pad-top-sm{padding-top:5px;}
@@ -265,12 +266,30 @@
 
 /* //////////////////////////////////////////////////////////////////////// */
 /* Compose View */
+.button-switch{background-color:rgba(0,0,0,0.15); border-radius:50px;height:20px; width:40px; cursor:pointer;
+    .knob{background-color:#585858; position:relative; left:0; width:20px; height:20px; border-radius:50px; animation: switch-knob-off 0.2s ease-in 1;}
+    &.selected {background-color:rgba(79, 180, 66, 0.3);
+        .knob{left:20px; background-color:#4fb442; animation: switch-knob-on 0.2s ease-in 1;}
+    }
+}
+.switch-label{ padding:2px 0 0 10px;}
+
+@keyframes switch-knob-off{
+    0%{left:20px;}
+    100%{left:0px;}
+}
+
+@keyframes switch-knob-on{
+    0%{left:0px;}
+    100%{left:20px;}
+}
+
 .compose-button{
     cursor:pointer;
     &.inboxsdk__composeButton, &.inboxsdk__button_icon{opacity:1 !important;}
 }
-.compose-send-button{
-    &:after{content:"Mass Mail" !important;}
+.compose-save-button{
+    &:after{content:"Save Campaign" !important; position:relative;}
     &:hover{
         background-color:#297be6;
         box-shadow: 0 1px 2px 0 rgba(26,115,232,0.451), 0 1px 3px 1px rgba(26,115,232,0.302);
