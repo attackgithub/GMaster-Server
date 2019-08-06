@@ -921,6 +921,12 @@
 .switch-label {
   padding: 2px 0 0 10px;
 }
+.switch-subscription {
+  margin-top: -8px;
+  padding-left: 7px;
+  position: relative;
+  top: 4px;
+}
 @keyframes switch-knob-off {
   0% {
     left: 20px;
@@ -939,12 +945,6 @@
 }
 .compose-button {
   cursor: pointer;
-}
-.compose-button.inboxsdk__composeButton,
-.compose-button.inboxsdk__button_icon {
-  opacity: 1 !important;
-}
-.compose-save-button {
   background-color: #1a73e8;
   color: #fff;
   font-size: 0.875rem;
@@ -954,13 +954,21 @@
   padding: 0 16px;
   line-height: 2.5;
 }
-.compose-save-button:after {
-  content: "Save Campaign" !important;
-  position: relative;
+.compose-button.inboxsdk__composeButton,
+.compose-button.inboxsdk__button_icon {
+  opacity: 1 !important;
 }
-.compose-save-button:hover {
+.compose-button:hover {
   background-color: #297be6;
   box-shadow: 0 1px 2px 0 rgba(26, 115, 232, 0.451), 0 1px 3px 1px rgba(26, 115, 232, 0.302);
+}
+.compose-create-button:after {
+  content: "Create Campaign" !important;
+  position: relative;
+}
+.compose-update-button:after {
+  content: "Update Campaign" !important;
+  position: relative;
 }
 /* /////////////////////////////////////////////////////////////////////// */
 /* InboxSDK overrides */

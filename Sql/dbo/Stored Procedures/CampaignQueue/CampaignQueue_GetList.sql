@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[CampaignQueue_GetList]
 	@campaignId int,
+	@teamId int,
 	@page int = 1,
 	@length int = 50,
 	@sort int,
@@ -12,7 +13,7 @@ AS
 	SELECT cq.*, ab.email 
 	FROM CampaignQueue cq
 	LEFT JOIN AddressBook ab ON ab.addressId=cq.addressId
-	WHERE campaignId=@campaignId
+	WHERE campaignId=@campaignId AND teamId=@teamId
 	AND cq.[status] = CASE WHEN @status IS NOT NULL THEN @status ELSE cq.[status] END
 	AND cq.[clicked] = CASE WHEN @clicked IS NOT NULL THEN @clicked ELSE cq.[clicked] END
 	AND cq.[response] = CASE WHEN @response IS NOT NULL THEN @response ELSE cq.[response] END

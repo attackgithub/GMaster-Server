@@ -294,4 +294,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="teamId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="23f10702-fe12-4f47-84e0-ec61e53131c8" ChangeDateTime="08/06/2019 13:22:55">
+    <Property Name="ElementName" Value="[dbo].[Campaigns].[userId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Campaigns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="teamId" />
+  </Operation>
 </Operations>

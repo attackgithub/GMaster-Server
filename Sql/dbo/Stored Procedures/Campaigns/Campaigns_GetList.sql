@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[Campaigns_GetList]
-	@userId int
+	@teamId int
 AS
 	SELECT *
 	FROM Campaigns
-	WHERE userId=@userId
+	WHERE teamId=@teamId
 	ORDER BY campaignId DESC

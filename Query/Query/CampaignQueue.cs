@@ -4,7 +4,7 @@ namespace Query
 {
     public static class CampaignQueue
     {
-        public static void BulkAdd(int campaignId, int userId, string[] emails)
+        public static void BulkAdd(int campaignId, int teamId, string[] emails)
         {
             //create class structure to use for XML
             var emailList = new Models.CampaignQueue_BulkAdd.Emails()
@@ -17,7 +17,7 @@ namespace Query
                 new Dictionary<string, object>()
                 {
                     {"campaignId", campaignId },
-                    {"userId", userId },
+                    {"teamId", teamId },
                     {"emails", Common.Serializer.ToXmlDocument(emailList) }
                 });
         }
@@ -46,13 +46,14 @@ namespace Query
             statusDesc = 7
         }
 
-        public static List<Models.CampaignQueue>GetList(int campaignId, int page = 1, int length = 50, SortList sort = 0, int? status = null, bool? clicked = null, int? response = null, bool? unsubscribed = null, bool? followup = null)
+        public static List<Models.CampaignQueue>GetList(int campaignId, int teamId, int page = 1, int length = 50, SortList sort = 0, int? status = null, bool? clicked = null, int? response = null, bool? unsubscribed = null, bool? followup = null)
         {
             return Sql.Populate<Models.CampaignQueue>(
                 "CampaignQueue_GetList",
                 new Dictionary<string, object>()
                 {
                     {"campaignId", campaignId },
+                    {"teamId", teamId },
                     {"page", page },
                     {"length", length },
                     {"sort", (int)sort },

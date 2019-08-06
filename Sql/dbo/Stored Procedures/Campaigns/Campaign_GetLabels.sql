@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[Campaign_GetLabels]
-	@userId int
+	@teamId int
 AS
 	SELECT campaignId, friendlyId, label, [status]
 	FROM Campaigns
-	WHERE userId=@userId
+	WHERE teamId=@teamId
 	ORDER BY campaignId DESC

@@ -67,7 +67,7 @@ namespace GMaster.Services
                     userId = Query.Users.CreateUser(new Query.Models.User()
                     {
                         email = googleUser.Email,
-                        name = googleUser.Name,
+                        name = googleUser.Name != null && googleUser.Name != "" ? googleUser.Name : "Post Master",
                         gender = googleUser.Gender == "male",
                         locale = googleUser.Locale,
                         refreshToken = refreshToken

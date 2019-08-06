@@ -2,7 +2,7 @@
 (
 	[campaignId] INT NOT NULL , 
 	[friendlyId] CHAR(7) NOT NULL,
-    [userId] INT NOT NULL, 
+    [teamId] INT NOT NULL, 
     [serverId] INT NOT NULL DEFAULT 0, /* 0 = Gmail, 1 = SendGrid */
     [label] NVARCHAR(32) NOT NULL DEFAULT 'New Campaign', 
     [status] TINYINT NOT NULL DEFAULT 0, /* 0 = new, 1 = in progress, disabled = 2 */
@@ -10,7 +10,7 @@
     [datecreated] DATETIME2 NOT NULL DEFAULT GETDATE(), 
     [schedule] DATETIME2 NOT NULL DEFAULT GETDATE(), 
     [queueperday] INT NOT NULL DEFAULT 1000000, 
-    CONSTRAINT [PK_Campaigns] PRIMARY KEY (userId, campaignId)
+    CONSTRAINT [PK_Campaigns] PRIMARY KEY ([teamId], campaignId)
 )
 
 GO

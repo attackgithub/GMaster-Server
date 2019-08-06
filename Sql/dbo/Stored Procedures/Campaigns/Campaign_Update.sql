@@ -1,5 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[Campaign_Update]
 	@campaignId int,
+	@teamId int,
 	@serverId int,
 	@label nvarchar(32),
 	@status tinyint = 0,
@@ -16,3 +17,4 @@ AS
 		schedule=@schedule,
 		queueperday=@queueperday
 	WHERE campaignId=@campaignId
+	AND teamId=@teamId
