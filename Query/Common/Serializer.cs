@@ -9,7 +9,7 @@ namespace Query.Common
     {
         public static XmlDocument ToXmlDocument(object input)
         {
-            XmlSerializer ser = new XmlSerializer(input.GetType(), "http://schemas.yournamespace.com");
+            XmlSerializer ser = new XmlSerializer(input.GetType());
 
             XmlDocument xd = null;
 

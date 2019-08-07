@@ -6,7 +6,7 @@ namespace Query
     {
         public static Models.NewCampaign Create(Models.Campaign model)
         {
-            return Sql.ExecuteScalar<Models.NewCampaign>(
+            var list = Sql.Populate<Models.NewCampaign>(
                 "Campaign_Create",
                 new Dictionary<string, object>()
                 {
@@ -19,6 +19,8 @@ namespace Query
                     {"queueperday", model.queueperday }
                 }
             );
+            if(list.Count == 1) { return list[0]; }
+            return null;
         }
 
         public static void Update(Models.Campaign model)

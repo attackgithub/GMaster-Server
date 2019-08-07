@@ -18,7 +18,7 @@ namespace Query
                 {
                     {"campaignId", campaignId },
                     {"teamId", teamId },
-                    {"emails", Common.Serializer.ToXmlDocument(emailList) }
+                    {"emails", Common.Serializer.ToXmlDocument(emailList).OuterXml }
                 });
         }
 

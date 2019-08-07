@@ -10,7 +10,7 @@ namespace Query.Models
         [XmlRoot("emails")]
         public class Emails
         {
-            [XmlArray("email")]
+            [XmlElement("email")]
             public string[] email;
         }
     }

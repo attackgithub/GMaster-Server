@@ -122,8 +122,21 @@ function handleComposeView(view, campaignId) {
             onClick: function (event) {
                 //create a new campaign
                 var data = {
-                    subscriptionId: parseInt($('#compose_subscription_' + index).val())
+                    subscriptionId: parseInt($('#compose_subscription_' + index).val()),
+                    subject: view.getSubject(),
+                    body: view.getHTMLContent(),
+                    emails: view.getToRecipients().map(a => a.emailAddress).join(',')
                 }
+
+                webApi('Campaigns/Create', data,
+                    (response) => {
+                        var campaignId = parseInt(response[0].campaignId);
+                        sdk.Router.goto('campaign-details/:campaignId', { campaignId: campaignId });
+                        view.close();
+                    }, (err) => {
+                        showMessage("Gmaster Error", err.responseText, 'error');
+                    }
+                );
             },
         });
     } else {

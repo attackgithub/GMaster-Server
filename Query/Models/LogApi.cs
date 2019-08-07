@@ -12,7 +12,8 @@
             UserCreate = 5,
             Subscribe = 6,
             SubscriptionPage = 7,
-            SubscriptionsGetUpgradeInfo = 8
+            SubscriptionsGetUpgradeInfo = 8,
+            CampaignDetails = 9
         }
     }
 }
