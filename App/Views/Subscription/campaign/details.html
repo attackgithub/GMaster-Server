@@ -1,0 +1,34 @@
+﻿<style>
+    .campaign-details-page > .title{padding:0 0 10px 5px; font-size:18px;}
+    .campaign-details-page .head{padding:15px 5px;}
+    .campaign-details-page .head .title{display:inline-block; padding-right:20px; vertical-align:bottom;}
+    .campaign-details-page .head h2{margin-block-end:0; line-height:0.5;}
+
+    .email-preview{width:100%; max-width:50%;}
+    .email-preview > div{background-color:rgba(0,0,0,0.05); border-radius:7px; padding:15px;}
+    .email-recepients{padding-bottom:10px;}
+    .email-recepients > span:nth-child(2){font-weight:bold;}
+    .email-subject{font-weight:bold; padding-bottom:10px;}
+    .email-body div{padding:10px 0;}
+    .email-body p{padding:15px 0 15px 0;}
+
+    @media (max-width:768px){
+        .email-preview{max-width:100%;}
+    }
+</style>
+<div class="head">
+    <div class="title"><h2>{{campaign.label}}</h2></div>
+</div>
+
+<div class="row">
+    <div class="col pad-right pad-bottom email-preview">
+        <div>
+            <div class="email-recepients">
+                <span>Recepients:</span> 
+                <span>{{recepients.total}} total</span>
+            </div>
+            <div class="email-subject">{{message.subject}}</div>
+            <div class="email-body">{{message.body}}</div>
+        </div>
+    </div>
+</div>

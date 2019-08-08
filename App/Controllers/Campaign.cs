@@ -20,7 +20,17 @@ namespace GMaster.Controllers
             try
             {
                 var campaignId = int.Parse(path[1]);
-                var html = "Campaign " + campaignId;
+                var html = "";
+
+                //load campaign details
+                var scaffold = new Scaffold("/Views/Subscription/campaign/details.html");
+                var campaign = Query.Campaigns.GetInfoByUserId(User.userId, campaignId);
+                var message = Query.CampaignMessages.GetInfo(campaignId);
+                scaffold.Bind(new { campaign, message,
+                    recepients = new { total = Query.CampaignQueue.TotalEmails(campaignId) }
+                });
+                html = scaffold.Render();
+
                 if (parameters.ContainsKey("nolayout"))
                 {
                     return RenderCORS(html);

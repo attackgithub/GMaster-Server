@@ -8,6 +8,7 @@ namespace Query.Models
         public string friendlyId { get; set; }
         public int teamId { get; set; }
         public int serverId { get; set; }
+        public string draftId { get; set; }
         public string label { get; set; }
         public byte status { get; set; }
         public bool draftsOnly { get; set; }

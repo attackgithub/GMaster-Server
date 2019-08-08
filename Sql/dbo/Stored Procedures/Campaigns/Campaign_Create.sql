@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[Campaign_Create]
 	@teamId int,
 	@serverId int,
+	@draftId varchar(25) = NULL,
 	@label nvarchar(32),
 	@status tinyint = 0,
 	@draftsOnly bit = 0,
@@ -13,8 +14,8 @@ AS
 	EXEC GetCustomID @length=7, @id = @friendlyId OUTPUT, @pattern='A??????';
 
 	INSERT INTO Campaigns (
-		campaignId, friendlyId, teamId, serverId, label, [status], draftsOnly, datecreated, schedule, queueperday)
+		campaignId, friendlyId, teamId, serverId, draftId, label, [status], draftsOnly, datecreated, schedule, queueperday)
 	VALUES (
-		@campaignId, @friendlyId, @teamId, @serverId, @label, @status, @draftsOnly, GETDATE(), @schedule, @queueperday)
+		@campaignId, @friendlyId, @teamId, @serverId, @draftId, @label, @status, @draftsOnly, GETDATE(), @schedule, @queueperday)
 
 	SELECT @campaignId AS campaignId, @friendlyId AS friendlyId

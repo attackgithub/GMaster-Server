@@ -41,7 +41,7 @@ namespace GMaster.Services
            return Error("You do not have permission to get details about this campaign");
         }
 
-        public string Create(int subscriptionId, string subject, string body, string emails, bool draftsonly = false)
+        public string Create(int subscriptionId, string subject, string body, string emails, string draftId, bool draftsonly = false)
         {
             //get all info about a campaign including entire email list (up to 100,000 emails)
             if (!HasPermissions()) { return Error(); }
@@ -57,12 +57,21 @@ namespace GMaster.Services
                     var info = Query.Campaigns.Create(new Query.Models.Campaign()
                     {
                         teamId = subscription.teamId,
+                        draftId = draftId,
                         serverId = 0,
                         label = subject,
                         queueperday = 500,
                         schedule = DateTime.Now.AddYears(10),
                         status = 1,
                         draftsOnly = draftsonly
+                    });
+
+                    //create campaign message
+                    Query.CampaignMessages.Create(new Query.Models.CampaignMessage()
+                    {
+                        campaignId = info.campaignId,
+                        subject = subject,
+                        body = body
                     });
 
                     //add emails to campaign queue

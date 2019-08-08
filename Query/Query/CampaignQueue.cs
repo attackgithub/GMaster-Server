@@ -65,5 +65,15 @@ namespace Query
                 }
             );
         }
+
+        public static int TotalEmails(int campaignId)
+        {
+            return Sql.ExecuteScalar<int>("CampaignQueue_TotalEmails",
+                new Dictionary<string, object>()
+                {
+                    {"campaignId", campaignId }
+                }
+            );
+        }
     }
 }

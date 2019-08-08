@@ -301,4 +301,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="teamId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="de8f6fa1-d1ca-4df6-9b7d-80f7b8d0f4ab" ChangeDateTime="08/08/2019 13:53:09">
+    <Property Name="ElementName" Value="[dbo].[Campaigns].[draftID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Campaigns]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="draftId" />
+  </Operation>
 </Operations>

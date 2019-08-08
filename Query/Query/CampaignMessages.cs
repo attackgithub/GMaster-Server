@@ -32,13 +32,15 @@ namespace Query
 
         public static Models.CampaignMessage GetInfo(int campaignId)
         {
-            return Sql.ExecuteScalar<Models.CampaignMessage>(
+            var list = Sql.Populate<Models.CampaignMessage>(
                     "CampaignMessage_GetInfo",
                     new Dictionary<string, object>()
                     {
                         {"campaignId", campaignId }
                     }
                 );
+            if (list.Count > 0) { return list[0]; }
+            return null;
         }
     }
 }

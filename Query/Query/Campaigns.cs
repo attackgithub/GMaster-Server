@@ -12,6 +12,7 @@ namespace Query
                 {
                     {"teamId", model.teamId },
                     {"serverId", model.serverId },
+                    {"draftId", model.draftId },
                     {"label", model.label },
                     {"status", model.status },
                     {"draftsOnly", model.draftsOnly },
@@ -65,7 +66,7 @@ namespace Query
 
         public static Models.Campaign GetInfo(int teamId, int campaignId = 0, int friendlyId = 0 )
         {
-            return Sql.ExecuteScalar<Models.Campaign>(
+            var list = Sql.Populate<Models.Campaign>(
                 "Campaign_GetInfo",
                 new Dictionary<string, object>()
                 {
@@ -74,6 +75,22 @@ namespace Query
                     {"friendlyId", friendlyId > 0 ? friendlyId : (int?)null }
                 }
             );
+            if(list.Count > 0) { return list[0]; }
+            return null;
+        }
+
+        public static Models.Campaign GetInfoByUserId(int userId, int campaignId = 0)
+        {
+            var list = Sql.Populate<Models.Campaign>(
+                "Campaign_GetInfoByUserId",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"campaignId", campaignId }
+                }
+            );
+            if (list.Count > 0) { return list[0]; }
+            return null;
         }
     }
 }

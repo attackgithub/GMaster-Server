@@ -210,6 +210,8 @@
     <Build Include="dbo\Stored Procedures\AddressFields\AddressField_SetValue.sql" />
     <Build Include="dbo\Stored Procedures\AddressFields\AddressField_SetValueById.sql" />
     <Build Include="dbo\Stored Procedures\AddressBook\AddressBook_DeleteEntry.sql" />
+    <Build Include="dbo\Stored Procedures\Campaigns\Campaign_GetInfoByUserId.sql" />
+    <Build Include="dbo\Stored Procedures\CampaignQueue\CampaignQueue_TotalEmails.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Sql.refactorlog" />

@@ -9,11 +9,16 @@ function webApi(path, data, onComplete, onError){
     console.log([api + path, form]);
     //</debug>
     $.ajax(api + path, {
-        data:JSON.stringify(form), 
-        dataType:'json',
+        data: JSON.stringify(form),
+        dataType: 'json',
         contentType: "text/plain; charset=utf-8",
-        method:'POST',
-        success:onComplete, 
+        method: 'POST',
+        success: (e) => {
+            //<debug>
+            console.log([api + path, form]);
+            //</debug>
+            onComplete(e)
+        },
         error:onError
     });
 }

@@ -125,18 +125,23 @@ function handleComposeView(view, campaignId) {
                     subscriptionId: parseInt($('#compose_subscription_' + index).val()),
                     subject: view.getSubject(),
                     body: view.getHTMLContent(),
-                    emails: view.getToRecipients().map(a => a.emailAddress).join(',')
+                    emails: view.getToRecipients().map(a => a.emailAddress).join(','),
                 }
 
-                webApi('Campaigns/Create', data,
-                    (response) => {
-                        var campaignId = parseInt(response[0].campaignId);
-                        sdk.Router.goto('campaign-details/:campaignId', { campaignId: campaignId });
-                        view.close();
-                    }, (err) => {
-                        showMessage("Gmaster Error", err.responseText, 'error');
-                    }
-                );
+                //get draftID
+                view.getCurrentDraftID().then(draftId => {
+                    data.draftId = draftId;
+
+                    webApi('Campaigns/Create', data,
+                        (response) => {
+                            var campaignId = parseInt(response[0].campaignId);
+                            sdk.Router.goto('campaign-details/:campaignId', { campaignId: campaignId });
+                            view.close();
+                        }, (err) => {
+                            showMessage("Gmaster Error", err.responseText, 'error');
+                        }
+                    );
+                });
             },
         });
     } else {
