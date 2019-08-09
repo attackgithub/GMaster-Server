@@ -23,7 +23,7 @@ namespace GMaster.Controllers
                 var html = "";
 
                 //load campaign details
-                var scaffold = new Scaffold("/Views/Subscription/campaign/details.html");
+                var scaffold = new Scaffold("/Views/Campaign/details.html");
                 var campaign = Query.Campaigns.GetInfoByUserId(User.userId, campaignId);
                 var message = Query.CampaignMessages.GetInfo(campaignId);
                 scaffold.Bind(new { campaign, message,

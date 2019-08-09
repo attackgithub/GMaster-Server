@@ -13,7 +13,8 @@
             Subscribe = 6,
             SubscriptionPage = 7,
             SubscriptionsGetUpgradeInfo = 8,
-            CampaignDetails = 9
+            CampaignDetails = 9,
+            Campaigns = 10
         }
     }
 }

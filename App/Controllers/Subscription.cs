@@ -22,17 +22,22 @@ namespace GMaster.Controllers
             }
             var subscriptionId = int.Parse(path[1]);
             var html = "";
+            var start = 1;
+            var length = 50;
+            var sort = 0;
+            var search = "";
+
             switch (path[2].ToLower())
             {
                 case "campaigns": /////////////////////////////////////////////////
+                    if (path.Length > 3) { start = int.Parse(path[3]); }
+                    if (path.Length > 4) { length = int.Parse(path[4]); }
+                    if (path.Length > 5) { search = path[5]; }
+                    html = GetCampaigns(subscriptionId, start, length, search);
                     break;
 
                 case "addressbook": ///////////////////////////////////////////////
-                    var start = 1;
-                    var length = 50;
-                    var sort = 0;
-                    var search = "";
-                    if(path.Length > 3){ start = int.Parse(path[3]); }
+                    if (path.Length > 3) { start = int.Parse(path[3]); }
                     if (path.Length > 4) { length = int.Parse(path[4]); }
                     if (path.Length > 5) { sort = int.Parse(path[5]); }
                     if (path.Length > 6) { search = path[6]; }
@@ -101,6 +106,50 @@ namespace GMaster.Controllers
                 {
                     scaffold["entries"] = Server.LoadFileFromCache("/Views/Subscription/addressbook/no-entries.html");
                 }
+                return scaffold.Render();
+            }
+            else
+            {
+                return Error("Subscription does not exist");
+            }
+        }
+
+        private string GetCampaigns(int subscriptionId, int start = 1, int length = 20, string search = "")
+        {
+            var subscription = Query.Subscriptions.GetInfo(subscriptionId);
+            if (subscription != null)
+            {
+                var campaigns = Query.Campaigns.GetList(subscription.teamId, start, length, search);
+                var scaffold = new Scaffold("/Views/Subscription/campaigns.html");
+                var item = new Scaffold("/Views/Subscription/campaigns/campaign-item.html");
+                scaffold["team-name"] = subscription.teamName;
+                if (campaigns.Count > 0)
+                {
+                    var html = new StringBuilder();
+                    foreach (var campaign in campaigns)
+                    {
+                        item.Bind(new
+                        {
+                            campaign = new
+                            {
+                                campaign.campaignId,
+                                campaign.label,
+                                status = campaign.status == 0 ? "New" :
+                                            campaign.status == 1 ? "Running" :
+                                            campaign.status == 2 ? "Ended" : "Unknown",
+                                draftonly = campaign.draftsOnly == true ? "Drafts Only" : "Customer Emails",
+                                datecreated = campaign.datecreated.ToString("MM-dd-yyyy")
+                            }
+                        });
+                        html.Append(item.Render());
+                    }
+                    scaffold["campaigns"] = html.ToString();
+                }
+                else
+                {
+                    scaffold["campaigns"] = Server.LoadFileFromCache("/Views/Subscription/campaigns/no-campaigns.html");
+                }
+
                 return scaffold.Render();
             }
             else

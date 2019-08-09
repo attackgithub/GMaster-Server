@@ -1,6 +1,13 @@
 function handleCampaignsPage(view, menu, sub){
     loadSubscriptionPage(sub.subscriptionId, "campaigns", view, () => {
-        
+        //bind all buttons on addressbook page //////////////////////////////////
+        $('.campaign-list tr').on('click', (e) => {
+            var id = $(e.target).attr('data-id');
+            if (e.target.tagName != 'TR') {
+                id = $(e.target).parents('tr').first().attr('data-id');
+            }
+            loadCampaign(id);
+        });
     });
 }
 

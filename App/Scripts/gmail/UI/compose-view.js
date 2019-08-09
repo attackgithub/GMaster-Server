@@ -135,7 +135,7 @@ function handleComposeView(view, campaignId) {
                     webApi('Campaigns/Create', data,
                         (response) => {
                             var campaignId = parseInt(response[0].campaignId);
-                            sdk.Router.goto('campaign-details/:campaignId', { campaignId: campaignId });
+                            loadCampaign(campaignId);
                             view.close();
                         }, (err) => {
                             showMessage("Gmaster Error", err.responseText, 'error');

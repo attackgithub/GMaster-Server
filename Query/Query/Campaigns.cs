@@ -42,13 +42,16 @@ namespace Query
             );
         }
 
-        public static List<Models.Campaign> GetList(int teamId)
+        public static List<Models.Campaign> GetList(int teamId, int page = 1, int length = 20, string search = "")
         {
             return Sql.Populate<Models.Campaign>(
-                "Campaign_GetList",
+                "Campaigns_GetList",
                 new Dictionary<string, object>()
                 {
-                    {"teamId", teamId }
+                    {"teamId", teamId },
+                    {"page", page },
+                    {"length", length },
+                    {"search", search != "" ? search : null },
                 }
             );
         }
