@@ -45,13 +45,14 @@ public class Startup: Datasilk.Startup
             GMaster.Settings.Google.OAuth2.secret = authConfig.GetSection("google:OAuth2:secret").Value;
             GMaster.Settings.Google.Chrome.Extension.Id = authConfig.GetSection("google:chrome:extension:" + environment + ":id").Value;
             GMaster.Settings.Google.OAuth2.redirectURI = authConfig.GetSection("google:OAuth2:redirectURI:" + environment).Value;
+
             //Stripe settings
             GMaster.Settings.Stripe.Keys.publicKey = authConfig.GetSection("stripe:keys:" + environment + ":public").Value;
             GMaster.Settings.Stripe.Keys.privateKey = authConfig.GetSection("stripe:keys:" + environment + ":secret").Value;
             GMaster.Settings.Stripe.Webhook.SigningSecret = authConfig.GetSection("stripe:webhook:signingsecret").Value;
 
             //Stripe Configuration
-            StripeConfiguration.SetApiKey(GMaster.Settings.Stripe.Keys.privateKey);
+            StripeConfiguration.ApiKey = GMaster.Settings.Stripe.Keys.privateKey;
         }
 
         //use CORS for cross-domain requests

@@ -4,20 +4,26 @@ namespace Query
 {
     public static class DeveloperKeys
     {
-        public static string Create(int userId)
+        public static string Create()
+        {
+            return Sql.ExecuteScalar<string>("DeveloperKey_Create");
+        }
+
+        public static string Update(int userId, string key)
         {
             return Sql.ExecuteScalar<string>(
-                "DeveloperKey_Create",
+                "DeveloperKey_Update",
                 new Dictionary<string, object>()
                 {
                     {"userId", userId },
+                    {"devkey", key },
                 }
             );
         }
 
-        public static int? Authenticate(string key, string email)
+        public static Models.Authenticated Authenticate(string key, string email)
         {
-            return Sql.ExecuteScalar<int?>(
+            var list = Sql.Populate<Models.Authenticated>(
                 "DeveloperKey_Authenticate",
                 new Dictionary<string, object>()
                 {
@@ -25,6 +31,8 @@ namespace Query
                     {"email", email },
                 }
             );
+            if(list.Count == 1) { return list[0]; }
+            return null;
         }
 
         public static List<Models.DeveloperKey> GetList()

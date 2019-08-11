@@ -194,7 +194,7 @@ namespace GMaster.Services
                         customer = customerService.Create(new CustomerCreateOptions
                         {
                             Description = "Customer for " + user.email + " (" + user.userId + ")",
-                            SourceToken = stripeToken,
+                            Source = stripeToken,
                             Email = user.email,
                             Metadata = new Dictionary<string, string>()
                             {
@@ -275,7 +275,7 @@ namespace GMaster.Services
                             //update subscription with same plan
                             updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
                             {
-                                BillingCycleAnchorNow = true,
+                                BillingCycleAnchor = SubscriptionBillingCycleAnchor.Now,
                                 Items = new List<SubscriptionItemUpdateOption>()
                                 {
                                     new SubscriptionItemUpdateOption()
@@ -292,7 +292,7 @@ namespace GMaster.Services
                             //update subscription with different plan
                             updatedSubscription = subscriptionService.Update(subscription.Id, new SubscriptionUpdateOptions()
                             {
-                                BillingCycleAnchorNow = true,
+                                BillingCycleAnchor = SubscriptionBillingCycleAnchor.Now,
                                 Items = new List<SubscriptionItemUpdateOption>()
                                 {
                                     new SubscriptionItemUpdateOption()

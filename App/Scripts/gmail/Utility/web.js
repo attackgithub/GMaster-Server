@@ -23,6 +23,12 @@ function webApi(path, data, onComplete, onError){
     });
 }
 
+function webApiPromise(path, data) {
+    return new Promise((resolve, reject) => {
+        webApi(path, data, (d) => resolve(d), (err) => reject(err));
+    });
+}
+
 function getUrl(url, data, onComplete, onError){
     $.ajax(url, {
         data:JSON.stringify(data), 
@@ -37,6 +43,12 @@ function getUrl(url, data, onComplete, onError){
                 onError(err);
             }
         }
+    });
+}
+
+function getUrlPromise(url, data) {
+    return new Promise((resolve, reject) => {
+        getUrl(url, data, (d) => resolve(d), (err) => reject(err));
     });
 }
 

@@ -9,6 +9,13 @@ function authAccount() {
         gapi.load('auth2', function () {
             auth2 = gapi.auth2.init({
                 client_id: clientId,
+                scope: [
+                    'https://www.googleapis.com/auth/plus.me',
+                    'https://www.googleapis.com/auth/gmail.compose',
+                    'https://www.googleapis.com/auth/gmail.modify',
+                    'https://www.googleapis.com/auth/gmail.send',
+                    'https://www.googleapis.com/auth/gmail.labels'
+                ].join(' ')
             });
             openGoogleSignin();
         });

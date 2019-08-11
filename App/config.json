@@ -3,7 +3,8 @@
   "environment": "development",
   "defaultController": "Home",
   "defaultServiceMethod": "Index",
-  "servicePaths":  "api,gmail",
+  "hostUrl": "https://localhost:44390/",
+  "servicePaths": "api,gmail",
   "sql": {
     "active": "SqlServerTrusted",
     "SqlServerTrusted": "server=.\\SQL2017; database=GMaster; Trusted_Connection=true"

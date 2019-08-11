@@ -308,4 +308,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="draftId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="46349efa-5378-4fdd-bf52-b0fb5cfbbaca" ChangeDateTime="08/10/2019 22:32:24">
+    <Property Name="ElementName" Value="[dbo].[GoogleTokens].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[GoogleTokens]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="key" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d256f782-1a7a-444e-8ef2-81605827a815" ChangeDateTime="08/10/2019 23:14:12">
+    <Property Name="ElementName" Value="[dbo].[Users].[refreshToken]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="credentialUserId" />
+  </Operation>
 </Operations>

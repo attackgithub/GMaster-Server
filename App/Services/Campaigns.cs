@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Http;
+using GMaster.Common.Google;
 
 namespace GMaster.Services
 {
@@ -54,6 +55,7 @@ namespace GMaster.Services
                 if (subscription.roleType <= Query.Models.RoleType.contributer)
                 {
                     //create campaign
+                    var datecreated = new DateTime();
                     var info = Query.Campaigns.Create(new Query.Models.Campaign()
                     {
                         teamId = subscription.teamId,
@@ -76,6 +78,65 @@ namespace GMaster.Services
 
                     //add emails to campaign queue
                     Query.CampaignQueue.BulkAdd(info.campaignId, subscription.teamId, emails.Split(','));
+
+                    if(draftId != null)
+                    {
+                        //extract attachments from body
+                        if(body.IndexOf("&attbid=") > 0)
+                        {
+                            var attachments = body.Split("&attbid=").Skip(1).Select(a => a.Split('&')[0]).ToArray();
+
+                            foreach(var attachmentId in attachments)
+                            {
+                                var attPath = Gmail.CampaignImagePath(datecreated);
+
+                                //get original filename
+                                var s = body.IndexOf("&attbid=" + attachmentId);
+                                var elx = -1;
+                                if (s > 0)
+                                {
+                                    while (s >= 0)
+                                    {
+                                        s = s - 1;
+                                        if (body.Substring(s, 1) == "<")
+                                        {
+                                            elx = s;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(elx >= 0)
+                                {
+                                    //get alt attribute from img tag
+
+                                }
+
+                                Gmail.DownloadAttachment(User, draftId, attachmentId, Server.MapPath(attPath));
+
+                                //replace attachment image src with new URL
+                                s = body.IndexOf("&attbid=" + attachmentId);
+                                if (s > 0)
+                                {
+                                   while(s > 0)
+                                    {
+                                        s = s - 1;
+                                        if(body.Substring(s, 1) == "\"")
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                if(s > 0)
+                                {
+                                    var e = body.IndexOf("\"", s + 10);
+                                    if(e > s)
+                                    {
+                                        body = body.Substring(0, s) + Server.hostUrl + attPath;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     return JsonResponse(new
                     {
@@ -111,7 +172,7 @@ namespace GMaster.Services
 
                 }
             }
-            return Error("You do not have permission to create a campaign");
+            return Error("You do not have permission to update this campaign");
         }
     }
 }

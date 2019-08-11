@@ -30,8 +30,8 @@ namespace GMaster
                 else
                 {
                     //check developer key if it is valid
-                    var userId = Query.DeveloperKeys.Authenticate(developerKey, email);
-                    if (userId.HasValue == false)
+                    var user = Query.DeveloperKeys.Authenticate(developerKey, email);
+                    if (user == null)
                     {
                         context.Response.StatusCode = 401;
                         context.Response.WriteAsync("Invalid authentication key");
@@ -39,8 +39,10 @@ namespace GMaster
                     }
                     else
                     {
-                        User.userId = userId.Value;
+                        User.userId = user.userId;
                         User.email = email;
+                        User.credentialUserId = user.credentialUserId;
+                        User.googleUserId = user.googleUserId;
                     }
                 }
             }

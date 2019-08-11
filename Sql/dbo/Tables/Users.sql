@@ -10,9 +10,10 @@
     [zipcode] VARCHAR(6) NOT NULL DEFAULT '', 
     [stateAbbr] VARCHAR(2) NOT NULL DEFAULT '', 
     [country] VARCHAR(2) NOT NULL DEFAULT '',
-    [refreshToken] VARCHAR(64) NOT NULL DEFAULT '',
+    [credentialUserId] CHAR(10) NOT NULL DEFAULT '',
     [stripeCustomerId] VARCHAR(25) NOT NULL DEFAULT '', 
-    [stripePaymentMethodId] VARCHAR(32) NOT NULL DEFAULT '' 
+    [stripePaymentMethodId] VARCHAR(32) NOT NULL DEFAULT '', 
+    [googleUserId] VARCHAR(32) NOT NULL DEFAULT '' 
 )
 
 GO

@@ -119,29 +119,28 @@ function handleComposeView(view, campaignId) {
         view.addButton({
             title: 'Create your campaign',
             iconClass: 'compose-button compose-create-button',
-            onClick: function (event) {
+            onClick: async function (event) {
                 //create a new campaign
                 var data = {
                     subscriptionId: parseInt($('#compose_subscription_' + index).val()),
                     subject: view.getSubject(),
                     body: view.getHTMLContent(),
                     emails: view.getToRecipients().map(a => a.emailAddress).join(','),
-                }
+                    draftId: await view.getCurrentDraftID()
+                };
 
-                //get draftID
-                view.getCurrentDraftID().then(draftId => {
-                    data.draftId = draftId;
+                console.log(data);
 
-                    webApi('Campaigns/Create', data,
-                        (response) => {
-                            var campaignId = parseInt(response[0].campaignId);
-                            loadCampaign(campaignId);
-                            view.close();
-                        }, (err) => {
-                            showMessage("Gmaster Error", err.responseText, 'error');
-                        }
-                    );
-                });
+                webApi('Campaigns/Create', data,
+                    async (response) => {
+                        var campaignId = parseInt(response[0].campaignId);
+                        //load campaign details page
+                        loadCampaign(campaignId);
+                        view.close();
+                    }, (err) => {
+                        showMessage("Gmaster Error", err.responseText, 'error');
+                    }
+                );
             },
         });
     } else {

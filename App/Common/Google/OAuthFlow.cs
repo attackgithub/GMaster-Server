@@ -1,6 +1,5 @@
 ﻿using Google.Apis.Auth.OAuth2;
 using Google.Apis.Auth.OAuth2.Flows;
-using Google.Apis.Util.Store;
 
 namespace GMaster.Common.Google
 {
@@ -16,10 +15,12 @@ namespace GMaster.Common.Google
                 },
                 Scopes = new string[]{ //authorization scopes for Google API access
                     "https://www.googleapis.com/auth/plus.me",
+                    "https://www.googleapis.com/auth/gmail.compose",
+                    "https://www.googleapis.com/auth/gmail.modify",
                     "https://www.googleapis.com/auth/gmail.send",
                     "https://www.googleapis.com/auth/gmail.labels"
                 },
-                DataStore = new FileDataStore("Content/Drive.Api.Auth.Store")
+                DataStore = new SqlDataStore()
             }
         );
     }

@@ -15,7 +15,8 @@ namespace Query
                     {"name", user.name },
                     {"gender", user.gender },
                     {"locale", user.locale ?? "" },
-                    {"refreshToken", user.refreshToken ?? "" },
+                    {"credentialUserId", user.credentialUserId ?? "" },
+                    {"googleUserId", user.googleUserId }
                 }
             );
         }
@@ -98,6 +99,28 @@ namespace Query
             );
         }
 
+        public static void UpdateCredentialUserId(int userId, string credentialUserId)
+        {
+            Sql.ExecuteNonQuery("User_UpdateCredentialUserId",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"credentialUserId", credentialUserId }
+                }
+            );
+        }
+
+        public static void UpdateGoogleUserId(int userId, string googleUserId)
+        {
+            Sql.ExecuteNonQuery("User_UpdateGoogleUserId",
+                new Dictionary<string, object>()
+                {
+                    {"userId", userId },
+                    {"googleUserId", googleUserId }
+                }
+            );
+        }
+
         public static bool HasPasswords()
         {
             return Sql.ExecuteScalar<int>("Users_HasPasswords") == 1;
@@ -142,17 +165,6 @@ namespace Query
             );
             if (list.Count > 0) { return list[0]; }
             return null;
-        }
-
-        public static void UpdateRefreshToken(int userId, string refreshToken)
-        {
-            Sql.ExecuteNonQuery("User_UpdateRefreshToken",
-                new Dictionary<string, object>()
-                {
-                    {"userId", userId },
-                    {"refreshToken", refreshToken }
-                }
-            );
         }
 
         public static void UpdateStripeCustomerId(int userId, string customerId)

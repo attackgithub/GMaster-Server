@@ -84,6 +84,7 @@ paths.working = {
             paths.gmail + 'Utility/web.js',
             paths.gmail + 'Utility/email.js',
             paths.gmail + 'Utility/numbers.js',
+            paths.gmail + 'Utility/sleep.js',
             // Initialize //////////////////////////////
             paths.gmail + 'init.js',
         ],

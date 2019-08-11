@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading;
 using Microsoft.AspNetCore.Http;
-using Google.Apis.Auth.OAuth2;
 using Google.Apis.Oauth2.v2;
 using Google.Apis.Services;
 using GMaster.Common.Google;
@@ -15,51 +13,32 @@ namespace GMaster.Services
 
         public string OAuth2(string code)
         {
+            //generate new developer key to use within Gmail Chrome Extension
+            var developerKey = Utility.Strings.Generate.NewId(10);
+
+            //generate new userId for Google Credentials
+            var credentialUserId = Utility.Strings.Generate.NewId(10);
             try
             {
                 //authenticate Google OAuth 2.0 via server-side
-                var oAuthFlow = new OAuthFlow();
-                var tokens = oAuthFlow.Flow.ExchangeCodeForTokenAsync(
-                    "gmaster", code,
-                    Settings.Google.OAuth2.redirectURI, CancellationToken.None).Result;
-
-                //get user account information from Google
-                var token = tokens.AccessToken;
-                var refreshToken = tokens.RefreshToken;
-                var credential = GoogleCredential.FromAccessToken(token);
-
-                var oauthService = new Oauth2Service(
-                    new BaseClientService.Initializer()
-                    {
-                        HttpClientInitializer = credential,
-                        ApplicationName = "Gmaster Account Auth"
-                    }
-                );
+                var oauthService = new Oauth2Service(new BaseClientInitializer(credentialUserId, code));
 
                 var googleUser = oauthService.Userinfo.Get().Execute();
 
                 //check if user is in the database
                 var user = Query.Users.GetByEmail(googleUser.Email);
                 var userId = 0;
-                var developerKey = "";
                 if (user != null)
                 {
                     //user exists
                     userId = user.userId;
-                    Query.Users.UpdateRefreshToken(userId, refreshToken);
+                    if(user.googleUserId == "")
+                    {
+                        Query.Users.UpdateGoogleUserId(userId, googleUser.Id);
+                    }
 
-                    //get developer key
-                    var devkeyInfo = Query.DeveloperKeys.ForUser(userId);
-                    if (devkeyInfo == null)
-                    {
-                        //developer key didn't exist
-                        developerKey = Query.DeveloperKeys.Create(userId);
-                    }
-                    else
-                    {
-                        //developer key exists
-                        developerKey = devkeyInfo.devkey;
-                    }
+                    //update Google Credentials userId
+                    Query.Users.UpdateCredentialUserId(userId, credentialUserId);
                 }
                 else
                 {
@@ -70,12 +49,13 @@ namespace GMaster.Services
                         name = googleUser.Name != null && googleUser.Name != "" ? googleUser.Name : googleUser.Email.Split('@')[0],
                         gender = googleUser.Gender == "male",
                         locale = googleUser.Locale,
-                        refreshToken = refreshToken
+                        credentialUserId = credentialUserId,
+                        googleUserId = googleUser.Id
                     });
-
-                    //create a developer key for new user
-                    developerKey = Query.DeveloperKeys.Create(userId);
                 }
+
+                //update developer key
+                Query.DeveloperKeys.Update(userId, developerKey);
 
                 //log API request
                 Common.Log.Api(context, Query.Models.LogApi.Names.GoogleOAuth2, userId);
