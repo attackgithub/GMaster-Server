@@ -3,7 +3,6 @@ authenticate((auth_info) => {
         title: 'Gmaster',
         titleClass:'gmaster-button',
         onClick: function(){
-            alert('cool brah');
         }
     });
 });

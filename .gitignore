@@ -8,6 +8,7 @@ auth.json
 
 /App/wwwroot/css/
 /App/wwwroot/js/
+/App/wwwroot/images/campaigns/
 
 *.bak
 *.jfm

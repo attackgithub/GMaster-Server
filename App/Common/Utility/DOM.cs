@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Utility.Strings;
 
 namespace Utility.DOM
@@ -96,16 +98,19 @@ namespace Utility.DOM
             {
                 if (_nextSibling >= 0) { return Parser.Elements[_nextSibling]; }
                 var hierarchy = string.Join(">", hierarchyIndexes);
-                var elem = Parser.Elements[index + 1];
-                var childhier = "";
-                do
+                var len = hierarchyIndexes.Length;
+                for (var x = index + 1; x < Parser.Elements.Count; x++)
                 {
-                    childhier = string.Join(">", elem.hierarchyIndexes);
-                    if (childhier == hierarchy)
+                    var elem = Parser.Elements[x];
+                    if(elem.hierarchyIndexes.Length == len)
                     {
-                        return elem;
-                    }
-                } while (childhier.IndexOf(hierarchy) == 0);
+                        var child = string.Join(">", elem.hierarchyIndexes);
+                        if (hierarchy == child)
+                        {
+                            return elem;
+                        }
+                    }else if(elem.hierarchyIndexes.Length < len) { return null; }
+                }
                 return null;
             }
         }
@@ -543,7 +548,6 @@ namespace Utility.DOM
             return parentElement;
         }
 
-        #region "Query"
         public List<DomElement> Find(string XPath, DomElement rootElement = null)
         {
             var elements = new List<DomElement>();
@@ -656,6 +660,51 @@ namespace Utility.DOM
             return elements;
         }
 
-        #endregion
+        public string Render(bool useLineBreaks = false, bool useTabs = false)
+        {
+            var html = new StringBuilder();
+            var atab = "    ";
+            var tabs = "";
+            foreach(var el in Elements)
+            {
+                if(el.tagName == "#text")
+                {
+                    //text node
+                    if (useTabs){ html.Append(tabs + atab); }
+                    html.Append(el.text);
+                    if (useLineBreaks) { html.Append("\n"); }
+                }
+                else
+                {
+                    //element node;
+                    if (useTabs) { html.Append(tabs + atab); }
+                    if (el.attribute != null && el.attribute.Count > 0)
+                    {
+                        html.Append("<" + el.tagName + " " + string.Join(' ', el.attribute.Select(a => a.Key + "=\"" + a.Value + "\"").ToArray()) + (el.isSelfClosing ? "/" : "") + ">");
+                    }
+                    else
+                    {
+                        html.Append("<" + el.tagName + (el.isSelfClosing ? "/" : "") + ">");
+                    }
+                    if (!el.isSelfClosing)
+                    {
+                        tabs += atab;
+                    }
+                    else if (el.isClosing)
+                    {
+                        if (tabs.Length == atab.Length || tabs.Length == 0)
+                        {
+                            tabs = "";
+                        }
+                        else
+                        {
+                            tabs = tabs.Substring(0, tabs.Length - 1 - atab.Length);
+                        }
+                    }
+                    if (useLineBreaks) { html.Append("\n"); }
+                }
+            }
+            return html.ToString();
+        }
     }
 }

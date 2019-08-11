@@ -4,16 +4,16 @@ namespace GMaster.Common.Google
 {
     public class BaseClientInitializer : BaseClientService.Initializer
     {
-        public BaseClientInitializer(Datasilk.User User)
+        public BaseClientInitializer(string credentialUserId)
         {
             ApplicationName = "Gmaster";
-            HttpClientInitializer = Credential.GetGoogleCredential(User.credentialUserId);
+            HttpClientInitializer = Credential.GetUserCredential(credentialUserId);
         }
 
-        public BaseClientInitializer(string userId, string code)
+        public BaseClientInitializer(string credentialUserId, string token)
         {
             ApplicationName = "Gmaster";
-            HttpClientInitializer = Credential.GetGoogleCredentialFromCode(userId, code);
+            HttpClientInitializer = Credential.GetUserCredentialFromToken(credentialUserId, token);
         }
     }
 }

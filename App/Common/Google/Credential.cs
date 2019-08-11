@@ -5,24 +5,19 @@ namespace GMaster.Common.Google
 {
     public static class Credential
     {
-        public static GoogleCredential GetGoogleCredential(string userId)
+        public static UserCredential GetUserCredential(string credentialUserId)
         {
             var oAuthFlow = new OAuthFlow();
-            var tokens = oAuthFlow.Flow.LoadTokenAsync(userId, CancellationToken.None).Result;
-            var credential = GoogleCredential.FromAccessToken(tokens.AccessToken);
-            return credential;
+            var tokens = oAuthFlow.Flow.LoadTokenAsync(credentialUserId, CancellationToken.None).Result;
+            return new UserCredential(oAuthFlow.Flow, credentialUserId, tokens);
         }
 
-        public static GoogleCredential GetGoogleCredentialFromCode(string userId, string code)
+        public static UserCredential GetUserCredentialFromToken(string credentialUserId, string token)
         {
             var oAuthFlow = new OAuthFlow();
-            var tokens = oAuthFlow.Flow.ExchangeCodeForTokenAsync(userId, code,
+            var tokens = oAuthFlow.Flow.ExchangeCodeForTokenAsync(credentialUserId, token,
                 Settings.Google.OAuth2.redirectURI, CancellationToken.None).Result;
-
-            //get user account information from Google
-            var token = tokens.AccessToken;
-            var refreshToken = tokens.RefreshToken;
-            return GoogleCredential.FromAccessToken(token);
+            return new UserCredential(oAuthFlow.Flow, credentialUserId, tokens);
         }
     }
 

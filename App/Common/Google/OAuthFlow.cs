@@ -16,8 +16,7 @@ namespace GMaster.Common.Google
                 Scopes = new string[]{ //authorization scopes for Google API access
                     "https://www.googleapis.com/auth/plus.me",
                     "https://www.googleapis.com/auth/gmail.compose",
-                    "https://www.googleapis.com/auth/gmail.modify",
-                    "https://www.googleapis.com/auth/gmail.send",
+                    "https://www.googleapis.com/auth/gmail.readonly",
                     "https://www.googleapis.com/auth/gmail.labels"
                 },
                 DataStore = new SqlDataStore()

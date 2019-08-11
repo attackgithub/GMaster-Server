@@ -5,7 +5,7 @@
 	@gender bit = 1,  /* 0 = female, 1 = male */
 	@locale varchar(8) = '',
 	@credentialUserId char(10) = '',
-	@googleUserId varchar(32) = ''
+	@googleUserId char(10) = ''
 AS
 	DECLARE @id int = NEXT VALUE FOR SequenceUsers
 	INSERT INTO Users (userId, email, [password], [name], gender, datecreated, locale, credentialUserId, googleUserId)

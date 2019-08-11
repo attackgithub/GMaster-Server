@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
 using Microsoft.AspNetCore.Http;
 using GMaster.Common.Google;
+using Utility.Strings;
+using Google.Apis.Gmail.v1;
 
 namespace GMaster.Services
 {
@@ -55,93 +56,71 @@ namespace GMaster.Services
                 if (subscription.roleType <= Query.Models.RoleType.contributer)
                 {
                     //create campaign
-                    var datecreated = new DateTime();
-                    var info = Query.Campaigns.Create(new Query.Models.Campaign()
+                    try
                     {
-                        teamId = subscription.teamId,
-                        draftId = draftId,
-                        serverId = 0,
-                        label = subject,
-                        queueperday = 500,
-                        schedule = DateTime.Now.AddYears(10),
-                        status = 1,
-                        draftsOnly = draftsonly
-                    });
-
-                    //create campaign message
-                    Query.CampaignMessages.Create(new Query.Models.CampaignMessage()
-                    {
-                        campaignId = info.campaignId,
-                        subject = subject,
-                        body = body
-                    });
-
-                    //add emails to campaign queue
-                    Query.CampaignQueue.BulkAdd(info.campaignId, subscription.teamId, emails.Split(','));
-
-                    if(draftId != null)
-                    {
-                        //extract attachments from body
-                        if(body.IndexOf("&attbid=") > 0)
+                        var service = new GmailService(new BaseClientInitializer(User.credentialUserId));
+                        var datecreated = DateTime.Now;
+                        var info = Query.Campaigns.Create(new Query.Models.Campaign()
                         {
-                            var attachments = body.Split("&attbid=").Skip(1).Select(a => a.Split('&')[0]).ToArray();
+                            teamId = subscription.teamId,
+                            draftId = draftId,
+                            serverId = 0,
+                            label = subject,
+                            queueperday = 500,
+                            schedule = DateTime.Now.AddYears(10),
+                            status = 1,
+                            draftsOnly = draftsonly
+                        });
 
-                            foreach(var attachmentId in attachments)
+                        //create campaign message
+                        Query.CampaignMessages.Create(new Query.Models.CampaignMessage()
+                        {
+                            campaignId = info.campaignId,
+                            subject = subject,
+                            body = body
+                        });
+
+                        //add emails to campaign queue
+                        Query.CampaignQueue.BulkAdd(info.campaignId, subscription.teamId, emails.Split(','));
+
+                        if(draftId != null)
+                        {
+                            //get all attachments from draft
+                            var dom = new Utility.DOM.Parser(body);
+                            var attPath = Gmail.CampaignImagePath(datecreated);
+                            var draft = service.Users.Drafts.Get(User.googleUserId, draftId).Execute();
+                            var attachments = draft.Message.Payload.Parts.Where(p => p.MimeType.IndexOf("image/") == 0 && p.Filename.Length > 0);
+                            foreach(var attachment in attachments)
                             {
-                                var attPath = Gmail.CampaignImagePath(datecreated);
+                                //download attachment
+                                var ext = attachment.Filename.GetFileExtension();
+                                var newfile = Generate.NewId(12);
+                                Gmail.DownloadAttachment(service, User.googleUserId, draftId, attachment.Body.AttachmentId, Server.MapPath(attPath + newfile + '.' + ext));
 
-                                //get original filename
-                                var s = body.IndexOf("&attbid=" + attachmentId);
-                                var elx = -1;
-                                if (s > 0)
+                                //update relavant body DOM img tags
+                                var imgs = dom.Elements.Where(a => a.tagName == "img" && a.attribute["alt"] == attachment.Filename).ToList();
+                                foreach(var img in imgs)
                                 {
-                                    while (s >= 0)
-                                    {
-                                        s = s - 1;
-                                        if (body.Substring(s, 1) == "<")
-                                        {
-                                            elx = s;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if(elx >= 0)
-                                {
-                                    //get alt attribute from img tag
-
-                                }
-
-                                Gmail.DownloadAttachment(User, draftId, attachmentId, Server.MapPath(attPath));
-
-                                //replace attachment image src with new URL
-                                s = body.IndexOf("&attbid=" + attachmentId);
-                                if (s > 0)
-                                {
-                                   while(s > 0)
-                                    {
-                                        s = s - 1;
-                                        if(body.Substring(s, 1) == "\"")
-                                        {
-                                            break;
-                                        }
-                                    }
-                                }
-                                if(s > 0)
-                                {
-                                    var e = body.IndexOf("\"", s + 10);
-                                    if(e > s)
-                                    {
-                                        body = body.Substring(0, s) + Server.hostUrl + attPath;
-                                    }
+                                    img.attribute["src"] = Server.hostUrl + Gmail.CampaignImageUrlPath(datecreated, newfile + '.' + ext);
                                 }
                             }
+
+                            //update campaign message
+                            var newbody = dom.Render(true, true);
+                            Query.CampaignMessages.Update(new Query.Models.CampaignMessage()
+                            {
+                                campaignId = info.campaignId,
+                                subject = subject,
+                                body = newbody
+                            });
                         }
+                        return JsonResponse(new { info.campaignId });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Error("Error occurred when creating your campaign (10103). Please report error to " + Settings.ContactInfo.CustomerService.email);
                     }
 
-                    return JsonResponse(new
-                    {
-                        info.campaignId
-                    });
                 }
             }
             return Error("You do not have permission to create a campaign");

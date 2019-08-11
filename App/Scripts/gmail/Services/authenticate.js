@@ -14,7 +14,7 @@ function authenticate(callback){
         //</debug>
         if(lockAuth(callback)){
             //show authentication popup to log into Gmaster
-            var port = chrome.runtime.connect({name: "authenticate"});
+            var port = chrome.runtime.connect({name: "authenticate:" + email});
             port.onMessage.addListener(function(msg){
                 //received dev key from extension
                 var devkey = msg.devkey;
@@ -46,8 +46,10 @@ function authenticate(callback){
         //</debug>
         
         /////////////////////////////////////
-        if(lockAuth(callback)){
+        if (lockAuth(callback)) {
+            //<debug>
             console.log(['key exists', db.devkey]);
+            //</debug>
             getSubscriptionInfo(function(auth_info){
                 releaseAuthLock(auth_info);
             }, true);
@@ -71,6 +73,10 @@ function lockAuth(callback){
 function releaseAuthLock(auth_info){
     const len = auth_callbacks.length;
     auth_tries = 0;
+    //<debug>
+    console.log('release Auth Lock');
+    console.log(auth_callbacks);
+    //</debug>
     for(let x = 0; x < len; x++){
         //execute queued callback
         var item = auth_callbacks.shift();

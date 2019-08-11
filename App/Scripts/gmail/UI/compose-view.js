@@ -1,6 +1,9 @@
 var compose_inc = 0;
 
 authenticate((auth_info) => {
+    //<debug>
+    console.log('register compose view handler');
+    //</debug>
     sdk.Compose.registerComposeViewHandler(handleComposeView);
 });
 
